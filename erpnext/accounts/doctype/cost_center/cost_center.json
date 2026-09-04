@@ -19,7 +19,8 @@
   "disabled",
   "lft",
   "rgt",
-  "old_parent"
+  "old_parent",
+  "branch_created"
  ],
  "fields": [
   {
@@ -120,13 +121,19 @@
    "fieldname": "disabled",
    "fieldtype": "Check",
    "label": "Disabled"
+  },
+  {
+   "default": "0",
+   "fieldname": "branch_created",
+   "fieldtype": "Check",
+   "label": "Branch Created"
   }
  ],
  "icon": "fa fa-money",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-04-14 18:15:27.367298",
+ "modified": "2026-09-04 23:02:27.257563",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cost Center",
