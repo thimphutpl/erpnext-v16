@@ -1,143 +1,187 @@
 // Copyright (c) 2016, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
-frappe.provide("erpnext.accounts.dimensions");
+//frappe.provide("erpnext.accounts.dimensions");
 
-frappe.ui.form.on("Budget", {
-	onload: function (frm) {
-		frm.set_query("monthly_distribution", function () {
+frappe.ui.form.on('Budget', {
+
+    setup(frm) {
+        frappe.db.get_single_value(
+            "Budget Settings",
+            "monthly_budget_check"
+        ).then(value => {
+            set_monthly_budget_fields(frm, cint(value) === 1);
+        });
+    },
+	onload: function(frm) {
+		frm.set_query("account", "accounts", function() {
 			return {
 				filters: {
-					fiscal_year: frm.doc.fiscal_year,
-				},
-			};
-		});
-
-		frm.set_query("account", function () {
-			return {
-				filters: {
-					is_group: 0,
 					company: frm.doc.company,
-				},
+					is_group: 0
+				}
+			};
+		});
+		
+		frm.set_query("cost_center", function() {
+			return {
+				filters: {
+					company: frm.doc.company,
+					is_group: 0
+				}
 			};
 		});
 
-		erpnext.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
-		frappe.db.get_single_value("Accounts Settings", "use_legacy_budget_controller").then((value) => {
-			if (value) {
-				frm.get_field("control_action_for_cumulative_expense_section").hide();
-			}
+		frm.set_query("monthly_distribution", function() {
+			return {
+				filters: {
+					fiscal_year: frm.doc.fiscal_year
+				}
+			};
 		});
+	
 	},
 
-	refresh: async function (frm) {
-		frm.trigger("toggle_reqd_fields");
-
-		if (!frm.doc.__islocal && frm.doc.docstatus == 1) {
-			frm.add_custom_button(
-				__("Revise Budget"),
-				function () {
-					frm.events.revise_budget_action(frm);
-				},
-				__("Actions")
-			);
-		}
-
-		toggle_distribution_fields(frm);
+	refresh: function(frm) {
+		frm.trigger("toggle_reqd_fields")
+		frm.get_field("accounts").grid.grid_pagination.page_length = 150
 	},
 
-	budget_against: function (frm) {
-		frm.trigger("set_null_value");
-		frm.trigger("toggle_reqd_fields");
+	budget_against: function(frm) {
+		frm.trigger("set_null_value")
+		frm.trigger("toggle_reqd_fields")
 	},
 
-	budget_amount(frm) {
-		if (frm.doc.budget_distribution?.length) {
-			frm.doc.budget_distribution.forEach((row) => {
-				row.amount = flt((row.percent / 100) * frm.doc.budget_amount, 2);
-			});
-			set_total_budget_amount(frm);
-			frm.refresh_field("budget_distribution");
-		}
-	},
-
-	distribute_equally: function (frm) {
-		toggle_distribution_fields(frm);
-	},
-
-	set_null_value: function (frm) {
-		if (frm.doc.budget_against == "Cost Center") {
-			frm.set_value("project", null);
+	set_null_value: function(frm) {
+		if(frm.doc.budget_against == 'Cost Center') {
+			frm.set_value('project', null)
 		} else {
-			frm.set_value("cost_center", null);
+			frm.set_value('cost_center', null)
 		}
 	},
-
-	toggle_reqd_fields: function (frm) {
-		frm.toggle_reqd("cost_center", frm.doc.budget_against == "Cost Center");
-		frm.toggle_reqd("project", frm.doc.budget_against == "Project");
+	get_accounts: function(frm) {
+		if(frm.doc.cost_center || frm.doc.project){
+			return frappe.call({
+				method: "get_accounts",
+				doc: frm.doc,
+				callback: function(r, rt) {
+					frm.refresh_field("accounts");
+					frm.refresh_fields();
+				},
+				freeze: true,
+				freeze_message: "Loading Expense Accounts..... Please Wait"
+			});
+		}else{
+			frappe.throw("Either Cost Center or Project is missing. ")
+		}
 	},
-
-	revise_budget_action: function (frm) {
-		frappe.confirm(
-			__(
-				"Are you sure you want to revise this budget? The current budget will be cancelled and a new draft will be created."
-			),
-			function () {
-				frappe.call({
-					method: "erpnext.accounts.doctype.budget.budget.revise_budget",
-					args: { budget_name: frm.doc.name },
-					callback: function (r) {
-						if (r.message) {
-							frappe.msgprint(__("New revised budget created successfully"));
-							frappe.set_route("Form", "Budget", r.message);
-						}
-					},
-				});
-			},
-			function () {
-				frappe.msgprint(__("Revision cancelled"));
-			}
-		);
-	},
+	toggle_reqd_fields: function(frm) {
+		frm.toggle_reqd("cost_center", frm.doc.budget_against=="Cost Center");
+		frm.toggle_reqd("project", frm.doc.budget_against=="Project");
+	}
 });
 
-frappe.ui.form.on("Budget Distribution", {
-	amount(frm, cdt, cdn) {
-		let row = frappe.get_doc(cdt, cdn);
-		if (frm.doc.budget_amount) {
-			row.percent = flt((row.amount / frm.doc.budget_amount) * 100, 2);
 
-			set_total_budget_amount(frm);
-			frm.refresh_field("budget_distribution");
-		}
+frappe.ui.form.on("Budget Account", {	
+	"january": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
 	},
-	percent(frm, cdt, cdn) {
-		let row = frappe.get_doc(cdt, cdn);
-		if (frm.doc.budget_amount) {
-			row.amount = flt((row.percent / 100) * frm.doc.budget_amount, 2);
-
-			set_total_budget_amount(frm);
-			frm.refresh_field("budget_distribution");
-		}
+	"february": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
 	},
-});
+	"march": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"april": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"may": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"june": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"july": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"august": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"september": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"october": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"november": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+	"december": function(frm, cdt, cdn) {
+		set_initial_budget(frm, cdt, cdn);
+	},
+}); 
 
-function set_total_budget_amount(frm) {
-	let total = 0;
-
-	(frm.doc.budget_distribution || []).forEach((row) => {
-		total += flt(row.amount);
-	});
-
-	frm.set_value("budget_distribution_total", total);
+function set_initial_budget(frm, cdt, cdn){
+	frappe.call({
+		method:"set_initial_budget",
+		doc: frm.doc,
+		callback: function(r) {
+			frm.refresh_field('initial_budget');
+			frm.refresh_field('budget_amount');
+			frm.refresh_fields('accounts');
+		}
+	})
 }
 
-function toggle_distribution_fields(frm) {
-	const grid = frm.fields_dict.budget_distribution.grid;
+const monthly_fields = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+];
 
-	["amount", "percent"].forEach((field) => {
-		grid.update_docfield_property(field, "read_only", frm.doc.distribute_equally);
-	});
+function set_monthly_budget_fields(frm, enabled) {
+    const accounts = frm.fields_dict.accounts;
 
-	grid.refresh();
+    if (!accounts || !accounts.grid) {
+        return;
+    }
+
+    // January - December
+    // monthly_fields.forEach(fieldname => {
+    //     accounts.grid.update_docfield_property(
+    //         fieldname,
+    //         "hidden",
+    //         enabled ? 0 : 1
+    //     );
+
+    //     accounts.grid.update_docfield_property(
+    //         fieldname,
+    //         "reqd",
+    //         enabled ? 1 : 0
+    //     );
+    // });
+
+    // budget_allocate - same child table
+    accounts.grid.update_docfield_property(
+        "budget_allocate",
+        "hidden",
+        enabled ? 1 : 0
+    );
+
+    accounts.grid.update_docfield_property(
+        "budget_allocate",
+        "reqd",
+        enabled ? 0 : 1
+    );
+
+    // Refresh the same child table
+    frm.refresh_field("accounts");
 }

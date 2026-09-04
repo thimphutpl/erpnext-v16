@@ -29,7 +29,12 @@
   "lft",
   "rgt",
   "old_parent",
-  "include_in_gross"
+  "include_in_gross",
+  "budget_details_tab",
+  "ignore_budget_check",
+  "is_centralized_budget",
+  "column_break_bcmp",
+  "budget_type"
  ],
  "fields": [
   {
@@ -197,13 +202,40 @@
    "fieldtype": "Link",
    "label": "Account Category",
    "options": "Account Category"
+  },
+  {
+   "fieldname": "budget_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Budget Details"
+  },
+  {
+   "fieldname": "budget_type",
+   "fieldtype": "Link",
+   "label": "Budget Type",
+   "options": "Budget Type"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_budget_check",
+   "fieldtype": "Check",
+   "label": "Ignore Budget Check"
+  },
+  {
+   "fieldname": "column_break_bcmp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_centralized_budget",
+   "fieldtype": "Check",
+   "label": "Is Centralized Budget"
   }
  ],
  "icon": "fa fa-money",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-04-14 18:14:42.202065",
+ "modified": "2026-09-04 22:03:58.126852",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",
