@@ -155,19 +155,19 @@ function set_monthly_budget_fields(frm, enabled) {
     }
 
     // January - December
-    // monthly_fields.forEach(fieldname => {
-    //     accounts.grid.update_docfield_property(
-    //         fieldname,
-    //         "hidden",
-    //         enabled ? 0 : 1
-    //     );
+    monthly_fields.forEach(fieldname => {
+        accounts.grid.update_docfield_property(
+            fieldname,
+            "hidden",
+            enabled ? 0 : 1
+        );
 
-    //     accounts.grid.update_docfield_property(
-    //         fieldname,
-    //         "reqd",
-    //         enabled ? 1 : 0
-    //     );
-    // });
+        accounts.grid.update_docfield_property(
+            fieldname,
+            "reqd",
+            enabled ? 1 : 0
+        );
+    });
 
     // budget_allocate - same child table
     accounts.grid.update_docfield_property(

@@ -10,7 +10,10 @@
  "field_order": [
   "entry_type_and_date",
   "company",
+  "branch",
+  "cost_center",
   "voucher_type",
+  "mode_of_payment",
   "column_break1",
   "naming_series",
   "posting_date",
@@ -80,7 +83,6 @@
   "column_break3",
   "custom_remark",
   "remark",
-  "mode_of_payment",
   "party_not_required"
  ],
  "fields": [
@@ -518,7 +520,6 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:['Credit Note', 'Debit Note'].includes(doc.voucher_type)",
    "fieldname": "apply_tds",
    "fieldtype": "Check",
    "label": "Consider for Tax Withholding "
@@ -659,6 +660,21 @@
    "fieldname": "custom_remark",
    "fieldtype": "Check",
    "label": "Custom Remark"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fetch_from": "branch.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "icon": "fa fa-file-text",
@@ -673,7 +689,7 @@
    "table_fieldname": "payment_entries"
   }
  ],
- "modified": "2026-04-08 14:19:30.870894",
+ "modified": "2026-09-06 13:03:32.418252",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry",

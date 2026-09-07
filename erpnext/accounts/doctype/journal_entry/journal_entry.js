@@ -5,6 +5,13 @@ frappe.provide("erpnext.accounts");
 frappe.provide("erpnext.journal_entry");
 
 frappe.ui.form.on("Journal Entry", {
+    branch: function (frm) {
+        erpnext.journal_entry.update_account_dimensions(frm);
+    },
+
+    cost_center: function (frm) {
+        erpnext.journal_entry.update_account_dimensions(frm);
+    },
 	setup: function (frm) {
 		frm.add_fetch("bank_account", "account", "account");
 		frm.ignore_doctypes_on_cancel_all = [
@@ -214,6 +221,7 @@ frappe.ui.form.on("Journal Entry", {
 				if (r.message) {
 					$.each(frm.doc.accounts || [], function (i, jvd) {
 						frappe.model.set_value(jvd.doctype, jvd.name, "cost_center", r.message.cost_center);
+                        
 					});
 				}
 			},
@@ -273,9 +281,44 @@ frappe.ui.form.on("Journal Entry", {
 		}
 	},
 
-	apply_tds: function (frm) {
-		frm.clear_table("tax_withholding_entries");
-	},
+    apply_tds: function (frm) {
+    
+        // Remove TDS account rows
+        erpnext.journal_entry.remove_tax_withholding(frm);
+        
+      
+    },
+
+    tax_withholding_category: function (frm) {
+        // Remove TDS account rows 
+        if (!frm.doc.tax_withholding_category) {
+            erpnext.journal_entry.remove_tax_withholding(frm);
+            return;
+        }
+        if (!frm.doc.tax_withholding_category) {
+            frm.set_value("tax_withholding_group", "");
+            return;
+        }
+
+        if (!frm.doc.posting_date) {
+            frappe.throw(__("Please select Posting Date first"));
+        }
+
+        frappe.call({
+            method: "erpnext.accounts.doctype.journal_entry.journal_entry.get_tax_withholding_group",
+            args: {
+                tax_withholding_category: frm.doc.tax_withholding_category,
+                posting_date: frm.doc.posting_date,
+            },
+            callback: function (r) {
+                if (r.message) {
+                    frm.set_value("tax_withholding_group", r.message);
+                } else {
+                    frm.set_value("tax_withholding_group", "");
+                }
+            },
+        });
+    },
 });
 
 var update_jv_details = function (doc, r) {
@@ -490,6 +533,7 @@ cur_frm.cscript.validate = function (doc, cdt, cdn) {
 };
 
 frappe.ui.form.on("Journal Entry Account", {
+   
 	party: function (frm, cdt, cdn) {
 		var d = frappe.get_doc(cdt, cdn);
 		if (!d.account && d.party_type && d.party) {
@@ -738,6 +782,26 @@ $.extend(erpnext.journal_entry, {
 });
 
 $.extend(erpnext.journal_entry, {
+
+    update_account_dimensions: function (frm) {
+		(frm.doc.accounts || []).forEach(function (row) {
+			frappe.model.set_value(
+				row.doctype,
+				row.name,
+				"branch",
+				frm.doc.branch || ""
+			);
+
+			frappe.model.set_value(
+				row.doctype,
+				row.name,
+				"cost_center",
+				frm.doc.cost_center || ""
+			);
+		});
+
+		frm.refresh_field("accounts");
+	},
 	set_account_details: function (frm, dt, dn) {
 		var d = locals[dt][dn];
 		if (d.account) {
@@ -753,13 +817,31 @@ $.extend(erpnext.journal_entry, {
 					debit: flt(d.debit_in_account_currency),
 					credit: flt(d.credit_in_account_currency),
 					exchange_rate: d.exchange_rate,
+                    branch: frm.doc.branch,
+	                cost_center: frm.doc.cost_center
+
 				},
 				callback: function (r) {
 					if (r.message) {
 						$.extend(d, r.message);
+                        frappe.model.set_value(
+                            dt,
+                            dn,
+                            "branch",
+                            frm.doc.branch || ""
+                        );
+
+                        frappe.model.set_value(
+                            dt,
+                            dn,
+                            "cost_center",
+                            frm.doc.cost_center || ""
+                        );
+
 						erpnext.journal_entry.set_amount_on_last_row(frm, dt, dn);
 						erpnext.journal_entry.set_debit_credit_in_company_currency(frm, dt, dn);
 						refresh_field("accounts");
+            
 					}
 				},
 			});
@@ -799,3 +881,80 @@ $.extend(erpnext.journal_entry, {
 		frm.refresh_field("accounts");
 	},
 });
+
+// Remove TDS account rows and reduce Debtors debit by TDS amount when TDS is disabled in Journal Entry 
+erpnext.journal_entry.remove_tax_withholding = function (frm) {
+	let tds_amount = 0;
+
+	// Get TDS amount BEFORE clearing the table
+	(frm.doc.tax_withholding_entries || []).forEach(function (row) {
+		tds_amount += flt(row.withholding_amount);
+	});
+
+	// Remove TDS account rows
+	frm.doc.accounts = (frm.doc.accounts || []).filter(function (row) {
+		return !cint(row.is_tax_withholding_account);
+	});
+
+	// Find party account using party_type
+	let party_row = (frm.doc.accounts || []).find(function (row) {
+		return row.party_type && row.party;
+	});
+
+	if (party_row && tds_amount) {
+		if (party_row.party_type === "Customer") {
+			// Customer payment:
+			// TDS was added to Debtors debit.
+			// Remove it when TDS is disabled.
+			frappe.model.set_value(
+				party_row.doctype,
+				party_row.name,
+				"debit",
+				flt(party_row.debit) - tds_amount
+			);
+
+			frappe.model.set_value(
+				party_row.doctype,
+				party_row.name,
+				"debit_in_account_currency",
+				flt(party_row.debit_in_account_currency) - tds_amount
+			);
+		}
+
+		if (party_row.party_type === "Supplier") {
+			// Supplier payment:
+			// TDS was added to Creditors credit.
+			// Remove TDS by restoring the credit.
+			frappe.model.set_value(
+				party_row.doctype,
+				party_row.name,
+				"credit",
+				flt(party_row.credit) + tds_amount
+			);
+
+			frappe.model.set_value(
+				party_row.doctype,
+				party_row.name,
+				"credit_in_account_currency",
+				flt(party_row.credit_in_account_currency) + tds_amount
+			);
+		}
+	}
+
+	// Clear TDS child table
+	frm.clear_table("tax_withholding_entries");
+
+	// Clear TDS fields
+	frm.set_value("tax_withholding_category", "");
+	frm.set_value("tax_withholding_group", "");
+	frm.set_value("ignore_tax_withholding_threshold", 0);
+	frm.set_value("override_tax_withholding_entries", 0);
+
+	// Recalculate totals
+	frm.cscript.update_totals(frm.doc);
+
+	// Refresh
+	frm.refresh_field("accounts");
+	frm.refresh_field("tax_withholding_entries");
+};
+

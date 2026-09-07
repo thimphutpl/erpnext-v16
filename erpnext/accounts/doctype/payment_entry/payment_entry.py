@@ -67,18 +67,11 @@ class PaymentEntry(AccountsController):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
-		from erpnext.accounts.doctype.advance_taxes_and_charges.advance_taxes_and_charges import (
-			AdvanceTaxesandCharges,
-		)
-		from erpnext.accounts.doctype.payment_entry_deduction.payment_entry_deduction import (
-			PaymentEntryDeduction,
-		)
-		from erpnext.accounts.doctype.payment_entry_reference.payment_entry_reference import (
-			PaymentEntryReference,
-		)
+		from erpnext.accounts.doctype.advance_taxes_and_charges.advance_taxes_and_charges import AdvanceTaxesandCharges
+		from erpnext.accounts.doctype.payment_entry_deduction.payment_entry_deduction import PaymentEntryDeduction
+		from erpnext.accounts.doctype.payment_entry_reference.payment_entry_reference import PaymentEntryReference
 		from erpnext.accounts.doctype.tax_withholding_entry.tax_withholding_entry import TaxWithholdingEntry
+		from frappe.types import DF
 
 		amended_from: DF.Link | None
 		apply_tds: DF.Check
@@ -94,6 +87,7 @@ class PaymentEntry(AccountsController):
 		base_total_allocated_amount: DF.Currency
 		base_total_taxes_and_charges: DF.Currency
 		book_advance_payments_in_separate_party_account: DF.Check
+		branch: DF.Link | None
 		clearance_date: DF.Date | None
 		company: DF.Link
 		contact_email: DF.Data | None

@@ -8,7 +8,15 @@
  "document_type": "Setup",
  "engine": "InnoDB",
  "field_order": [
-  "branch"
+  "company",
+  "branch",
+  "cost_center",
+  "column_break_qvlo",
+  "disabled",
+  "accounts_settings_section",
+  "expense_bank_account",
+  "column_break_6",
+  "revenue_bank_account"
  ],
  "fields": [
   {
@@ -20,12 +28,60 @@
    "oldfieldtype": "Data",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_qvlo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "accounts_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Accounts Settings"
+  },
+  {
+   "fieldname": "expense_bank_account",
+   "fieldtype": "Link",
+   "label": "Default Expense Bank Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_bank_account",
+   "fieldtype": "Link",
+   "label": "Revenue Bank Account",
+   "options": "Account"
   }
  ],
  "icon": "fa fa-code-fork",
  "idx": 1,
  "links": [],
- "modified": "2024-03-27 13:06:42.370664",
+ "modified": "2026-09-06 12:35:10.038446",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Branch",
@@ -55,6 +111,7 @@
   }
  ],
  "quick_entry": 1,
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": []

@@ -11,6 +11,7 @@
   "naming_series",
   "payment_type",
   "payment_order_status",
+  "branch",
   "column_break_5",
   "posting_date",
   "company",
@@ -781,6 +782,12 @@
    "fieldname": "auto_repeat_section",
    "fieldtype": "Section Break",
    "label": "Auto Repeat"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "grid_page_length": 50,
@@ -795,7 +802,7 @@
    "table_fieldname": "payment_entries"
   }
  ],
- "modified": "2026-05-15 13:31:01.166010",
+ "modified": "2026-09-06 12:51:32.859396",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Entry",

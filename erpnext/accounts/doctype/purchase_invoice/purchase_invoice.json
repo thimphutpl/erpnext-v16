@@ -13,6 +13,7 @@
   "supplier_name",
   "tax_id",
   "company",
+  "branch",
   "column_break_6",
   "posting_date",
   "posting_time",
@@ -1691,6 +1692,12 @@
    "label": "Title",
    "no_copy": 1,
    "print_hide": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "grid_page_length": 50,
@@ -1698,7 +1705,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-05-28 12:36:55.215363",
+ "modified": "2026-09-06 12:46:52.470373",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",

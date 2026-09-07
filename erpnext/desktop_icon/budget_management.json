@@ -1,0 +1,20 @@
+{
+ "app": "erpnext",
+ "bg_color": "gray",
+ "creation": "2026-09-07 10:58:38.086516",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "Folder",
+ "idx": 2,
+ "label": "Budget Management",
+ "link_type": "Workspace Sidebar",
+ "modified": "2026-09-07 13:27:48.954845",
+ "modified_by": "Administrator",
+ "name": "Budget Management",
+ "owner": "Administrator",
+ "parent_icon": "Budget Management",
+ "restrict_removal": 0,
+ "roles": [],
+ "standard": 1
+}

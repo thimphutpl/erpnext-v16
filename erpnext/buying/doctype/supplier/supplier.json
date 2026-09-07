@@ -14,6 +14,7 @@
   "supplier_type",
   "supplier_name",
   "gender",
+  "supplier_tpn_no",
   "column_break0",
   "supplier_group",
   "country",
@@ -504,6 +505,11 @@
   {
    "fieldname": "column_break_oxjw",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "supplier_tpn_no",
+   "fieldtype": "Data",
+   "label": "Supplier TPN"
   }
  ],
  "grid_page_length": 50,
@@ -517,7 +523,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2026-03-09 17:15:25.465759",
+ "modified": "2026-09-06 12:41:46.080688",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",

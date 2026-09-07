@@ -25,8 +25,10 @@ class TaxWithholdingEntry(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		branch: DF.Link | None
 		company: DF.Link | None
 		conversion_rate: DF.Float
+		cost_center: DF.Link | None
 		created_by_migration: DF.Check
 		currency: DF.Link | None
 		lower_deduction_certificate: DF.Link | None
@@ -36,6 +38,7 @@ class TaxWithholdingEntry(Document):
 		party: DF.DynamicLink | None
 		party_type: DF.Link | None
 		status: DF.Literal["", "Settled", "Under Withheld", "Over Withheld", "Duplicate", "Cancelled"]
+		tax_account: DF.Link | None
 		tax_id: DF.Data | None
 		tax_rate: DF.Percent
 		tax_withholding_category: DF.Link | None
@@ -121,7 +124,7 @@ class TaxWithholdingEntry(Document):
 		The logic reads like: "Match up old incomplete entries with this new entry"
 
 		Args:
-		                field_type: Either "taxable" or "withholding" - determines which fields to use
+						field_type: Either "taxable" or "withholding" - determines which fields to use
 		"""
 
 		doctype_field = f"{field_type}_doctype"
@@ -392,6 +395,10 @@ class TaxWithholdingController:
 
 		for category in self.category_details.values():
 			self.entries += self._create_entries_for_category(category)
+		# for entry in self.entries:
+		# 	entry["branch"] = self.doc.get("branch")
+		# 	entry["cost_center"] = self.doc.get("cost_center")
+
 
 		self.doc.extend("tax_withholding_entries", self.entries)
 
@@ -405,6 +412,7 @@ class TaxWithholdingController:
 		if not category.threshold_crossed:
 			entries.append(self._create_under_withheld_entry(category))
 			category.taxable_amount = 0
+
 			return entries
 
 		# Case 2: Tax on excess amount - handle threshold exemption first
@@ -690,6 +698,7 @@ class TaxWithholdingController:
 				"party_type": self.party_type,
 				"party": self.party,
 				"tax_id": category.tax_id,
+				"tax_account": category.account_head,
 				"tax_withholding_category": category.name,
 				"tax_withholding_group": category.tax_withholding_group,
 				"tax_rate": category.tax_rate,
@@ -1045,6 +1054,7 @@ class TaxWithholdingController:
 		entry = {}
 		if default_obj:
 			entry.update(default_obj)
+		# frappe.throw(str(self.branch))
 
 		entry.update(
 			{
@@ -1052,9 +1062,12 @@ class TaxWithholdingController:
 				"taxable_name": source_entry.taxable_name,
 				"taxable_date": source_entry.taxable_date,
 				"tax_withholding_category": category.name,
+				"tax_account":source_entry.tax_account,
 				"tax_rate": tax_rate,
 				"party_type": self.party_type,
 				"party": self.party,
+				 "branch": self.doc.get("branch"),
+            "cost_center": self.doc.get("cost_center"),
 				"company": self.doc.company,
 				"tax_id": category.tax_id,
 			}
@@ -1314,7 +1327,26 @@ class JournalTaxWithholding(TaxWithholdingController):
 		self._recalculate_totals()
 
 	def _should_apply_tds(self):
-		return self.doc.apply_tds and self.doc.voucher_type in ("Debit Note", "Credit Note")
+		return self.doc.apply_tds and self.doc.voucher_type in (
+			"Journal Entry",
+		"Inter Company Journal Entry",
+		"Bank Entry",
+		"Cash Entry",
+		"Credit Card Entry",
+		"Debit Note",
+		"Credit Note",
+		"Contra Entry",
+		"Excise Entry",
+		"Write Off Entry",
+		"Opening Entry",
+		"Depreciation Entry",
+		"Asset Disposal",
+		"Periodic Accounting Entry",
+		"Exchange Rate Revaluation",
+		"Exchange Gain Or Loss",
+		"Deferred Revenue",
+		"Deferred Expense"
+		)
 
 	def _reset_existing_tds(self):
 		for row in self.existing_tds_rows:
@@ -1395,6 +1427,7 @@ class JournalTaxWithholding(TaxWithholdingController):
 					"account": account_head,
 					"account_currency": account_currency,
 					"exchange_rate": exchange_rate,
+					"branch": self.doc.get("branch"),
 					"cost_center": self.doc.get("cost_center")
 					or erpnext.get_default_cost_center(self.doc.company),
 					"credit": 0,
@@ -1407,7 +1440,13 @@ class JournalTaxWithholding(TaxWithholdingController):
 
 		# TDS/TCS is always credited (liability to government)
 		tax_row.update(
-			{
+			{  
+				# "party_row": self.party_row,
+				# "party_type": self.party_type,
+				# "party": self.party,
+				"tds_account": account_head,
+				"branch": self.doc.get("branch"),
+				"cost_center": self.doc.get("cost_center"),
 				"credit": tax_amount,
 				"credit_in_account_currency": tax_amount_in_account_currency,
 				"debit": 0,

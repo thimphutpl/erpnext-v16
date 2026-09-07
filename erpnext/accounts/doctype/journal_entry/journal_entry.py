@@ -46,10 +46,9 @@ class JournalEntry(AccountsController):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
 		from erpnext.accounts.doctype.journal_entry_account.journal_entry_account import JournalEntryAccount
 		from erpnext.accounts.doctype.tax_withholding_entry.tax_withholding_entry import TaxWithholdingEntry
+		from frappe.types import DF
 
 		accounts: DF.Table[JournalEntryAccount]
 		amended_from: DF.Link | None
@@ -57,10 +56,12 @@ class JournalEntry(AccountsController):
 		auto_repeat: DF.Link | None
 		bill_date: DF.Date | None
 		bill_no: DF.Data | None
+		branch: DF.Link | None
 		cheque_date: DF.Date | None
 		cheque_no: DF.Data | None
 		clearance_date: DF.Date | None
 		company: DF.Link
+		cost_center: DF.Link | None
 		custom_remark: DF.Check
 		difference: DF.Currency
 		due_date: DF.Date | None
@@ -97,26 +98,7 @@ class JournalEntry(AccountsController):
 		total_credit: DF.Currency
 		total_debit: DF.Currency
 		user_remark: DF.SmallText | None
-		voucher_type: DF.Literal[
-			"Journal Entry",
-			"Inter Company Journal Entry",
-			"Bank Entry",
-			"Cash Entry",
-			"Credit Card Entry",
-			"Debit Note",
-			"Credit Note",
-			"Contra Entry",
-			"Excise Entry",
-			"Write Off Entry",
-			"Opening Entry",
-			"Depreciation Entry",
-			"Asset Disposal",
-			"Periodic Accounting Entry",
-			"Exchange Rate Revaluation",
-			"Exchange Gain Or Loss",
-			"Deferred Revenue",
-			"Deferred Expense",
-		]
+		voucher_type: DF.Literal["Journal Entry", "Inter Company Journal Entry", "Bank Entry", "Cash Entry", "Credit Card Entry", "Debit Note", "Credit Note", "Contra Entry", "Excise Entry", "Write Off Entry", "Opening Entry", "Depreciation Entry", "Asset Disposal", "Periodic Accounting Entry", "Exchange Rate Revaluation", "Exchange Gain Or Loss", "Deferred Revenue", "Deferred Expense"]
 		write_off_amount: DF.Currency
 		write_off_based_on: DF.Literal["Accounts Receivable", "Accounts Payable"]
 	# end: auto-generated types
@@ -1642,7 +1624,7 @@ def get_party_account_and_currency(company, party_type, party):
 
 
 @frappe.whitelist()
-def get_account_details_and_party_type(account, date, company, debit=None, credit=None, exchange_rate=None):
+def get_account_details_and_party_type(account, date, company, debit=None, credit=None, exchange_rate=None, branch=None, cost_center=None):
 	"""Returns dict of account details and party type to be set in Journal Entry on selection of account."""
 	if not frappe.has_permission("Account"):
 		frappe.msgprint(_("No Permission"), raise_exception=1)
@@ -1657,13 +1639,19 @@ def get_account_details_and_party_type(account, date, company, debit=None, credi
 
 	if account_details.account_type == "Receivable":
 		party_type = "Customer"
+		party=""
 	elif account_details.account_type == "Payable":
 		party_type = "Supplier"
+		party=""
 	else:
 		party_type = ""
+		party=""
 
 	grid_values = {
 		"party_type": party_type,
+        "party": party,
+		"branch":branch,
+		"cost_center":cost_center,
 		"account_type": account_details.account_type,
 		"account_currency": account_details.account_currency or company_currency,
 		"bank_account": (
@@ -1795,3 +1783,47 @@ def make_reverse_journal_entry(source_name, target_doc=None):
 	)
 
 	return doclist
+
+@frappe.whitelist()
+def get_tds_account(tax_withholding_category):
+	account = frappe.db.sql("""select t.name,
+			ifnull((select tax_withholding_rate
+				from `tabTax Withholding Rate` r
+				where r.parent = t.name
+				limit 1),0) as tax_withholding_rate,
+			(select account
+				from `tabTax Withholding Account` a
+				where a.parent = t.name
+				limit 1) as tax_withholding_account
+		from `tabTax Withholding Category` t
+		where t.name = "{}" """.format(tax_withholding_category), as_dict=True)
+	return account[0] if account else None
+@frappe.whitelist()
+def get_tax_withholding_group(tax_withholding_category, posting_date):
+	if not tax_withholding_category or not posting_date:
+		return None
+
+	return frappe.db.get_value(
+		"Tax Withholding Rate",
+		{
+			"parent": tax_withholding_category,
+			"parenttype": "Tax Withholding Category",
+			"from_date": ["<=", posting_date],
+			"to_date": [">=", posting_date],
+		},
+		"tax_withholding_group",
+	)
+@frappe.whitelist()
+def get_tax_withholding_accounts(tax_withholding_category, company):
+	if not tax_withholding_category or not company:
+		return []
+
+	return frappe.get_all(
+		"Tax Withholding Account",
+		filters={
+			"parent": tax_withholding_category,
+			"parenttype": "Tax Withholding Category",
+			"company": company,
+		},
+		pluck="account",
+	)

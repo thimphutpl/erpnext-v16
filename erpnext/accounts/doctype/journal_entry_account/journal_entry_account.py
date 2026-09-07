@@ -21,6 +21,7 @@ class JournalEntryAccount(Document):
 		advance_voucher_type: DF.Link | None
 		against_account: DF.Text | None
 		bank_account: DF.Link | None
+		branch: DF.Link | None
 		cost_center: DF.Link | None
 		credit: DF.Currency
 		credit_in_account_currency: DF.Currency
@@ -38,25 +39,7 @@ class JournalEntryAccount(Document):
 		reference_detail_no: DF.Data | None
 		reference_due_date: DF.Date | None
 		reference_name: DF.DynamicLink | None
-		reference_type: DF.Literal[
-			"",
-			"Sales Invoice",
-			"Purchase Invoice",
-			"Journal Entry",
-			"Sales Order",
-			"Purchase Order",
-			"Expense Claim",
-			"Asset",
-			"Loan",
-			"Payroll Entry",
-			"Employee Advance",
-			"Exchange Rate Revaluation",
-			"Invoice Discounting",
-			"Fees",
-			"Full and Final Statement",
-			"Payment Entry",
-			"Bank Transaction",
-		]
+		reference_type: DF.Literal["", "Sales Invoice", "Purchase Invoice", "Journal Entry", "Sales Order", "Purchase Order", "Expense Claim", "Asset", "Loan", "Payroll Entry", "Employee Advance", "Exchange Rate Revaluation", "Invoice Discounting", "Fees", "Full and Final Statement", "Payment Entry", "Bank Transaction"]
 		user_remark: DF.SmallText | None
 	# end: auto-generated types
 
