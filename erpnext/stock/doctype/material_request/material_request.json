@@ -102,7 +102,8 @@
    "fieldname": "schedule_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Required By"
+   "label": "Required By",
+   "reqd": 1
   },
   {
    "fieldname": "company",
@@ -284,7 +285,8 @@
    "fieldname": "set_warehouse",
    "fieldtype": "Link",
    "label": "Set Target Warehouse",
-   "options": "Warehouse"
+   "options": "Warehouse",
+   "reqd": 1
   },
   {
    "fieldname": "column_break5",
@@ -299,7 +301,8 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Set Source Warehouse",
-   "options": "Warehouse"
+   "options": "Warehouse",
+   "reqd": 1
   },
   {
    "allow_on_submit": 1,
@@ -377,7 +380,7 @@
  "idx": 70,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-09 17:15:30.124509",
+ "modified": "2026-09-08 15:36:19.048105",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Material Request",
