@@ -1016,26 +1016,26 @@ erpnext.journal_entry.remove_tax_withholding = function (frm) {
 
             if (payment_row) {
                 // Customer:
-                // Debtors Dr 1000
-                // Cash    Cr 950
-                // TCS     Cr 50
+                // Debtors Cr 1000
+                // Cash    Dr 950
+                // TCS     Dr 50
                 //
                 // After removing TCS:
-                // Debtors Dr 1000
-                // Cash    Cr 1000
+                // Debtors Cr 1000
+                // Cash    Dr 1000
 
                 frappe.model.set_value(
                     payment_row.doctype,
                     payment_row.name,
-                    "credit",
-                    flt(payment_row.credit) + tds_amount
+                    "debit",
+                    flt(payment_row.debit) + tds_amount
                 );
 
                 frappe.model.set_value(
                     payment_row.doctype,
                     payment_row.name,
-                    "credit_in_account_currency",
-                    flt(payment_row.credit_in_account_currency) + tds_amount
+                    "debit_in_account_currency",
+                    flt(payment_row.debit_in_account_currency) + tds_amount
                 );
             }
         }

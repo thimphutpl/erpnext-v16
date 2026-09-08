@@ -1410,11 +1410,9 @@ class JournalTaxWithholding(TaxWithholdingController):
 	# 	)
 	def _update_party_amount(self, amount, is_reversal=False):
 		"""
-		Adjusts the counter/offsetting account (e.g. Cash, Bank) by the TDS amount,
-		leaving the party row's original amount untouched.
-
-		NOTE: assumes a single non-party, non-TDS counter row. If a Journal Entry
-		can have multiple counter rows, this needs to split the adjustment across them.
+		Adjusts the counter/offsetting account (e.g. Cash, Bank) by the tax amount,
+		leaving the party row's original amount untouched. Counter account is
+		always reduced by the tax amount, for both Supplier (TDS) and Customer (TCS).
 		"""
 		amount = flt(amount, self.precision)
 
@@ -1425,10 +1423,9 @@ class JournalTaxWithholding(TaxWithholdingController):
 		]
 
 		if not counter_rows:
-			frappe.throw(_("No counter account found to adjust for TDS."))
+			frappe.throw(_("No counter account found to adjust for TDS/TCS."))
 
 		counter_row = counter_rows[0]
-
 		active_field = "credit" if counter_row.get("credit") else "debit"
 		active_field_account_currency = f"{active_field}_in_account_currency"
 
@@ -1449,6 +1446,58 @@ class JournalTaxWithholding(TaxWithholdingController):
 			}
 		)
 
+	# def _create_or_update_tds_row(self, account_head, tax_amount):
+	# 	from erpnext.accounts.utils import get_account_currency
+	# 	from erpnext.setup.utils import get_exchange_rate as _get_exchange_rate
+
+	# 	account_currency = get_account_currency(account_head)
+	# 	company_currency = frappe.get_cached_value("Company", self.doc.company, "default_currency")
+	# 	exchange_rate = _get_exchange_rate(account_currency, company_currency, self.doc.posting_date)
+
+	# 	tax_amount = flt(tax_amount, self.precision)
+	# 	tax_amount_in_account_currency = flt(tax_amount / exchange_rate, self.precision)
+
+	# 	tax_row = None
+	# 	for row in self.doc.get("accounts"):
+	# 		if row.account == account_head and row.get("is_tax_withholding_account"):
+	# 			tax_row = row
+	# 			break
+
+	# 	if not tax_row:
+	# 		tax_row = self.doc.append(
+	# 			"accounts",
+	# 			{
+	# 				"account": account_head,
+	# 				"account_currency": account_currency,
+	# 				"exchange_rate": exchange_rate,
+	# 				"branch": self.doc.get("branch"),
+	# 				"cost_center": self.doc.get("cost_center")
+	# 				or erpnext.get_default_cost_center(self.doc.company),
+	# 				"credit": 0,
+	# 				"credit_in_account_currency": 0,
+	# 				"debit": 0,
+	# 				"debit_in_account_currency": 0,
+	# 				"is_tax_withholding_account": 1,
+	# 			},
+	# 		)
+
+	# 	# TDS/TCS is always credited (liability to government)
+	# 	tax_row.update(
+	# 		{  
+	# 			# "party_row": self.party_row,
+	# 			# "party_type": self.party_type,
+	# 			# "party": self.party,
+	# 			"tds_account": account_head,
+	# 			"branch": self.doc.get("branch"),
+	# 			"cost_center": self.doc.get("cost_center"),
+	# 			"credit": tax_amount,
+	# 			"credit_in_account_currency": tax_amount_in_account_currency,
+	# 			"debit": 0,
+	# 			"debit_in_account_currency": 0,
+	# 		}
+	# 	)
+
+	# 	self._cleanup_duplicate_tds_rows(tax_row)
 	def _create_or_update_tds_row(self, account_head, tax_amount):
 		from erpnext.accounts.utils import get_account_currency
 		from erpnext.setup.utils import get_exchange_rate as _get_exchange_rate
@@ -1484,21 +1533,31 @@ class JournalTaxWithholding(TaxWithholdingController):
 				},
 			)
 
-		# TDS/TCS is always credited (liability to government)
-		tax_row.update(
-			{  
-				# "party_row": self.party_row,
-				# "party_type": self.party_type,
-				# "party": self.party,
-				"tds_account": account_head,
-				"branch": self.doc.get("branch"),
-				"cost_center": self.doc.get("cost_center"),
-				"credit": tax_amount,
-				"credit_in_account_currency": tax_amount_in_account_currency,
-				"debit": 0,
-				"debit_in_account_currency": 0,
-			}
-		)
+		# Supplier (TDS): Credit. Customer (TCS): Debit.
+		if self.party_type == "Customer":
+			tax_row.update(
+				{
+					"tds_account": account_head,
+					"branch": self.doc.get("branch"),
+					"cost_center": self.doc.get("cost_center"),
+					"debit": tax_amount,
+					"debit_in_account_currency": tax_amount_in_account_currency,
+					"credit": 0,
+					"credit_in_account_currency": 0,
+				}
+			)
+		else:
+			tax_row.update(
+				{
+					"tds_account": account_head,
+					"branch": self.doc.get("branch"),
+					"cost_center": self.doc.get("cost_center"),
+					"credit": tax_amount,
+					"credit_in_account_currency": tax_amount_in_account_currency,
+					"debit": 0,
+					"debit_in_account_currency": 0,
+				}
+			)
 
 		self._cleanup_duplicate_tds_rows(tax_row)
 
