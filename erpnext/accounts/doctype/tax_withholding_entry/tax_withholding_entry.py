@@ -1255,12 +1255,18 @@ class JournalTaxWithholding(TaxWithholdingController):
 		For Supplier (TDS): party has credit, TDS reduces credit
 		For Customer (TCS): party has debit, TCS increases debit
 		"""
-		if self.party_type == "Supplier":
-			self.party_field = "credit"
-			self.reverse_field = "debit"
-		else:  # Customer
+		# if self.party_type == "Supplier":
+		# 	self.party_field = "credit"
+		# 	self.reverse_field = "debit"
+		# else:  # Customer
+		# 	self.party_field = "debit"
+		# 	self.reverse_field = "credit"
+		if self.party_row.get("debit"):
 			self.party_field = "debit"
 			self.reverse_field = "credit"
+		else:
+			self.party_field = "credit"
+			self.reverse_field = "debit"
 
 		self.precision = self.doc.precision(self.party_field, self.party_row)
 
@@ -1367,37 +1373,77 @@ class JournalTaxWithholding(TaxWithholdingController):
 				}
 			)
 
+	# def _update_party_amount(self, amount, is_reversal=False):
+	# 	amount = flt(amount, self.precision)
+	# 	amount_in_party_currency = flt(amount / self.party_row.get("exchange_rate", 1), self.precision)
+
+	# 	# Determine which field the party amount is in
+	# 	active_field = self.party_field if self.party_row.get(self.party_field) else self.reverse_field
+
+	# 	# If amount is in reverse field, flip the signs
+	# 	if active_field == self.reverse_field:
+	# 		amount = -amount
+	# 		amount_in_party_currency = -amount_in_party_currency
+
+	# 	# Direction multiplier based on party type:
+	# 	# Customer (TCS): +1 (add to debit)
+	# 	# Supplier (TDS): -1 (subtract from credit)
+	# 	direction = 1 if self.party_type == "Customer" else -1
+
+	# 	# Reversal inverts the direction
+	# 	if is_reversal:
+	# 		direction = -direction
+
+	# 	adjustment = amount * direction
+	# 	adjustment_in_party_currency = amount_in_party_currency * direction
+
+	# 	active_field_account_currency = f"{active_field}_in_account_currency"
+
+	# 	self.party_row.update(
+	# 		{
+	# 			active_field: flt(self.party_row.get(active_field) + adjustment, self.precision),
+	# 			active_field_account_currency: flt(
+	# 				self.party_row.get(active_field_account_currency) + adjustment_in_party_currency,
+	# 				self.precision,
+	# 			),
+	# 		}
+	# 	)
 	def _update_party_amount(self, amount, is_reversal=False):
+		"""
+		Adjusts the counter/offsetting account (e.g. Cash, Bank) by the TDS amount,
+		leaving the party row's original amount untouched.
+
+		NOTE: assumes a single non-party, non-TDS counter row. If a Journal Entry
+		can have multiple counter rows, this needs to split the adjustment across them.
+		"""
 		amount = flt(amount, self.precision)
-		amount_in_party_currency = flt(amount / self.party_row.get("exchange_rate", 1), self.precision)
 
-		# Determine which field the party amount is in
-		active_field = self.party_field if self.party_row.get(self.party_field) else self.reverse_field
+		counter_rows = [
+			row for row in self.doc.get("accounts")
+			if row.name != self.party_row.name
+			and not row.get("is_tax_withholding_account")
+		]
 
-		# If amount is in reverse field, flip the signs
-		if active_field == self.reverse_field:
-			amount = -amount
-			amount_in_party_currency = -amount_in_party_currency
+		if not counter_rows:
+			frappe.throw(_("No counter account found to adjust for TDS."))
 
-		# Direction multiplier based on party type:
-		# Customer (TCS): +1 (add to debit)
-		# Supplier (TDS): -1 (subtract from credit)
-		direction = 1 if self.party_type == "Customer" else -1
+		counter_row = counter_rows[0]
 
-		# Reversal inverts the direction
-		if is_reversal:
-			direction = -direction
-
-		adjustment = amount * direction
-		adjustment_in_party_currency = amount_in_party_currency * direction
-
+		active_field = "credit" if counter_row.get("credit") else "debit"
 		active_field_account_currency = f"{active_field}_in_account_currency"
 
-		self.party_row.update(
+		exchange_rate = counter_row.get("exchange_rate", 1) or 1
+		amount_in_account_currency = flt(amount / exchange_rate, self.precision)
+
+		direction = -1 if is_reversal else 1
+		adjustment = amount * direction
+		adjustment_in_account_currency = amount_in_account_currency * direction
+
+		counter_row.update(
 			{
-				active_field: flt(self.party_row.get(active_field) + adjustment, self.precision),
+				active_field: flt(counter_row.get(active_field) - adjustment, self.precision),
 				active_field_account_currency: flt(
-					self.party_row.get(active_field_account_currency) + adjustment_in_party_currency,
+					counter_row.get(active_field_account_currency) - adjustment_in_account_currency,
 					self.precision,
 				),
 			}

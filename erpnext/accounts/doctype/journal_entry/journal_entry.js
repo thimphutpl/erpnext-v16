@@ -883,6 +883,81 @@ $.extend(erpnext.journal_entry, {
 });
 
 // Remove TDS account rows and reduce Debtors debit by TDS amount when TDS is disabled in Journal Entry 
+// erpnext.journal_entry.remove_tax_withholding = function (frm) {
+// 	let tds_amount = 0;
+
+// 	// Get TDS amount BEFORE clearing the table
+// 	(frm.doc.tax_withholding_entries || []).forEach(function (row) {
+// 		tds_amount += flt(row.withholding_amount);
+// 	});
+
+// 	// Remove TDS account rows
+// 	frm.doc.accounts = (frm.doc.accounts || []).filter(function (row) {
+// 		return !cint(row.is_tax_withholding_account);
+// 	});
+
+// 	// Find party account using party_type
+// 	let party_row = (frm.doc.accounts || []).find(function (row) {
+// 		return row.party_type && row.party;
+// 	});
+
+// 	if (party_row && tds_amount) {
+// 		if (party_row.party_type === "Customer") {
+// 			// Customer payment:
+// 			// TDS was added to Debtors debit.
+// 			// Remove it when TDS is disabled.
+// 			frappe.model.set_value(
+// 				party_row.doctype,
+// 				party_row.name,
+// 				"debit",
+// 				flt(party_row.debit) - tds_amount
+// 			);
+
+// 			frappe.model.set_value(
+// 				party_row.doctype,
+// 				party_row.name,
+// 				"debit_in_account_currency",
+// 				flt(party_row.debit_in_account_currency) - tds_amount
+// 			);
+// 		}
+
+// 		if (party_row.party_type === "Supplier") {
+// 			// Supplier payment:
+// 			// TDS was added to Creditors credit.
+// 			// Remove TDS by restoring the credit.
+// 			frappe.model.set_value(
+// 				party_row.doctype,
+// 				party_row.name,
+// 				"credit",
+// 				flt(party_row.credit) + tds_amount
+// 			);
+
+// 			frappe.model.set_value(
+// 				party_row.doctype,
+// 				party_row.name,
+// 				"credit_in_account_currency",
+// 				flt(party_row.credit_in_account_currency) + tds_amount
+// 			);
+// 		}
+// 	}
+
+// 	// Clear TDS child table
+// 	frm.clear_table("tax_withholding_entries");
+
+// 	// Clear TDS fields
+// 	frm.set_value("tax_withholding_category", "");
+// 	frm.set_value("tax_withholding_group", "");
+// 	frm.set_value("ignore_tax_withholding_threshold", 0);
+// 	frm.set_value("override_tax_withholding_entries", 0);
+
+// 	// Recalculate totals
+// 	frm.cscript.update_totals(frm.doc);
+
+// 	// Refresh
+// 	frm.refresh_field("accounts");
+// 	frm.refresh_field("tax_withholding_entries");
+// };
+
 erpnext.journal_entry.remove_tax_withholding = function (frm) {
 	let tds_amount = 0;
 
@@ -896,49 +971,74 @@ erpnext.journal_entry.remove_tax_withholding = function (frm) {
 		return !cint(row.is_tax_withholding_account);
 	});
 
-	// Find party account using party_type
+	// Find party account
 	let party_row = (frm.doc.accounts || []).find(function (row) {
 		return row.party_type && row.party;
 	});
 
 	if (party_row && tds_amount) {
-		if (party_row.party_type === "Customer") {
-			// Customer payment:
-			// TDS was added to Debtors debit.
-			// Remove it when TDS is disabled.
-			frappe.model.set_value(
-				party_row.doctype,
-				party_row.name,
-				"debit",
-				flt(party_row.debit) - tds_amount
-			);
-
-			frappe.model.set_value(
-				party_row.doctype,
-				party_row.name,
-				"debit_in_account_currency",
-				flt(party_row.debit_in_account_currency) - tds_amount
-			);
-		}
-
 		if (party_row.party_type === "Supplier") {
-			// Supplier payment:
-			// TDS was added to Creditors credit.
-			// Remove TDS by restoring the credit.
-			frappe.model.set_value(
-				party_row.doctype,
-				party_row.name,
-				"credit",
-				flt(party_row.credit) + tds_amount
-			);
+			// Supplier remains at gross amount
+			// Example:
+			// Supplier Dr 1000
+			// Cash     Cr 980
+			// TDS      Cr 20
+			//
+			// After removing TDS:
+			// Supplier Dr 1000
+			// Cash     Cr 1000
 
-			frappe.model.set_value(
-				party_row.doctype,
-				party_row.name,
-				"credit_in_account_currency",
-				flt(party_row.credit_in_account_currency) + tds_amount
-			);
+			let cash_row = (frm.doc.accounts || []).find(function (row) {
+				return row.account && !row.party_type;
+			});
+
+			if (cash_row) {
+				frappe.model.set_value(
+					cash_row.doctype,
+					cash_row.name,
+					"credit",
+					flt(cash_row.credit) + tds_amount
+				);
+
+				frappe.model.set_value(
+					cash_row.doctype,
+					cash_row.name,
+					"credit_in_account_currency",
+					flt(cash_row.credit_in_account_currency) + tds_amount
+				);
+			}
 		}
+
+		if (party_row.party_type === "Customer") {
+            let payment_row = (frm.doc.accounts || []).find(function (row) {
+                return row.account && !row.party_type;
+            });
+
+            if (payment_row) {
+                // Customer:
+                // Debtors Dr 1000
+                // Cash    Cr 950
+                // TCS     Cr 50
+                //
+                // After removing TCS:
+                // Debtors Dr 1000
+                // Cash    Cr 1000
+
+                frappe.model.set_value(
+                    payment_row.doctype,
+                    payment_row.name,
+                    "credit",
+                    flt(payment_row.credit) + tds_amount
+                );
+
+                frappe.model.set_value(
+                    payment_row.doctype,
+                    payment_row.name,
+                    "credit_in_account_currency",
+                    flt(payment_row.credit_in_account_currency) + tds_amount
+                );
+            }
+        }
 	}
 
 	// Clear TDS child table
@@ -957,4 +1057,3 @@ erpnext.journal_entry.remove_tax_withholding = function (frm) {
 	frm.refresh_field("accounts");
 	frm.refresh_field("tax_withholding_entries");
 };
-
