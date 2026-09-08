@@ -6,31 +6,227 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "employee_group_name",
-  "section_break_00",
-  "employee_list"
- ],
- "fields": [
-  {
-   "fieldname": "employee_group_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "section_break_00",
-   "fieldtype": "Section Break",
-   "label": "Employee"
-  },
-  {
-   "fieldname": "employee_list",
-   "fieldtype": "Table",
-   "label": "Employee",
-   "options": "Employee Group Table"
-  }
- ],
+    "employee_group_name",
+    "column_break_yyxm",
+    "retirement_age",
+    "section_break_00",
+    "employee_list",
+    "payroll_settings_section",
+    "employee_pf",
+    "employer_pf",
+    "column_break_htfk",
+    "health_contribution",
+    "salary_advance_setting_section",
+    "salary_advance_type",
+    "salary_advance_max_months",
+    "limit_multiplier",
+    "column_break_uukl",
+    "salary_advance_limit",
+    "no_of_installment_for_salary",
+    "section_break_lqip",
+    "minimum_months",
+    "increment_prorated",
+    "column_break_tylp",
+    "column_break_bcub",
+    "leave_encashment_settings_section",
+    "min_encashment_days",
+    "max_encashment_days",
+    "encashment_min",
+    "encashment_lapse",
+    "column_break_vsay",
+    "leave_encashment_type",
+    "leave_encashment_amount",
+    "leave_encashment_months",
+    "encashment_frequency",
+    "leave_credits_section",
+    "items"
+   ],
+   "fields": [
+    {
+     "fieldname": "employee_group_name",
+     "fieldtype": "Data",
+     "in_list_view": 1,
+     "label": "Name",
+     "reqd": 1,
+     "unique": 1
+    },
+    {
+     "fieldname": "section_break_00",
+     "fieldtype": "Section Break",
+     "hidden": 1,
+     "label": "Employee"
+    },
+    {
+     "fieldname": "employee_list",
+     "fieldtype": "Table",
+     "hidden": 1,
+     "label": "Employee",
+     "options": "Employee Group Table"
+    },
+    {
+     "fieldname": "payroll_settings_section",
+     "fieldtype": "Section Break",
+     "label": "PAYROLL SETTINGS"
+    },
+    {
+     "fieldname": "employee_pf",
+     "fieldtype": "Percent",
+     "label": "Employee PF Contribution ( % )",
+     "precision": "2",
+     "reqd": 1
+    },
+    {
+     "fieldname": "employer_pf",
+     "fieldtype": "Percent",
+     "label": "Employer PF Contribution ( % )",
+     "precision": "2",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_htfk",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "health_contribution",
+     "fieldtype": "Percent",
+     "label": "Health Contribution ( % )",
+     "precision": "2"
+    },
+    {
+     "fieldname": "salary_advance_setting_section",
+     "fieldtype": "Section Break",
+     "label": "SALARY ADVANCE SETTING"
+    },
+    {
+     "fieldname": "salary_advance_type",
+     "fieldtype": "Select",
+     "label": "Salary Advance Type",
+     "options": "\nFlat Amount\nBasic Pay\nNet Pay\nGross Pay"
+    },
+    {
+     "fieldname": "limit_multiplier",
+     "fieldtype": "Float",
+     "hidden": 1,
+     "label": "Limit Multiplier"
+    },
+    {
+     "fieldname": "column_break_uukl",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "section_break_lqip",
+     "fieldtype": "Section Break",
+     "label": "ANNUAL INCREMENT SETTINGS"
+    },
+    {
+     "fieldname": "leave_encashment_settings_section",
+     "fieldtype": "Section Break",
+     "label": "LEAVE ENCASHMENT SETTINGS"
+    },
+    {
+     "fieldname": "column_break_vsay",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "leave_encashment_type",
+     "fieldtype": "Select",
+     "label": "Leave Encashment Type",
+     "options": "\nFlat Amount\nBasic Pay\nGross Pay"
+    },
+    {
+     "fieldname": "leave_credits_section",
+     "fieldtype": "Section Break",
+     "label": "LEAVE CREDITS"
+    },
+    {
+     "fieldname": "items",
+     "fieldtype": "Table",
+     "label": "Leave Credits",
+     "options": "Employee Group Item"
+    },
+    {
+     "fieldname": "encashment_frequency",
+     "fieldtype": "Int",
+     "label": "Encashment Frequency ( No. of times permitted per Year )"
+    },
+    {
+     "fieldname": "leave_encashment_months",
+     "fieldtype": "Float",
+     "label": "No. of Months Pay Entitled For Encashment"
+    },
+    {
+     "fieldname": "leave_encashment_amount",
+     "fieldtype": "Currency",
+     "label": "Entitled Amount"
+    },
+    {
+     "fieldname": "encashment_lapse",
+     "fieldtype": "Float",
+     "label": "Maximum Balance Limit"
+    },
+    {
+     "fieldname": "encashment_min",
+     "fieldtype": "Float",
+     "label": "Minimum Balance Required For Encashment"
+    },
+    {
+     "fieldname": "min_encashment_days",
+     "fieldtype": "Float",
+     "label": "Minimum No. of Days Entitled For Encashment",
+     "precision": "2"
+    },
+    {
+     "fieldname": "max_encashment_days",
+     "fieldtype": "Float",
+     "label": "Maximum No. of Days Entitled For Encashment",
+     "precision": "2"
+    },
+    {
+     "default": "0",
+     "fieldname": "increment_prorated",
+     "fieldtype": "Check",
+     "label": "Is Prorated?"
+    },
+    {
+     "fieldname": "minimum_months",
+     "fieldtype": "Float",
+     "label": "Minimum No. of Months in Service Required For Full Increment",
+     "precision": "2"
+    },
+    {
+     "fieldname": "no_of_installment_for_salary",
+     "fieldtype": "Select",
+     "label": "No. of Installment",
+     "options": "\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12"
+    },
+    {
+     "fieldname": "salary_advance_limit",
+     "fieldtype": "Data",
+     "label": "Maximum Advance Amount"
+    },
+    {
+     "fieldname": "salary_advance_max_months",
+     "fieldtype": "Float",
+     "label": "Maximum No. of Months Allowed"
+    },
+    {
+     "fieldname": "retirement_age",
+     "fieldtype": "Int",
+     "label": "Retirement Age"
+    },
+    {
+     "fieldname": "column_break_bcub",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "column_break_yyxm",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "column_break_tylp",
+     "fieldtype": "Column Break"
+    }
+   ],
  "links": [],
  "modified": "2026-03-26 17:22:45.737955",
  "modified_by": "Administrator",

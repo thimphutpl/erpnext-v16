@@ -81,6 +81,7 @@ class Company(NestedSet):
 		default_payable_account: DF.Link | None
 		default_provisional_account: DF.Link | None
 		default_receivable_account: DF.Link | None
+		default_salary_tax_account: DF.Link | None
 		default_sales_contact: DF.Link | None
 		default_scrap_warehouse: DF.Link | None
 		default_selling_terms: DF.Link | None
@@ -108,9 +109,7 @@ class Company(NestedSet):
 		purchase_expense_account: DF.Link | None
 		purchase_expense_contra_account: DF.Link | None
 		reconcile_on_advance_payment_date: DF.Check
-		reconciliation_takes_effect_on: DF.Literal[
-			"Advance Payment Date", "Oldest Of Invoice Or Advance", "Reconciliation Date"
-		]
+		reconciliation_takes_effect_on: DF.Literal["Advance Payment Date", "Oldest Of Invoice Or Advance", "Reconciliation Date"]
 		registration_details: DF.Code | None
 		reporting_currency: DF.Link | None
 		rgt: DF.Int
