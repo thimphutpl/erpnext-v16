@@ -14,7 +14,8 @@
   "year_start_date",
   "year_end_date",
   "companies",
-  "auto_created"
+  "auto_created",
+  "closed"
  ],
  "fields": [
   {
@@ -77,12 +78,18 @@
    "fieldtype": "Check",
    "label": "Is Short/Long Year",
    "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "closed",
+   "fieldtype": "Check",
+   "label": " Financial Year Closed"
   }
  ],
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2024-05-27 17:29:55.560840",
+ "modified": "2026-09-04 22:09:05.616795",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Fiscal Year",
@@ -133,6 +140,7 @@
    "role": "Auditor"
   }
  ],
+ "row_format": "Dynamic",
  "show_name_in_global_search": 1,
  "sort_field": "name",
  "sort_order": "DESC",

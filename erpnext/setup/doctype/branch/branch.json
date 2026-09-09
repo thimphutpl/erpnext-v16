@@ -8,20 +8,81 @@
  "document_type": "Setup",
  "engine": "InnoDB",
  "field_order": [
-  "branch"
- ],
- "fields": [
-  {
-   "fieldname": "branch",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Branch",
-   "oldfieldname": "branch",
-   "oldfieldtype": "Data",
-   "reqd": 1,
-   "unique": 1
-  }
- ],
+    "branch",
+    "cost_center",
+    "holiday_list",
+    "column_break_yded",
+    "company",
+    "disabled",
+    "accounts_settings_section",
+    "expense_bank_account",
+    "column_break_yvba",
+    "revenue_bank_account"
+   ],
+   "fields": [
+    {
+     "fieldname": "branch",
+     "fieldtype": "Data",
+     "in_list_view": 1,
+     "label": "Branch",
+     "oldfieldname": "branch",
+     "oldfieldtype": "Data",
+     "reqd": 1,
+     "unique": 1
+    },
+    {
+     "fieldname": "column_break_yded",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "cost_center",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Cost Center",
+     "options": "Cost Center",
+     "reqd": 1
+    },
+    {
+     "fieldname": "company",
+     "fieldtype": "Link",
+     "label": "Company",
+     "options": "Company",
+     "reqd": 1
+    },
+    {
+     "default": "0",
+     "fieldname": "disabled",
+     "fieldtype": "Check",
+     "label": "Disabled"
+    },
+    {
+     "fieldname": "accounts_settings_section",
+     "fieldtype": "Section Break",
+     "label": "Accounts Settings"
+    },
+    {
+     "fieldname": "expense_bank_account",
+     "fieldtype": "Link",
+     "label": "Default Expense Bank Account",
+     "options": "Account"
+    },
+    {
+     "fieldname": "column_break_yvba",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "revenue_bank_account",
+     "fieldtype": "Link",
+     "label": "Default Revenue Bank Account",
+     "options": "Account"
+    },
+    {
+     "fieldname": "holiday_list",
+     "fieldtype": "Link",
+     "label": "Holiday List",
+     "options": "Holiday List"
+    }
+   ],
  "icon": "fa fa-code-fork",
  "idx": 1,
  "links": [],

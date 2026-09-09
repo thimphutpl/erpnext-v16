@@ -16,11 +16,11 @@ class FiscalYear(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
+		from erpnext.accounts.doctype.fiscal_year_company.fiscal_year_company import FiscalYearCompany
 		from frappe.types import DF
 
-		from erpnext.accounts.doctype.fiscal_year_company.fiscal_year_company import FiscalYearCompany
-
 		auto_created: DF.Check
+		closed: DF.Check
 		companies: DF.Table[FiscalYearCompany]
 		disabled: DF.Check
 		is_short_year: DF.Check

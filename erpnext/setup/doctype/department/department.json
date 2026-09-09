@@ -7,85 +7,152 @@
  "document_type": "Setup",
  "engine": "InnoDB",
  "field_order": [
-  "department_name",
-  "parent_department",
-  "column_break_3",
-  "company",
-  "is_group",
-  "disabled",
-  "lft",
-  "rgt",
-  "old_parent"
- ],
- "fields": [
-  {
-   "fieldname": "department_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Department",
-   "oldfieldname": "department_name",
-   "oldfieldtype": "Data",
-   "reqd": 1
-  },
-  {
-   "fieldname": "parent_department",
-   "fieldtype": "Link",
-   "ignore_user_permissions": 1,
-   "in_list_view": 1,
-   "label": "Parent Department",
-   "options": "Department"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "in_standard_filter": 1,
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1
-  },
-  {
-   "bold": 1,
-   "default": "0",
-   "fieldname": "is_group",
-   "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Is Group"
-  },
-  {
-   "default": "0",
-   "fieldname": "disabled",
-   "fieldtype": "Check",
-   "label": "Disabled"
-  },
-  {
-   "fieldname": "lft",
-   "fieldtype": "Int",
-   "hidden": 1,
-   "label": "lft",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "rgt",
-   "fieldtype": "Int",
-   "hidden": 1,
-   "label": "rgt",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "old_parent",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "ignore_user_permissions": 1,
-   "label": "Old Parent",
-   "print_hide": 1
-  },
-  {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  }
- ],
+    "department_name",
+    "parent_department",
+    "leave_block_list",
+    "column_break_3",
+    "company",
+    "is_group",
+    "is_department",
+    "is_division",
+    "is_section",
+    "disabled",
+    "lft",
+    "rgt",
+    "old_parent",
+    "section_break_nhgb",
+    "approver",
+    "column_break_ljzx",
+    "approver_name",
+    "column_break_lzca",
+    "approver_designation"
+   ],
+   "fields": [
+    {
+     "fieldname": "department_name",
+     "fieldtype": "Data",
+     "in_list_view": 1,
+     "label": "Department",
+     "oldfieldname": "department_name",
+     "oldfieldtype": "Data",
+     "reqd": 1
+    },
+    {
+     "fieldname": "parent_department",
+     "fieldtype": "Link",
+     "ignore_user_permissions": 1,
+     "in_list_view": 1,
+     "label": "Parent Department",
+     "options": "Department"
+    },
+    {
+     "fieldname": "company",
+     "fieldtype": "Link",
+     "in_standard_filter": 1,
+     "label": "Company",
+     "options": "Company",
+     "reqd": 1
+    },
+    {
+     "bold": 1,
+     "default": "0",
+     "fieldname": "is_group",
+     "fieldtype": "Check",
+     "in_list_view": 1,
+     "label": "Is Group"
+    },
+    {
+     "default": "0",
+     "fieldname": "disabled",
+     "fieldtype": "Check",
+     "label": "Disabled"
+    },
+    {
+     "fieldname": "lft",
+     "fieldtype": "Int",
+     "hidden": 1,
+     "label": "lft",
+     "print_hide": 1,
+     "read_only": 1
+    },
+    {
+     "fieldname": "rgt",
+     "fieldtype": "Int",
+     "hidden": 1,
+     "label": "rgt",
+     "print_hide": 1,
+     "read_only": 1
+    },
+    {
+     "fieldname": "old_parent",
+     "fieldtype": "Data",
+     "hidden": 1,
+     "ignore_user_permissions": 1,
+     "label": "Old Parent",
+     "print_hide": 1
+    },
+    {
+     "fieldname": "column_break_3",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "section_break_nhgb",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "approver",
+     "fieldtype": "Link",
+     "label": "Approver",
+     "options": "Employee"
+    },
+    {
+     "fieldname": "column_break_ljzx",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fetch_from": "approver.employee_name",
+     "fieldname": "approver_name",
+     "fieldtype": "Data",
+     "label": "Approver Name",
+     "read_only": 1
+    },
+    {
+     "fieldname": "column_break_lzca",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fetch_from": "approver.designation",
+     "fieldname": "approver_designation",
+     "fieldtype": "Link",
+     "label": "Approver Designation",
+     "options": "Designation",
+     "read_only": 1
+    },
+    {
+     "default": "0",
+     "fieldname": "is_department",
+     "fieldtype": "Check",
+     "label": "Is Services"
+    },
+    {
+     "default": "0",
+     "fieldname": "is_division",
+     "fieldtype": "Check",
+     "label": "Is Division"
+    },
+    {
+     "default": "0",
+     "fieldname": "is_section",
+     "fieldtype": "Check",
+     "label": "Is Section"
+    },
+    {
+     "fieldname": "leave_block_list",
+     "fieldtype": "Link",
+     "label": "Leave Block List",
+     "options": "Leave Block List"
+    }
+   ],
  "icon": "fa fa-sitemap",
  "idx": 1,
  "is_tree": 1,

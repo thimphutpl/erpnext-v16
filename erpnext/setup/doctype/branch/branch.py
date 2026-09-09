@@ -15,6 +15,12 @@ class Branch(Document):
 		from frappe.types import DF
 
 		branch: DF.Data
+		company: DF.Link
+		cost_center: DF.Link
+		disabled: DF.Check
+		expense_bank_account: DF.Link | None
+		holiday_list: DF.Link | None
+		revenue_bank_account: DF.Link | None
 	# end: auto-generated types
 
 	pass

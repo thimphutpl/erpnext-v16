@@ -135,7 +135,8 @@
   "default_wip_warehouse",
   "default_fg_warehouse",
   "default_scrap_warehouse",
-  "dashboard_tab"
+  "dashboard_tab",
+  "default_salary_tax_account"
  ],
  "fields": [
   {
@@ -962,6 +963,12 @@
   {
    "fieldname": "accounts_closing_section",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "default_salary_tax_account",
+   "fieldtype": "Link",
+   "label": "Default Salary Tax Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
@@ -970,7 +977,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-04-17 17:11:46.586135",
+ "modified": "2026-09-05 14:35:40.172870",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
