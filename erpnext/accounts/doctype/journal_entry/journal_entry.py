@@ -1798,6 +1798,7 @@ def get_tds_account(tax_withholding_category):
 		from `tabTax Withholding Category` t
 		where t.name = "{}" """.format(tax_withholding_category), as_dict=True)
 	return account[0] if account else None
+
 @frappe.whitelist()
 def get_tax_withholding_group(tax_withholding_category, posting_date):
 	if not tax_withholding_category or not posting_date:
