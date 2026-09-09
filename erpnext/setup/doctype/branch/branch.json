@@ -8,78 +8,6 @@
  "document_type": "Setup",
  "engine": "InnoDB",
  "field_order": [
-<<<<<<< HEAD
-  "company",
-  "branch",
-  "cost_center",
-  "column_break_qvlo",
-  "disabled",
-  "accounts_settings_section",
-  "expense_bank_account",
-  "column_break_6",
-  "revenue_bank_account"
- ],
- "fields": [
-  {
-   "fieldname": "branch",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Branch",
-   "oldfieldname": "branch",
-   "oldfieldtype": "Data",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "cost_center",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Cost Center",
-   "options": "Cost Center",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_qvlo",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "disabled",
-   "fieldtype": "Check",
-   "label": "Disabled"
-  },
-  {
-   "fieldname": "accounts_settings_section",
-   "fieldtype": "Section Break",
-   "label": "Accounts Settings"
-  },
-  {
-   "fieldname": "expense_bank_account",
-   "fieldtype": "Link",
-   "label": "Default Expense Bank Account",
-   "options": "Account"
-  },
-  {
-   "fieldname": "column_break_6",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "revenue_bank_account",
-   "fieldtype": "Link",
-   "label": "Revenue Bank Account",
-   "options": "Account"
-  }
- ],
-=======
     "branch",
     "cost_center",
     "holiday_list",
@@ -155,7 +83,6 @@
      "options": "Holiday List"
     }
    ],
->>>>>>> 7502b1f16ba846639bbfb0f8f917d068bc1f0324
  "icon": "fa fa-code-fork",
  "idx": 1,
  "links": [],
