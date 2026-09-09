@@ -162,7 +162,9 @@
   "is_internal_supplier",
   "inter_company_order_reference",
   "is_old_subcontracting_flow",
-  "connections_tab"
+  "connections_tab",
+  "raw_material_details",
+  "supplied_items"
  ],
  "fields": [
   {
@@ -1172,6 +1174,7 @@
   {
    "fieldname": "address_and_contact_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "Address & Contact"
   },
   {
@@ -1323,7 +1326,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-05-28 12:34:19.659621",
+ "modified": "2026-09-08 16:22:06.536643",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",

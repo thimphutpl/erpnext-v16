@@ -19,6 +19,10 @@ class Branch(Document):
 		cost_center: DF.Link
 		disabled: DF.Check
 		expense_bank_account: DF.Link | None
+<<<<<<< HEAD
+=======
+		holiday_list: DF.Link | None
+>>>>>>> 7502b1f16ba846639bbfb0f8f917d068bc1f0324
 		revenue_bank_account: DF.Link | None
 	# end: auto-generated types
 
