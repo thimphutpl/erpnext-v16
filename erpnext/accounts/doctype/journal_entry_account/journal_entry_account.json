@@ -301,11 +301,7 @@
  "idx": 1,
  "istable": 1,
  "links": [],
-<<<<<<< HEAD
  "modified": "2026-09-06 13:19:44.777012",
-=======
- "modified": "2026-09-05 14:48:05.651490",
->>>>>>> 7502b1f16ba846639bbfb0f8f917d068bc1f0324
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry Account",
