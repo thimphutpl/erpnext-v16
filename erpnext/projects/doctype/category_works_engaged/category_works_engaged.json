@@ -1,0 +1,124 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2024-12-03 10:54:18.835057",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "activity_type",
+  "time_hrs",
+  "cb_cwe1",
+  "quantity",
+  "unit",
+  "workers_engaged_section",
+  "workers",
+  "mason",
+  "carpenter",
+  "painter",
+  "cb_sb_we1",
+  "electrician",
+  "technician",
+  "operator",
+  "others"
+ ],
+ "fields": [
+  {
+   "fieldname": "activity_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Activity Type",
+   "options": "Activity Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time_hrs",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Time (Hrs)",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_cwe1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Unit",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "workers_engaged_section",
+   "fieldtype": "Section Break",
+   "label": "Workers Engaged"
+  },
+  {
+   "fieldname": "workers",
+   "fieldtype": "Int",
+   "label": "Workers"
+  },
+  {
+   "fieldname": "carpenter",
+   "fieldtype": "Int",
+   "label": "Carpenter"
+  },
+  {
+   "fieldname": "cb_sb_we1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "operator",
+   "fieldtype": "Int",
+   "label": "Operator"
+  },
+  {
+   "fieldname": "others",
+   "fieldtype": "Int",
+   "label": "Others"
+  },
+  {
+   "fieldname": "mason",
+   "fieldtype": "Int",
+   "label": "Mason"
+  },
+  {
+   "fieldname": "painter",
+   "fieldtype": "Int",
+   "label": "Painter"
+  },
+  {
+   "fieldname": "electrician",
+   "fieldtype": "Int",
+   "label": "Electrician"
+  },
+  {
+   "fieldname": "technician",
+   "fieldtype": "Int",
+   "label": "Technician"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-05 09:44:22.087323",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Category Works Engaged",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

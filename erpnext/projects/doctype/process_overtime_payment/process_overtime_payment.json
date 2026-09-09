@@ -1,0 +1,321 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "OTP.YY.MM.###",
+ "creation": "2024-12-11 12:33:32.890938",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "column_break_2",
+  "fiscal_year",
+  "column_break_3",
+  "month",
+  "bank_col",
+  "bank_name",
+  "sec_break_6",
+  "branch",
+  "expense_bank_account",
+  "branch_col",
+  "cost_center",
+  "ot_account",
+  "amount_col",
+  "total_amount",
+  "remarks_sec",
+  "remarks",
+  "section_break_14",
+  "load_entries",
+  "items",
+  "section_break_3",
+  "assign_from_cheque_lot",
+  "cheque_lot",
+  "column_break_20",
+  "cheque_no",
+  "column_break_22",
+  "cheque_date",
+  "clearance_date",
+  "amended_from",
+  "payment_jv",
+  "company",
+  "user_details",
+  "applied_by",
+  "ac",
+  "verified_by",
+  "bc",
+  "approved_by"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "label": "Fiscal Year",
+   "options": "Fiscal Year",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Select",
+   "label": "Month",
+   "options": "01\n02\n03\n04\n05\n06\n07\n08\n09\n10\n11\n12",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee Bank",
+   "options": "Financial Institution",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sec_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "branch.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "expense_bank_account",
+   "fieldtype": "Link",
+   "label": "Credit Account",
+   "options": "Account",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ot_account",
+   "fieldtype": "Link",
+   "label": "Debit Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "amount_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks_sec",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break",
+   "label": "Employee OT Details"
+  },
+  {
+   "fieldname": "load_entries",
+   "fieldtype": "Button",
+   "label": "Load Entries"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "options": "Overtime Payment Item"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Cheque Information"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "assign_from_cheque_lot",
+   "fieldtype": "Check",
+   "label": "Assign From Cheque Lot"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.assign_from_cheque_lot",
+   "fieldname": "cheque_lot",
+   "fieldtype": "Link",
+   "label": "Cheque Lot",
+   "options": "Cheque Lot"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cheque_no",
+   "fieldtype": "Data",
+   "label": "Cheque  No"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cheque_date",
+   "fieldtype": "Date",
+   "label": "Cheque Date"
+  },
+  {
+   "fieldname": "clearance_date",
+   "fieldtype": "Date",
+   "label": "Clearance Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Process Overtime Payment",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_jv",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "label": "Payment Voucher"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "user_details",
+   "fieldtype": "Section Break",
+   "label": "User Details"
+  },
+  {
+   "fieldname": "applied_by",
+   "fieldtype": "Link",
+   "label": "Applied By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ac",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "verified_by",
+   "fieldtype": "Link",
+   "label": "Verified By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-05-23 09:38:28.770746",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Process Overtime Payment",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts GM",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

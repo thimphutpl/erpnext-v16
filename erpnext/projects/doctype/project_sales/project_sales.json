@@ -1,0 +1,208 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "PRS.YY.MM.###",
+ "creation": "2024-10-29 10:50:13.769611",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_bqnn",
+  "posting_date",
+  "project_details_section",
+  "selling_project",
+  "selling_branch",
+  "selling_cost_center",
+  "column_break_mvjx",
+  "buying_project",
+  "buying_branch",
+  "buying_cost_center",
+  "employee",
+  "section_break_bvcv",
+  "items",
+  "section_break_feic",
+  "jv",
+  "column_break_crmk",
+  "amended_form",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_bqnn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_details_section",
+   "fieldtype": "Section Break",
+   "label": "Project Details"
+  },
+  {
+   "fieldname": "selling_project",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Selling Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "selling_branch",
+   "fieldtype": "Link",
+   "label": "Selling Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "selling_branch.cost_center",
+   "fieldname": "selling_cost_center",
+   "fieldtype": "Link",
+   "label": "Selling Cost Center",
+   "options": "Cost Center",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_mvjx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "buying_project",
+   "fieldtype": "Link",
+   "label": "Buying Project",
+   "options": "Project",
+   "read_only": 1
+  },
+  {
+   "fieldname": "buying_branch",
+   "fieldtype": "Link",
+   "label": "Buying Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "buying_branch.cost_center",
+   "fieldname": "buying_cost_center",
+   "fieldtype": "Link",
+   "label": "Buying Cost Center",
+   "options": "Cost Center",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Responsible Employee",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "section_break_bvcv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "options": "Project Sales Item"
+  },
+  {
+   "fieldname": "section_break_feic",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "jv",
+   "fieldtype": "Data",
+   "label": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_crmk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_form",
+   "fieldtype": "Link",
+   "label": "Amended Form",
+   "options": "Project Sales"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Sales",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-12-02 17:17:23.930294",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Project Sales",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Asset User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

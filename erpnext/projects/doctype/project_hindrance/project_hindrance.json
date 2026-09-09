@@ -1,0 +1,169 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "PHR.#####",
+ "creation": "2025-05-12 14:29:29.547050",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9axx",
+  "column_break_qcbw",
+  "branch",
+  "from_date",
+  "employee",
+  "column_break_qyky",
+  "project",
+  "to_date",
+  "company",
+  "hindrance",
+  "hindrance_description",
+  "approver_section_section",
+  "approver",
+  "amended_from",
+  "column_break_tght",
+  "approver_name",
+  "column_break_yjqp",
+  "approver_designation"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9axx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Hindrance",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "branch",
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_qyky",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hindrance",
+   "fieldtype": "Section Break",
+   "label": "Hindrance Section"
+  },
+  {
+   "fieldname": "hindrance_description",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Hindrance Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_qcbw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "approver_section_section",
+   "fieldtype": "Section Break",
+   "label": "Approver Section"
+  },
+  {
+   "fieldname": "approver",
+   "fieldtype": "Link",
+   "label": "Approver",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_tght",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approver_name",
+   "fieldtype": "Data",
+   "label": "Approver Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_yjqp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approver_designation",
+   "fieldtype": "Data",
+   "label": "Approver Designation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.project_engineer",
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Project Engineer",
+   "options": "Employee",
+   "read_only": 1,
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-05-12 16:02:43.163581",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Project Hindrance",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

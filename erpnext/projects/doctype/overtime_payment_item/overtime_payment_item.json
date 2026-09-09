@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-14 16:19:38.756655",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "reference_doc",
+  "employee",
+  "bank_name",
+  "cost_center",
+  "column_break_3",
+  "employee_name",
+  "bank_account",
+  "column_break_5",
+  "designation",
+  "grade",
+  "section_break_7",
+  "total_hours",
+  "ot_column",
+  "hourly_rate",
+  "ot_column1",
+  "total_ot_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Employee Detail"
+  },
+  {
+   "fieldname": "reference_doc",
+   "fieldtype": "Link",
+   "label": "Reference OT",
+   "options": "Overtime Application",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Link",
+   "label": "Bank Name",
+   "options": "Financial Institution",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Employee Name",
+   "options": "employee.employee_name",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Read Only",
+   "label": "Bank Account",
+   "options": "employee.bank_ac_no",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Read Only",
+   "label": "Designation",
+   "options": "employee.designation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grade",
+   "fieldtype": "Read Only",
+   "label": "Grade",
+   "options": "employee.employee_subgroup"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break",
+   "label": "Accounts Details"
+  },
+  {
+   "fieldname": "total_hours",
+   "fieldtype": "Float",
+   "label": "Total Hours",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ot_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hourly_rate",
+   "fieldtype": "Currency",
+   "label": "Hourly Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ot_column1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_ot_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total OT Amount",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-07-31 14:54:37.953086",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Overtime Payment Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

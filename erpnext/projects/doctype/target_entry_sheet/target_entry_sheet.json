@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2025-06-20 10:41:51.967711",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "project",
+  "project_parent",
+  "entry_type",
+  "from_date",
+  "to_date",
+  "percent_completed",
+  "percent_completed_overall",
+  "percent_completed_overall_gi",
+  "entry_name",
+  "activity_weightage",
+  "ga_weightage",
+  "column_break_wxkr",
+  "section_break_wueq",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Target Entry Sheet",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "project_parent",
+   "fieldtype": "Link",
+   "label": "Project Parent",
+   "options": "Project Definition"
+  },
+  {
+   "fieldname": "column_break_wxkr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_wueq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "entry_type",
+   "fieldtype": "Data",
+   "label": "Entry Type"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "percent_completed",
+   "fieldtype": "Data",
+   "label": "% Planned Completion"
+  },
+  {
+   "fieldname": "percent_completed_overall",
+   "fieldtype": "Data",
+   "label": "% Completion GA"
+  },
+  {
+   "fieldname": "percent_completed_overall_gi",
+   "fieldtype": "Data",
+   "label": "% Completion GI"
+  },
+  {
+   "fieldname": "entry_name",
+   "fieldtype": "Data",
+   "label": "Entry Name"
+  },
+  {
+   "fieldname": "activity_weightage",
+   "fieldtype": "Read Only",
+   "label": "Activity Weightage"
+  },
+  {
+   "fieldname": "ga_weightage",
+   "fieldtype": "Read Only",
+   "label": "GA Weightage"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-06-23 15:07:30.445074",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Target Entry Sheet",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

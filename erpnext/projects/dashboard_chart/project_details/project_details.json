@@ -1,0 +1,38 @@
+{
+ "chart_name": "Project Details",
+ "chart_type": "Report",
+ "creation": "2024-12-09 16:44:15.454502",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{\"project_category\":\"Buildings\",\"status\":\"Ongoing\",\"additional_info\":0}",
+ "group_by_type": "Count",
+ "idx": 3,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2026-08-31 19:39:03.180591",
+ "modified_by": "tdsengor1999@gmail.com",
+ "module": "Projects",
+ "name": "Project Details",
+ "number_of_groups": 0,
+ "owner": "rinzin.norbu@thimphutechpark.bt",
+ "report_name": "Project Register",
+ "roles": [],
+ "show_values_over_chart": 0,
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "project_category",
+ "y_axis": [
+  {
+   "color": "#ED6396",
+   "y_field": "physical_progress"
+  },
+  {
+   "color": "#ECAD4B",
+   "y_field": "project_value_(a)"
+  }
+ ]
+}

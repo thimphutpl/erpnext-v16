@@ -1,0 +1,301 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-16 10:40:13.652524",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "boq_code",
+  "uom",
+  "currency",
+  "is_selected",
+  "column_break_ntrl",
+  "item",
+  "is_group",
+  "sb_billing",
+  "quantity",
+  "claimed_quantity",
+  "booked_quantity",
+  "received_quantity",
+  "adjustment_quantity",
+  "cb_bi_1",
+  "rate",
+  "cb_bi_2",
+  "amount",
+  "claimed_amount",
+  "booked_amount",
+  "received_amount",
+  "adjustment_amount",
+  "section_break_hegl",
+  "balance_quantity",
+  "column_break_svqg",
+  "balance_rate",
+  "column_break_ghpz",
+  "balance_amount",
+  "sb_sub_contract",
+  "subcontract_quantity",
+  "cb_sc_1_column",
+  "subcontract_rate",
+  "cb_sc_2_column",
+  "subcontract_amount",
+  "section_break_jfbl",
+  "remarks",
+  "project",
+  "parent_item"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "boq_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "BOQ Code",
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_ntrl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 2,
+   "fieldname": "item",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Group Item?"
+  },
+  {
+   "fieldname": "sb_billing",
+   "fieldtype": "Section Break",
+   "label": "BILLING"
+  },
+  {
+   "fieldname": "claimed_quantity",
+   "fieldtype": "Float",
+   "label": "Claimed Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_quantity",
+   "fieldtype": "Float",
+   "label": "Booked Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "received_quantity",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Received Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "adjustment_quantity",
+   "fieldtype": "Float",
+   "label": "Adjustment Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_bi_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Rate",
+   "precision": "2"
+  },
+  {
+   "fieldname": "cb_bi_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 2,
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "claimed_amount",
+   "fieldtype": "Float",
+   "label": "Claimed Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_amount",
+   "fieldtype": "Float",
+   "label": "Booked Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "received_amount",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Received Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "adjustment_amount",
+   "fieldtype": "Float",
+   "label": "Adjustment Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_hegl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "balance_quantity",
+   "fieldtype": "Float",
+   "label": "Balance Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_svqg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "balance_rate",
+   "fieldtype": "Float",
+   "label": "Balance Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ghpz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "balance_amount",
+   "fieldtype": "Float",
+   "label": "Balance Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_sub_contract",
+   "fieldtype": "Section Break",
+   "label": "SUB-CONTRACT"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "subcontract_quantity",
+   "fieldtype": "Float",
+   "label": "Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_sc_1_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "subcontract_rate",
+   "fieldtype": "Float",
+   "label": "Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_sc_2_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "subcontract_amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_jfbl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text Editor",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "parent_item",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Parent Item"
+  },
+  {
+   "columns": 1,
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity",
+   "precision": "5"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_selected",
+   "fieldtype": "Check",
+   "label": "Is Selected?"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-08 10:55:23.196171",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "BOQ Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

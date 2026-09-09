@@ -1,0 +1,421 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "PJI.YYYY.MM.####",
+ "creation": "2026-09-04 14:29:57.085280",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ylns",
+  "amended_from",
+  "invoice_title",
+  "invoice_date",
+  "invoice_type",
+  "customer",
+  "currency",
+  "column_break_qwed",
+  "project",
+  "party_type",
+  "party",
+  "company",
+  "column_break_ubys",
+  "boq",
+  "boq_type",
+  "branch",
+  "cost_center",
+  "subcontract",
+  "get_mb_entries",
+  "sb_measurement_book_entries",
+  "check_all_mb",
+  "project_invoice_mb",
+  "sb_boq_items",
+  "check_all",
+  "project_invoice_boq",
+  "section_break_abmr",
+  "column_break_hrfc",
+  "column_break_nfco",
+  "gross_invoice_amount",
+  "price_adjustment_amount",
+  "advance_recovery",
+  "tds_amount",
+  "net_invoice_amount",
+  "column_break_xsjx",
+  "total_received_amount",
+  "total_paid_amount",
+  "total_balance_amount",
+  "status",
+  "reference_doctype",
+  "reference_name",
+  "section_break_kbka",
+  "taxes_and_charges",
+  "account_head",
+  "tax_rate",
+  "included_gst",
+  "column_break_gtia",
+  "gst_amount",
+  "total_gst_amount",
+  "sb_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ylns",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Invoice",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "invoice_title",
+   "fieldtype": "Data",
+   "label": "Invoice Title"
+  },
+  {
+   "default": "Today",
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Invoice Date",
+   "reqd": 1
+  },
+  {
+   "default": "MB Based Invoice",
+   "fieldname": "invoice_type",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Invoice Type",
+   "options": "Direct Invoice\nMB Based Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "column_break_qwed",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "label": "Party Type",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "label": "Party",
+   "options": "party_type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "column_break_ubys",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "boq",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "BOQ",
+   "options": "BOQ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Type of BOQ",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.branch",
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "get_mb_entries",
+   "fieldtype": "Button",
+   "label": "Get Measurement Book Entries"
+  },
+  {
+   "depends_on": "eval:(doc.invoice_type === \"MB Based Invoice\")\r\n",
+   "fieldname": "sb_measurement_book_entries",
+   "fieldtype": "Section Break",
+   "label": "MEASUREMENT BOOK ENTRIES"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: cur_frm.doc.invoice_type === \"MB Based Invoice\"\r\n",
+   "fieldname": "check_all_mb",
+   "fieldtype": "Check",
+   "label": "Check/Uncheck All"
+  },
+  {
+   "fieldname": "project_invoice_mb",
+   "fieldtype": "Table",
+   "label": "Project Invoice MB",
+   "options": "Project Invoice MB"
+  },
+  {
+   "depends_on": "eval:(doc.invoice_type === \"Direct Invoice\")\r\n",
+   "fieldname": "sb_boq_items",
+   "fieldtype": "Section Break",
+   "label": "BOQ ITEMS"
+  },
+  {
+   "default": "0",
+   "fieldname": "check_all",
+   "fieldtype": "Check",
+   "label": "Check/Uncheck All"
+  },
+  {
+   "fieldname": "project_invoice_boq",
+   "fieldtype": "Table",
+   "label": "Project Invoice BOQ",
+   "options": "Project Invoice BOQ"
+  },
+  {
+   "fieldname": "section_break_abmr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_hrfc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_nfco",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gross_invoice_amount",
+   "fieldtype": "Currency",
+   "label": "Gross Invoice Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "price_adjustment_amount",
+   "fieldtype": "Currency",
+   "label": "Price Adjustment (+/-)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "advance_recovery",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Advance Recovery",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tds_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "TDS Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "net_invoice_amount",
+   "fieldtype": "Currency",
+   "label": "Net Invoice Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xsjx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:(doc.party_type !== \"Supplier\")\r\n",
+   "fieldname": "total_received_amount",
+   "fieldtype": "Currency",
+   "label": "Payment Received against Invoice",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:(doc.party_type === \"Supplier\")\r\n",
+   "fieldname": "total_paid_amount",
+   "fieldtype": "Currency",
+   "label": "Payment Made against Invoice",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_balance_amount",
+   "fieldtype": "Currency",
+   "label": "Invoice Balance Amount",
+   "options": "Company:company:default_currency",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nUnpaid\nPaid\nCancelled"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Reference Doctype",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "hidden": 1,
+   "label": "Reference Name",
+   "options": "reference_doctype"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "NOTES"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "subcontract",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Subcontract",
+   "options": "Subcontract",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "total_gst_amount",
+   "fieldtype": "Currency",
+   "label": "Total GST Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_kbka",
+   "fieldtype": "Section Break",
+   "label": "GST Details"
+  },
+  {
+   "fieldname": "taxes_and_charges",
+   "fieldtype": "Link",
+   "label": "Purchase Taxes and Charges Template",
+   "options": "Sales Taxes and Charges Template",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "gst_amount",
+   "fieldtype": "Float",
+   "label": "GST Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_gtia",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tax_rate",
+   "fieldtype": "Float",
+   "label": "Tax Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "account_head",
+   "fieldtype": "Data",
+   "label": "Account Head",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "included_gst",
+   "fieldtype": "Check",
+   "label": "Included GST",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-04 14:29:57.085280",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Project Invoice",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
