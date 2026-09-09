@@ -21,7 +21,6 @@ frappe.ui.form.on("Timesheet", {
 				filters: {
 					project: child.project,
 					status: ["!=", "Cancelled"],
-					is_group: 0,
 				},
 			};
 		};
@@ -35,34 +34,34 @@ frappe.ui.form.on("Timesheet", {
 		};
 	},
 
-	onload: function (frm) {
-		if (frm.doc.__islocal && frm.doc.time_logs) {
-			calculate_time_and_amount(frm);
-		}
+	// onload: function (frm) {
+	// 	if (frm.doc.__islocal && frm.doc.time_logs) {
+	// 		calculate_time_and_amount(frm);
+	// 	}
 
-		if (frm.is_new() && !frm.doc.employee) {
-			set_employee_and_company(frm);
-		}
-	},
+		// if (frm.is_new() && !frm.doc.employee) {
+		// 	set_employee_and_company(frm);
+		// }
+	// },
 
 	refresh: function (frm) {
-		if (frm.doc.docstatus == 1) {
-			if (
-				frm.doc.per_billed < 100 &&
-				frm.doc.total_billable_hours &&
-				frm.doc.total_billable_hours > frm.doc.total_billed_hours
-			) {
-				frm.add_custom_button(__("Create Sales Invoice"), function () {
-					frm.trigger("make_invoice");
-				});
-			}
-		}
+		// if (frm.doc.docstatus == 1) {
+		// 	if (
+		// 		frm.doc.per_billed < 100 &&
+		// 		frm.doc.total_billable_hours &&
+		// 		frm.doc.total_billable_hours > frm.doc.total_billed_hours
+		// 	) {
+		// 		frm.add_custom_button(__("Create Sales Invoice"), function () {
+		// 			frm.trigger("make_invoice");
+		// 		});
+		// 	}
+		// }
 
 		if (frm.doc.docstatus < 1) {
-			let button = __("Start Timer");
+			let button = "Start Timer";
 			$.each(frm.doc.time_logs || [], function (i, row) {
 				if (row.from_time <= frappe.datetime.now_datetime() && !row.completed) {
-					button = __("Resume Timer");
+					button = "Resume Timer";
 				}
 			});
 
@@ -99,7 +98,7 @@ frappe.ui.form.on("Timesheet", {
 		}
 
 		let filters = {
-			status: "Open",
+			status: ["!=", "Closed"]
 		};
 
 		if (frm.doc.customer) {
@@ -260,38 +259,25 @@ frappe.ui.form.on("Timesheet", {
 	parent_project: function (frm) {
 		set_project_in_timelog(frm);
 	},
-
-	employee: function (frm) {
-		if (frm.doc.employee && frm.doc.time_logs) {
-			const selected_employee = frm.doc.employee;
-			frm.doc.time_logs.forEach((row) => {
-				if (row.activity_type) {
-					frappe.call({
-						method: "erpnext.projects.doctype.timesheet.timesheet.get_activity_cost",
-						args: {
-							employee: frm.doc.employee,
-							activity_type: row.activity_type,
-							currency: frm.doc.currency,
-						},
-						callback: function (r) {
-							if (r.message) {
-								if (selected_employee !== frm.doc.employee) return;
-								row.billing_rate = r.message["billing_rate"];
-								row.costing_rate = r.message["costing_rate"];
-								frm.refresh_fields("time_logs");
-								calculate_billing_costing_amount(frm, row.doctype, row.name);
-							}
-						},
-					});
-				}
-			});
-		}
-	},
 });
 
 frappe.ui.form.on("Timesheet Detail", {
+	target_quantity_complete: function(frm, cdt, cdn){
+		var child = locals[cdt][cdn];
+		
+		/*
+		if(child.target_quantity_complete > child.target_quantity){
+			msgprint(__("Achieved value cannot be more than Target value."));
+			//frappe.model.set_value(cdt, cdn, "target_quantity_complete",child.target_quantity);
+		}
+		*/
+		calculate_target_quantity_complete(frm);
+	},
+
 	time_logs_remove: function (frm) {
 		calculate_time_and_amount(frm);
+		calculate_target_quantity_complete(frm);
+		calculate_tot_days(frm, cdt, cdn);
 	},
 
 	task: (frm, cdt, cdn) => {
@@ -320,11 +306,24 @@ frappe.ui.form.on("Timesheet Detail", {
 		if (frm.doc.parent_project) {
 			frappe.model.set_value(cdt, cdn, "project", frm.doc.parent_project);
 		}
+		populate_dates(frm, cdt, cdn);
 	},
+
+	// ++++++++++++++++++++ Ver 1.0 BEGINS ++++++++++++++++++++
+	// Following functions created by SHIV on 10/09/2017
+	from_date: function(frm, cdt, cdn){
+		calculate_days(frm, cdt, cdn);
+		calculate_tot_days(frm, cdt, cdn);
+	},
+
+	to_date: function(frm, cdt, cdn){
+		calculate_days(frm, cdt, cdn);
+		calculate_tot_days(frm, cdt, cdn);
+	},	
+	// +++++++++++++++++++++ Ver 1.0 ENDS +++++++++++++++++++++
 
 	hours: function (frm, cdt, cdn) {
 		calculate_end_time(frm, cdt, cdn);
-		update_billing_hours(frm, cdt, cdn);
 		calculate_billing_costing_amount(frm, cdt, cdn);
 		calculate_time_and_amount(frm);
 	},
@@ -384,11 +383,41 @@ var calculate_end_time = function (frm, cdt, cdn) {
 	if (child.hours) {
 		d.add(child.hours, "hours");
 		frm._setting_hours = true;
-		frappe.model.set_value(cdt, cdn, "to_time", frappe.datetime.get_datetime_as_string(d)).then(() => {
+		frappe.model.set_value(cdt, cdn, "to_time", d.format(frappe.defaultDatetimeFormat)).then(() => {
 			frm._setting_hours = false;
 		});
 	}
 };
+
+// ++++++++++++++++++++ Ver 2.0 BEGINS ++++++++++++++++++++
+// Following function created by SHIV on 10/09/2017
+calculate_days = function(frm, cdt, cdn){
+	var child = locals[cdt][cdn];
+	
+	if(child.to_date){
+		frappe.model.set_value(cdt, cdn, "days", (moment(child.to_date).diff(moment(child.from_date),'days') || 0)+1);
+	}
+	else {
+		frappe.model.set_value(cdt, cdn, "days", 0);
+	}	
+}
+
+calculate_tot_days = function(frm, cdt, cdn){
+	var tl = frm.doc.time_logs || [];
+	total_days = 0;
+
+	for(var i=0; i<tl.length; i++) {
+		if (tl[i].days) {
+			total_days += (tl[i].days || 0);
+		}
+	}
+	
+	if(total_days){
+		cur_frm.set_value("total_days", total_days);
+	}
+	
+}
+// +++++++++++++++++++++ Ver 2.0 ENDS +++++++++++++++++++++
 
 var update_billing_hours = function (frm, cdt, cdn) {
 	let child = frappe.get_doc(cdt, cdn);
@@ -449,6 +478,79 @@ var calculate_time_and_amount = function (frm) {
 	frm.set_value("total_costing_amount", total_costing_amount);
 };
 
+// ++++++++++++++++++++ Ver 1.0 BEGINS ++++++++++++++++++++
+// Following function created by SHIV on 2017/08/17
+var calculate_target_quantity_complete = function(frm){
+	var tl = frm.doc.time_logs || [];
+	total_target_quantity_complete = 0.0;
+	total_work_quantity_complete = 0.0;
+	
+	for(var i=0; i<tl.length; i++) {
+		if (tl[i].target_quantity_complete) {
+			total_target_quantity_complete += parseFloat(tl[i].target_quantity_complete || 0);
+		}
+	}
+	
+	cur_frm.set_value("work_quantity_complete",parseFloat(frm.doc.work_quantity)*(parseFloat(total_target_quantity_complete)/(frm.doc.target_quantity || 1)));
+	
+	/*
+	// Commented on 2018/15/05 because child records somehow not getting docstatus=2 even when parent is cancelled.
+	frappe.call({
+			method: "frappe.client.get_list",
+			args: {
+				doctype: "Timesheet Detail",
+				filters: {
+					task: frm.doc.task,
+					docstatus: ["<",2]
+				},
+				fields:["parent","target_quantity_complete"]
+			},
+			callback: function(r){
+				$.each(r.message, function(i, d){
+					if (d.parent != frm.doc.name){
+						total_target_quantity_complete += parseFloat(d.target_quantity_complete || 0);
+					}
+				})
+				cur_frm.set_value("target_quantity_complete", parseFloat(total_target_quantity_complete));
+			}
+	});
+	*/
+
+	frappe.call({
+		method: "erpnext.projects.doctype.timesheet.timesheet.get_target_quantity_complete",
+		args: {
+			"docname": frm.doc.name,
+			"task": frm.doc.task
+		},
+		callback: function(r){
+			if(r.message){
+				total_target_quantity_complete += parseFloat(r.message)
+				cur_frm.set_value("target_quantity_complete", parseFloat(total_target_quantity_complete));
+			}
+			else {
+				cur_frm.set_value("target_quantity_complete", parseFloat(total_target_quantity_complete));
+			}
+		}
+	});
+	
+	/*
+	frappe.call({
+			method: "frappe.client.get_value",
+			args: {
+				doctype: "Task",
+				filters: {
+					name: frm.doc.task
+				},
+				fieldname:["target_quantity_complete"]
+			},
+			callback: function(r){
+				cur_frm.set_value("target_quantity_complete", (r.message.target_quantity_complete || 0) + (total_target_quantity_complete || 0));
+			}
+	})
+	*/
+}
+// +++++++++++++++++++++ Ver 1.0 ENDS +++++++++++++++++++++	
+
 // set employee (and company) to the one that's currently logged in
 const set_employee_and_company = function (frm) {
 	const options = { user_id: frappe.session.user };
@@ -469,3 +571,87 @@ function set_project_in_timelog(frm) {
 		});
 	}
 }
+
+// ++++++++++++++++++++ Ver 2.0 BEGINS ++++++++++++++++++++
+// Following function created by SHIV on 13/09/2017
+var populate_dates = function(frm, cdt, cdn){
+	var tl = frm.doc.time_logs || [];
+	var child = locals[cdt][cdn];
+	var flag = 0, balance_quantity = 0.0, total_quantity = 0.0;
+	
+	for(idx in tl){
+		if (tl[idx].from_date){
+			flag += 1;
+		}
+		total_quantity += parseFloat(tl[idx].target_quantity_complete || 0);
+	}
+	
+	if (total_quantity >= parseFloat(frm.doc.target_quantity)){
+		balance_quantity = 0.0;
+	}
+	else {
+		balance_quantity = parseFloat(frm.doc.target_quantity || 0)-total_quantity;
+	}
+	
+	if (frm.doc.docstatus != 1 && flag == 0){
+		cur_frm.clear_table("time_logs");
+		var row = frappe.model.add_child(frm.doc, "Timesheet Detail", "time_logs");
+		row.from_date 		= frm.doc.exp_start_date;
+		row.to_date 		= frm.doc.exp_end_date;
+		row.days      		= (moment(row.to_date).diff(moment(row.from_date),'days') || 0)+1;
+		row.target_quantity = parseFloat(balance_quantity);
+	} else if(frm.doc.docstatus != 1 && flag > 0){
+		min = tl.reduce(function(prev, curr){
+						if(curr.from_date){
+							return moment(prev.from_date).toDate() < moment(curr.from_date).toDate() ? prev : curr;
+						} else {
+							return prev;
+						}
+					});		
+
+		max = tl.reduce(function(prev, curr){
+						if(curr.to_date){
+							return moment(prev.to_date).toDate() > moment(curr.to_date).toDate() ? prev : curr;
+						} else {
+							return prev;
+						}
+					});	
+					
+		if (min.from_date > frm.doc.exp_start_date && max.to_date < frm.doc.exp_end_date){
+			frappe.model.set_value(cdt, cdn, "from_date", frm.doc.exp_start_date);
+			frappe.model.set_value(cdt, cdn, "to_date", moment(min.from_date).add(-1,"days"));
+			frappe.model.set_value(cdt, cdn, "target_quantity", balance_quantity);
+			
+			var row = frappe.model.add_child(frm.doc, "Timesheet Detail", "time_logs");
+			row.from_date 		= moment(max.to_date).add(1,"days");
+			row.to_date   		= frm.doc.exp_end_date;
+			row.days      		= (moment(row.to_date).diff(moment(row.from_date),'days') || 0)+1;
+			row.target_quantity = parseFloat(balance_quantity);
+		} else if(min.from_date > frm.doc.exp_start_date){
+			frappe.model.set_value(cdt, cdn, "from_date", frm.doc.exp_start_date);
+			frappe.model.set_value(cdt, cdn, "to_date", moment(min.from_date).add(-1,"days"));
+			frappe.model.set_value(cdt, cdn, "target_quantity", balance_quantity);
+		} else if (max.to_date < frm.doc.exp_end_date){
+			frappe.model.set_value(cdt, cdn, "from_date", moment(max.to_date).add(1,"days"));
+			frappe.model.set_value(cdt, cdn, "to_date", frm.doc.exp_end_date);		
+			frappe.model.set_value(cdt, cdn, "target_quantity", balance_quantity);
+		}
+	}
+	
+	/*
+
+
+
+
+	*/
+	//frappe.model.set_value("Timesheet Detail", tl[0].name, 'from_date', frm.doc.exp_start_date);
+
+
+	/*
+	if (!min.from_date && !max.to_date){
+		//frappe.model.set_value(cdt, cdn, 'from_date', frm.doc.exp_start_date);
+		frappe.model.set_value("Timesheet Detail", tl[0].name, 'from_date', frm.doc.exp_start_date);
+	}
+*/	
+}
+// +++++++++++++++++++++ Ver 2.0 ENDS +++++++++++++++++++++

@@ -7,12 +7,12 @@ import json
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils import flt, get_datetime, getdate
-from frappe.utils.deprecations import deprecated
+from frappe.utils import add_to_date, flt, get_datetime, getdate, time_diff_in_hours, date_diff, today
 
 from erpnext.controllers.queries import get_match_cond
 from erpnext.setup.utils import get_exchange_rate
 
+from frappe.model.naming import make_autoname
 
 class OverlapError(frappe.ValidationError):
 	pass
@@ -23,49 +23,22 @@ class OverWorkLoggedError(frappe.ValidationError):
 
 
 class Timesheet(Document):
-	# begin: auto-generated types
-	# This code is auto-generated. Do not modify anything in this block.
+	def autoname(self):
+		cur_year  = str(today())[0:4]
+		cur_month = str(today())[5:7]
+		if self.parent_project:
+			serialno  = make_autoname("TSM" + self.parent_project[-4:] + ".####")
+		else:
+			serialno  = make_autoname("TSM.YY.MM.####")
 
-	from typing import TYPE_CHECKING
-
-	if TYPE_CHECKING:
-		from frappe.types import DF
-
-		from erpnext.projects.doctype.timesheet_detail.timesheet_detail import TimesheetDetail
-
-		amended_from: DF.Link | None
-		base_total_billable_amount: DF.Currency
-		base_total_billed_amount: DF.Currency
-		base_total_costing_amount: DF.Currency
-		company: DF.Link | None
-		currency: DF.Link | None
-		customer: DF.Link | None
-		department: DF.Link | None
-		employee: DF.Link | None
-		employee_name: DF.Data | None
-		end_date: DF.Date | None
-		exchange_rate: DF.Float
-		naming_series: DF.Literal["TS-.YYYY.-"]
-		note: DF.TextEditor | None
-		parent_project: DF.Link | None
-		per_billed: DF.Percent
-		sales_invoice: DF.Link | None
-		start_date: DF.Date | None
-		status: DF.Literal[
-			"Draft", "Submitted", "Partially Billed", "Billed", "Payslip", "Completed", "Cancelled"
-		]
-		time_logs: DF.Table[TimesheetDetail]
-		title: DF.Data | None
-		total_billable_amount: DF.Currency
-		total_billable_hours: DF.Float
-		total_billed_amount: DF.Currency
-		total_billed_hours: DF.Float
-		total_costing_amount: DF.Currency
-		total_hours: DF.Float
-		user: DF.Link | None
-	# end: auto-generated types
-
+		self.name = serialno
+		
 	def validate(self):
+		# ++++++++++++++++++++ Ver 2.0 BEGINS ++++++++++++++++++++
+		# Following two methods introduced by SHIV on 15/08/2017
+		self.validate_target_quantity()
+		self.set_defaults()
+		# +++++++++++++++++++++ Ver 2.0 ENDS +++++++++++++++++++++
 		self.set_status()
 		self.validate_dates()
 		self.calculate_hours()
@@ -75,20 +48,196 @@ class Timesheet(Document):
 		self.calculate_percentage_billed()
 		self.set_dates()
 
-	def on_discard(self):
-		self.db_set("status", "Cancelled")
+	def before_submit(self):
+		self.set_dates()
+		self.calculate_target_quantity()
 
-	def on_update_after_submit(self):
-		self.validate_mandatory_fields()
-		self.update_task_and_project()
-		self.validate_time_logs()
+	# Following method added by SHIV on 2017/08/16
+	def calculate_target_quantity(self):
+		if flt(self.target_quantity_complete) > flt(self.target_quantity):
+			frappe.throw(_("Total Achieved value({0}) cannot be greater than Task's Target value({1}).").format(flt(self.target_quantity_complete),flt(self.target_quantity)))
+		else:
+			if self.parent_project:
+				# Updating Project Progress                        
+				base_project = frappe.get_doc("Project",self.parent_project)
+				base_project.update_task_progress()
+				#base_project.update_project_progress()
+				base_project.update_group_tasks()
 
+				total = frappe.db.sql("""
+								select
+										sum(
+												case
+												when additional_task = 0 and status in ('Closed', 'Cancelled') then 1
+												else 0
+												end
+										) as completed_count,
+										sum(
+												case
+												when additional_task = 0 then 1
+												else 0
+												end
+										) as count,
+										sum(
+												case
+												when additional_task = 1 and status in ('Closed', 'Cancelled') then 1
+												else 0
+												end
+										) as add_completed_count,
+										sum(
+												case
+												when additional_task = 1 then 1
+												else 0
+												end
+										) as add_count,
+										sum(
+												case
+												when additional_task = 0 then ifnull(work_quantity,0)
+												else 0
+												end
+										) as tot_work_quantity,
+										sum(
+												case
+												when additional_task = 1 then ifnull(work_quantity,0)
+												else 0
+												end
+										) as tot_add_work_quantity,
+										sum(
+												case
+												when additional_task = 0 then ifnull(work_quantity_complete,0)
+												else 0
+												end
+										) as tot_work_quantity_complete,
+										sum(
+												case
+												when additional_task = 1 then ifnull(work_quantity_complete,0)
+												else 0
+												end
+										) as tot_add_work_quantity_complete
+								from tabTask
+								where project=%s
+								and is_group=0
+						""", self.parent_project, as_dict=1)[0]
+				
+				percent_complete           = 0.0
+				add_percent_complete       = 0.0
+				tot_wq_percent             = 0.0
+				tot_wq_percent_complete    = 0.0
+				tot_add_wq_percent         = 0.0
+				tot_add_wq_percent_complete= 0.0
+
+				if total.count:
+					percent_complete   = flt(flt(total.completed_count) / total.count * 100, 2)
+					tot_wq_percent     = flt(total.tot_work_quantity,2)
+					tot_wq_percent_complete = flt(total.tot_work_quantity_complete,2)
+
+				if total.add_count:
+					add_percent_complete = flt(flt(total.add_completed_count) / total.add_count * 100, 2)
+					tot_add_wq_percent = flt(total.tot_add_work_quantity,2)
+					tot_add_wq_percent_complete = flt(total.tot_add_work_quantity_complete,2)                                
+
+				frappe.db.sql("""
+					update `tabProject`
+					set
+							percent_complete = ifnull({1},0),
+							add_percent_complete = ifnull({2},0),
+							tot_wq_percent = ifnull({3},0),
+							tot_wq_percent_complete = ifnull({4},0),
+							tot_add_wq_percent = ifnull({5},0),
+							tot_add_wq_percent_complete = ifnull({6},0)
+					where name = '{0}'
+				""".format(self.parent_project, flt(percent_complete), flt(add_percent_complete), flt(tot_wq_percent), flt(tot_wq_percent_complete), flt(tot_add_wq_percent), flt(tot_add_wq_percent_complete)))
+		# +++++++++++++++++++++ Ver 1.0 ENDS +++++++++++++++++++++	
+
+	def validate_target_quantity(self):
+		curr_balance = 0.0
+
+		prev_balance = get_target_quantity_complete(self.name, self.task)
+		
+		for tl in self.time_logs:
+				curr_balance += flt(tl.target_quantity_complete)
+		
+		if flt(self.target_quantity) < (flt(prev_balance)+flt(curr_balance)):
+				frappe.throw(_("`Total Achieved Value` cannot be more than `Total Target Value`."))
+		
+	def reset_time_log_order(self):
+		idx = 0
+		tl_list = frappe.db.sql("""
+							select *
+							from `tabTimesheet Detail`
+							where parent = '{0}'
+							order by from_date, to_date
+					""".format(self.name), as_dict=1)
+
+		for tl in tl_list:
+			idx += 1
+			frappe.db.sql("""
+					update `tabTimesheet Detail`
+					set idx = {0}
+					where name = '{1}'
+			""".format(idx, tl.name))
+				
+	# ++++++++++++++++++++ Ver 1.0 BEGINS ++++++++++++++++++++
+	# Following method introduced by SHIV on 2017/08/15
+	def set_defaults(self):
+		# Defaults
+		if self.parent_project:
+			base_project    = frappe.get_doc("Project", self.parent_project)
+			self.branch     = base_project.branch
+			self.cost_center= base_project.cost_center
+
+			if base_project.status in ('Completed','Cancelled'):
+				frappe.throw(_("Operation not permitted on already {0} Project.").format(base_project.status),title="Timesheet: Invalid Operation")
+						
+		# `Timesheet Detail` Validations
+		total_target_quantity           = 0.0
+		total_target_quantity_complete  = 0.0
+		for tl in self.time_logs:
+			total_target_quantity           += flt(tl.target_quantity)
+			total_target_quantity_complete  += flt(tl.target_quantity_complete)
+			tl.from_time = tl.from_date
+			tl.to_time   = tl.to_date
+
+			if tl.from_date > tl.to_date:
+				frappe.throw(_("Row {0}: From Date cannot be after To Date.").format(tl.idx))
+
+			if flt(tl.target_quantity_complete,2) > flt(tl.target_quantity,2):
+				frappe.throw(_("Row {0}: Target completed cannot be greater than Target quantity.").format(tl.idx))
+						
+		if flt(total_target_quantity) > flt(self.target_quantity):
+			frappe.throw(_("Total Target quantity for Time Sheets items ({0}) cannot be greater than ({1})").format(flt(total_target_quantity),flt(self.target_quantity)))
+		
+		if flt(total_target_quantity_complete) > flt(self.target_quantity):
+			frappe.throw(_("Total Achieved value({0}) cannot be more than Target value({1})").format(flt(total_target_quantity_complete),flt(self.target_quantity)))
+		
+		# Setting `Timesheet` Defaults
+		if self.task:
+			base_task = frappe.get_doc("Task", self.task)
+			
+			self.task_name          = base_task.subject
+			self.work_quantity      = base_task.work_quantity
+			self.exp_start_date     = base_task.exp_start_date
+			self.exp_end_date       = base_task.exp_end_date
+			self.target_uom         = base_task.target_uom
+			self.target_quantity    = base_task.target_quantity
+
+			self.target_quantity_complete = 0.0
+			for item in self.time_logs:
+				self.target_quantity_complete += flt(item.target_quantity_complete)
+
+		# Setting `Timesheet Detail` Defaults
+		for data in self.time_logs:
+			if not data.project or data.project != self.parent_project:
+				data.project = self.parent_project
+
+			if not data.task or data.task != self.task:
+				data.task = self.task
+						
+	""" Default Codes begins here of ERPNext Jai"""
 	def calculate_hours(self):
 		for row in self.time_logs:
 			if row.to_time and row.from_time:
-				row.calculate_hours()
-				row.validate_billing_hours()
-				row.update_billing_hours()
+				row.hours = time_diff_in_hours(row.to_time, row.from_time)
 
 	def calculate_total_amounts(self):
 		self.total_hours = 0.0
@@ -99,7 +248,7 @@ class Timesheet(Document):
 		self.total_billed_amount = self.base_total_billed_amount = 0.0
 
 		for d in self.get("time_logs"):
-			d.update_billing_hours()
+			self.update_billing_hours(d)
 			self.update_time_rates(d)
 
 			self.total_hours += flt(d.hours)
@@ -120,18 +269,24 @@ class Timesheet(Document):
 		elif self.total_billed_hours > 0 and self.total_billable_hours > 0:
 			self.per_billed = (self.total_billed_hours * 100) / self.total_billable_hours
 
-	@deprecated
-	def update_billing_hours(self, args: "TimesheetDetail"):
-		args.update_billing_hours()
+	def update_billing_hours(self, args):
+		if args.is_billable:
+			if flt(args.billing_hours) == 0.0:
+				args.billing_hours = args.hours
+			elif flt(args.billing_hours) > flt(args.hours):
+				frappe.msgprint(
+					_("Warning - Row {0}: Billing Hours are more than Actual Hours").format(args.idx),
+					indicator="orange",
+					alert=True,
+				)
+		else:
+			args.billing_hours = 0
 
 	def set_status(self):
 		self.status = {"0": "Draft", "1": "Submitted", "2": "Cancelled"}[str(self.docstatus or 0)]
 
 		if flt(self.per_billed, self.precision("per_billed")) >= 100.0:
 			self.status = "Billed"
-
-		if 0.0 < flt(self.per_billed, self.precision("per_billed")) < 100.0:
-			self.status = "Partially Billed"
 
 		if self.sales_invoice:
 			self.status = "Completed"
@@ -145,16 +300,35 @@ class Timesheet(Document):
 				self.start_date = getdate(start_date)
 				self.end_date = getdate(end_date)
 
+			if not self.total_days:
+				self.total_days = flt(date_diff(getdate(end_date),getdate(start_date)))+1
+
 	def before_cancel(self):
 		self.set_status()
 
 	def on_cancel(self):
 		self.update_task_and_project()
+		# ++++++++++++++++++++ Ver 2.0 BEGINS ++++++++++++++++++++
+		# Following methods introduced by SHIV on 15/08/2017
+		self.calculate_target_quantity()
+		self.reset_time_log_order()
+		# +++++++++++++++++++++ Ver 2.0 ENDS +++++++++++++++++++++	
 
+	def after_delete(self):
+		self.calculate_target_quantity()
+		self.reset_time_log_order()
+		
 	def on_submit(self):
 		self.validate_mandatory_fields()
 		self.update_task_and_project()
 
+	def on_update(self):
+		# ++++++++++++++++++++ Ver 2.0 BEGINS ++++++++++++++++++++
+		# Following methods introduced by SHIV on 15/08/2017
+		self.calculate_target_quantity()
+		self.reset_time_log_order()
+		# +++++++++++++++++++++ Ver 2.0 ENDS +++++++++++++++++++++
+		
 	def validate_mandatory_fields(self):
 		for data in self.time_logs:
 			if not data.from_time and not data.to_time:
@@ -163,8 +337,8 @@ class Timesheet(Document):
 			if not data.activity_type and self.employee:
 				frappe.throw(_("Row {0}: Activity Type is mandatory.").format(data.idx))
 
-			if flt(data.hours) == 0.0:
-				frappe.throw(_("Row {0}: Hours value must be greater than zero.").format(data.idx))
+			# if flt(data.hours) == 0.0:
+			# 	frappe.throw(_("Row {0}: Hours value must be greater than zero.").format(data.idx))
 
 	def update_task_and_project(self):
 		tasks, projects = [], []
@@ -173,47 +347,48 @@ class Timesheet(Document):
 			if data.task and data.task not in tasks:
 				task = frappe.get_doc("Task", data.task)
 				task.update_time_and_costing()
-				time_logs_completed = all(tl.completed for tl in self.time_logs if tl.task == task.name)
-
-				if time_logs_completed:
-					task.status = "Completed"
-				else:
-					task.status = "Working"
-				task.save(ignore_permissions=True)
+				task.save()
 				tasks.append(data.task)
 
-			if data.project and data.project not in projects:
+			elif data.project and data.project not in projects:
+				frappe.get_doc("Project", data.project).update_project()
 				projects.append(data.project)
 
-		for project in projects:
-			project_doc = frappe.get_doc("Project", project)
-			project_doc.update_project()
-			project_doc.save(ignore_permissions=True)
-
 	def validate_dates(self):
-		for time_log in self.time_logs:
-			time_log.validate_dates()
+		for data in self.time_logs:
+			if data.from_time and data.to_time and time_diff_in_hours(data.to_time, data.from_time) < 0:
+				frappe.throw(_("To date cannot be before from date"))
 
 	def validate_time_logs(self):
-		for time_log in self.time_logs:
-			time_log.set_to_time()
-			self.validate_overlap(time_log)
-			time_log.set_project()
-			time_log.validate_parent_project(self.parent_project)
-			time_log.validate_task_project()
+		for data in self.get("time_logs"):
+			self.set_to_time(data)
+			self.validate_overlap(data)
+			self.set_project(data)
+			self.validate_project(data)
+
+	def set_to_time(self, data):
+		if not (data.from_time and data.hours):
+			return
+
+		_to_time = get_datetime(add_to_date(data.from_time, hours=data.hours, as_datetime=True))
+		if data.to_time != _to_time:
+			data.to_time = _to_time
 
 	def validate_overlap(self, data):
 		settings = frappe.get_single("Projects Settings")
 		self.validate_overlap_for("user", data, self.user, settings.ignore_user_time_overlap)
 		self.validate_overlap_for("employee", data, self.employee, settings.ignore_employee_time_overlap)
 
-	@deprecated
-	def set_project(self, data: "TimesheetDetail"):
-		data.set_project()
+	def set_project(self, data):
+		data.project = data.project or frappe.db.get_value("Task", data.task, "project")
 
-	@deprecated
-	def validate_project(self, data: "TimesheetDetail"):
-		data.validate_parent_project(self.parent_project)
+	def validate_project(self, data):
+		if self.parent_project and self.parent_project != data.project:
+			frappe.throw(
+				_("Row {0}: Project must be same as the one set in the Timesheet: {1}.").format(
+					data.idx, self.parent_project
+				)
+			)
 
 	def validate_overlap_for(self, fieldname, args, value, ignore_validation=False):
 		if not value or ignore_validation:
@@ -283,22 +458,24 @@ class Timesheet(Document):
 		return False
 
 	def update_cost(self):
-		for time_log in self.time_logs:
-			time_log.update_cost(self.employee)
+		for data in self.time_logs:
+			if data.activity_type or data.is_billable:
+				rate = get_activity_cost(self.employee, data.activity_type)
+				hours = data.billing_hours or 0
+				costing_hours = data.billing_hours or data.hours or 0
+				if rate:
+					data.billing_rate = (
+						flt(rate.get("billing_rate")) if flt(data.billing_rate) == 0 else data.billing_rate
+					)
+					data.costing_rate = (
+						flt(rate.get("costing_rate")) if flt(data.costing_rate) == 0 else data.costing_rate
+					)
+					data.billing_amount = data.billing_rate * hours
+					data.costing_amount = data.costing_rate * costing_hours
 
 	def update_time_rates(self, ts_detail):
 		if not ts_detail.is_billable:
 			ts_detail.billing_rate = 0.0
-
-	def unlink_sales_invoice(self, sales_invoice: str):
-		"""Remove link to Sales Invoice from all time logs."""
-		for time_log in self.time_logs:
-			if time_log.sales_invoice == sales_invoice:
-				time_log.sales_invoice = None
-
-		self.calculate_total_amounts()
-		self.calculate_percentage_billed()
-		self.set_status()
 
 
 @frappe.whitelist()
@@ -342,16 +519,12 @@ def get_projectwise_timesheet_data(project=None, parent=None, from_time=None, to
 
 @frappe.whitelist()
 def get_timesheet_detail_rate(timelog, currency):
-	ts = frappe.qb.DocType("Timesheet")
-	ts_detail = frappe.qb.DocType("Timesheet Detail")
-
-	timelog_detail = (
-		frappe.qb.from_(ts_detail)
-		.inner_join(ts)
-		.on(ts.name == ts_detail.parent)
-		.select(ts_detail.billing_amount.as_("billing_amount"), ts.currency.as_("currency"))
-		.where(ts_detail.name == timelog)
-		.run(as_dict=1)
+	timelog_detail = frappe.db.sql(
+		f"""SELECT tsd.billing_amount as billing_amount,
+		ts.currency as currency FROM `tabTimesheet Detail` tsd
+		INNER JOIN `tabTimesheet` ts ON ts.name=tsd.parent
+		WHERE tsd.name = '{timelog}'""",
+		as_dict=1,
 	)[0]
 
 	if timelog_detail.currency:
@@ -396,7 +569,7 @@ def get_timesheet_data(name, project):
 		data = frappe.get_all(
 			"Timesheet",
 			fields=[
-				{"SUB": ["total_billable_amount", "total_billed_amount"], "as": "billing_amt"},
+				"(total_billable_amount - total_billed_amount) as billing_amt",
 				"total_billable_hours as billing_hours",
 			],
 			filters={"name": name},
@@ -427,9 +600,6 @@ def make_sales_invoice(source_name, item_code=None, customer=None, currency=None
 	target.project = timesheet.parent_project
 	if customer:
 		target.customer = customer
-		default_price_list = frappe.get_value("Customer", customer, "default_price_list")
-		if default_price_list:
-			target.selling_price_list = default_price_list
 
 	if currency:
 		target.currency = currency
@@ -438,7 +608,7 @@ def make_sales_invoice(source_name, item_code=None, customer=None, currency=None
 		target.append("items", {"item_code": item_code, "qty": hours, "rate": billing_rate})
 
 	for time_log in timesheet.time_logs:
-		if time_log.is_billable and not time_log.sales_invoice:
+		if time_log.is_billable:
 			target.append(
 				"timesheets",
 				{
@@ -513,10 +683,11 @@ def get_events(start, end, filters=None):
 	)
 
 
-def get_timesheets_list(doctype, txt, filters, limit_start, limit_page_length=20, order_by="creation"):
+def get_timesheets_list(doctype, txt, filters, limit_start, limit_page_length=20, order_by="modified"):
 	user = frappe.session.user
 	# find customer name from contact.
 	customer = ""
+	timesheets = []
 
 	contact = frappe.db.exists("Contact", {"user": user})
 	if contact:
@@ -525,43 +696,31 @@ def get_timesheets_list(doctype, txt, filters, limit_start, limit_page_length=20
 		customer = contact.get_link_for("Customer")
 
 	if customer:
-		sales_invoices = frappe.get_all("Sales Invoice", filters={"customer": customer}, pluck="name")
-		projects = frappe.get_all("Project", filters={"customer": customer}, pluck="name")
-
+		sales_invoices = [
+			d.name for d in frappe.get_all("Sales Invoice", filters={"customer": customer})
+		] or [None]
+		projects = [d.name for d in frappe.get_all("Project", filters={"customer": customer})]
 		# Return timesheet related data to web portal.
-		table = frappe.qb.DocType("Timesheet")
-		child_table = frappe.qb.DocType("Timesheet Detail")
-		query = (
-			frappe.qb.from_(table)
-			.join(child_table)
-			.on(table.name == child_table.parent)
-			.select(
-				table.name,
-				child_table.activity_type,
-				table.status,
-				child_table.billing_hours,
-				(table.sales_invoice | child_table.sales_invoice).as_("sales_invoice"),
-				child_table.project,
-			)
-			.orderby(table.end_date)
-			.limit(limit_page_length)
-			.offset(limit_start)
-		)
+		timesheets = frappe.db.sql(
+			f"""
+			SELECT
+				ts.name, tsd.activity_type, ts.status, ts.total_billable_hours,
+				COALESCE(ts.sales_invoice, tsd.sales_invoice) AS sales_invoice, tsd.project
+			FROM `tabTimesheet` ts, `tabTimesheet Detail` tsd
+			WHERE tsd.parent = ts.name AND
+				(
+					ts.sales_invoice IN %(sales_invoices)s OR
+					tsd.sales_invoice IN %(sales_invoices)s OR
+					tsd.project IN %(projects)s
+				)
+			ORDER BY `end_date` ASC
+			LIMIT {limit_page_length} offset {limit_start}
+		""",
+			dict(sales_invoices=sales_invoices, projects=projects),
+			as_dict=True,
+		)  # nosec
 
-		conditions = []
-		if sales_invoices:
-			conditions.extend(
-				[table.sales_invoice.isin(sales_invoices), child_table.sales_invoice.isin(sales_invoices)]
-			)
-		if projects:
-			conditions.append(child_table.project.isin(projects))
-
-		if conditions:
-			query = query.where(frappe.qb.terms.Criterion.any(conditions))
-
-		return query.run(as_dict=True)
-	else:
-		return {}
+	return timesheets
 
 
 def get_list_context(context=None):
@@ -572,5 +731,21 @@ def get_list_context(context=None):
 		"title": _("Timesheets"),
 		"get_list": get_timesheets_list,
 		"row_template": "templates/includes/timesheet/timesheet_row.html",
-		"list_template": "templates/includes/list/list.html",
 	}
+
+
+@frappe.whitelist()
+def get_target_quantity_complete(docname = None, task = None):
+        td = frappe.db.sql("""
+                select sum(ifnull(tsd.target_quantity_complete, 0)) as target_quantity_complete
+                from `tabTimesheet Detail` tsd, `tabTimesheet` ts
+                where ts.task = '{0}'
+                and ts.name != '{1}'
+                and ts.docstatus != 2
+                and tsd.parent = ts.name                
+        """.format(task, docname), as_dict=1)
+
+        if td:
+                return flt(td[0].target_quantity_complete)
+        else:
+                return 0.0

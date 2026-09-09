@@ -1,0 +1,24 @@
+{
+ "cards": [
+  {
+   "card": "Active MR"
+  }
+ ],
+ "charts": [
+  {
+   "width": "Half"
+  }
+ ],
+ "creation": "2024-11-28 11:02:53.468838",
+ "dashboard_name": "Active Muster Roll",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2024-11-28 11:02:53.468838",
+ "modified_by": "kinzang.namgyal@cdcl.bt",
+ "module": "Projects",
+ "name": "Active Muster Roll",
+ "owner": "kinzang.namgyal@cdcl.bt"
+}

@@ -1,0 +1,41 @@
+{
+ "chart_name": "Project Details",
+ "chart_type": "Report",
+ "creation": "2024-11-27 15:07:35.818643",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{\"additional_info\":0}",
+ "group_by_type": "Count",
+ "idx": 2,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2024-11-28 17:06:07.427208",
+ "modified_by": "kinzang.namgyal@cdcl.bt",
+ "module": "Projects",
+ "name": "Project Details",
+ "number_of_groups": 0,
+ "owner": "kinzang.namgyal@cdcl.bt",
+ "report_name": "Project Register",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "project",
+ "y_axis": [
+  {
+   "color": "#4463F0",
+   "y_field": "physical_progress"
+  },
+  {
+   "color": "#CB2929",
+   "y_field": "estimated_cost"
+  },
+  {
+   "color": "#29CD42",
+   "y_field": "project_value_(a)"
+  }
+ ]
+}

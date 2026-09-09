@@ -1,0 +1,31 @@
+{
+ "cards": [
+  {
+   "card": "Active MR"
+  },
+  {
+   "card": "Project Invoice Balance"
+  },
+  {
+   "card": "Project Payment Received"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "Project Details",
+   "width": "Full"
+  }
+ ],
+ "creation": "2024-11-27 15:08:46.374841",
+ "dashboard_name": "Project Details",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2024-11-28 14:32:32.729555",
+ "modified_by": "kinzang.namgyal@cdcl.bt",
+ "module": "Projects",
+ "name": "Project Details",
+ "owner": "kinzang.namgyal@cdcl.bt"
+}

@@ -13,6 +13,11 @@
   "type",
   "color",
   "is_group",
+  "is_template",
+  "additional_task",
+  "work_quantity",
+  "work_quantity_complete",
+  "activity",
   "column_break0",
   "status",
   "priority",
@@ -20,21 +25,23 @@
   "parent_task",
   "completed_by",
   "completed_on",
-  "section_break_dafi",
-  "is_template",
-  "column_break_vvfp",
-  "start",
-  "duration",
   "sb_timeline",
   "exp_start_date",
   "expected_time",
+  "start",
   "column_break_11",
   "exp_end_date",
   "progress",
+  "duration",
   "is_milestone",
+  "target_achievement_value",
+  "target_uom",
+  "cb_tav_1",
+  "target_quantity",
+  "cb_tav_2",
+  "target_quantity_complete",
   "sb_details",
   "description",
-  "dependencies_tab",
   "sb_depends_on",
   "depends_on",
   "depends_on_tasks",
@@ -47,17 +54,23 @@
   "total_costing_amount",
   "column_break_20",
   "total_billing_amount",
-  "more_info_tab",
   "sb_more_info",
-  "company",
   "review_date",
   "closing_date",
+  "task_idx",
+  "grp_exp_start_date",
+  "grp_exp_end_date",
+  "grp_work_quantity",
+  "grp_work_quantity_complete",
   "column_break_22",
   "department",
+  "company",
   "lft",
   "rgt",
   "old_parent",
-  "template_task"
+  "template_task",
+  "branch",
+  "cost_center"
  ],
  "fields": [
   {
@@ -82,6 +95,7 @@
    "oldfieldname": "project",
    "oldfieldtype": "Link",
    "options": "Project",
+   "remember_last_selected_value": 1,
    "search_index": 1
   },
   {
@@ -121,7 +135,7 @@
    "no_copy": 1,
    "oldfieldname": "status",
    "oldfieldtype": "Select",
-   "options": "Open\nWorking\nPending Review\nOverdue\nTemplate\nCompleted\nCancelled"
+   "options": "Open\nWorking\nPending Review\nOverdue\nTemplate\nCompleted\nCancelled\nClosed"
   },
   {
    "fieldname": "priority",
@@ -150,7 +164,7 @@
   },
   {
    "collapsible": 1,
-   "collapsible_depends_on": "exp_start_date",
+   "collapsible_depends_on": "eval:doc.__islocal",
    "fieldname": "sb_timeline",
    "fieldtype": "Section Break",
    "label": "Timeline"
@@ -158,7 +172,7 @@
   {
    "bold": 1,
    "fieldname": "exp_start_date",
-   "fieldtype": "Datetime",
+   "fieldtype": "Date",
    "label": "Expected Start Date",
    "oldfieldname": "exp_start_date",
    "oldfieldtype": "Date"
@@ -184,7 +198,7 @@
   {
    "bold": 1,
    "fieldname": "exp_end_date",
-   "fieldtype": "Datetime",
+   "fieldtype": "Date",
    "label": "Expected End Date",
    "oldfieldname": "exp_end_date",
    "oldfieldtype": "Date",
@@ -221,6 +235,7 @@
   {
    "fieldname": "sb_depends_on",
    "fieldtype": "Section Break",
+   "label": "Dependencies",
    "oldfieldtype": "Section Break"
   },
   {
@@ -247,7 +262,6 @@
    "fieldname": "act_start_date",
    "fieldtype": "Date",
    "label": "Actual Start Date (via Timesheet)",
-   "no_copy": 1,
    "oldfieldname": "act_start_date",
    "oldfieldtype": "Date",
    "read_only": 1
@@ -255,8 +269,8 @@
   {
    "fieldname": "actual_time",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Actual Time in Hours (via Timesheet)",
-   "no_copy": 1,
    "read_only": 1
   },
   {
@@ -267,7 +281,6 @@
    "fieldname": "act_end_date",
    "fieldtype": "Date",
    "label": "Actual End Date (via Timesheet)",
-   "no_copy": 1,
    "oldfieldname": "act_end_date",
    "oldfieldtype": "Date",
    "read_only": 1
@@ -276,13 +289,13 @@
    "collapsible": 1,
    "fieldname": "sb_costing",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Costing"
   },
   {
    "fieldname": "total_costing_amount",
    "fieldtype": "Currency",
    "label": "Total Costing Amount (via Timesheet)",
-   "no_copy": 1,
    "oldfieldname": "actual_budget",
    "oldfieldtype": "Currency",
    "options": "Company:company:default_currency",
@@ -296,16 +309,16 @@
    "fieldname": "total_billing_amount",
    "fieldtype": "Currency",
    "label": "Total Billable Amount (via Timesheet)",
-   "no_copy": 1,
    "read_only": 1
   },
   {
+   "collapsible": 1,
    "fieldname": "sb_more_info",
    "fieldtype": "Section Break",
-   "label": "Additional Info"
+   "label": "More Info"
   },
   {
-   "depends_on": "eval:doc.status == \"Completed\" || doc.status == \"Pending Review\"",
+   "depends_on": "eval:doc.status == \"Closed\" || doc.status == \"Pending Review\"",
    "fieldname": "review_date",
    "fieldtype": "Date",
    "label": "Review Date",
@@ -313,7 +326,7 @@
    "oldfieldtype": "Date"
   },
   {
-   "depends_on": "eval:doc.status == \"Completed\"",
+   "depends_on": "eval:doc.status == \"Closed\"",
    "fieldname": "closing_date",
    "fieldtype": "Date",
    "label": "Closing Date",
@@ -335,7 +348,8 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "remember_last_selected_value": 1
   },
   {
    "fieldname": "lft",
@@ -368,10 +382,10 @@
    "options": "User"
   },
   {
-   "allow_in_quick_entry": 1,
    "default": "0",
    "fieldname": "is_template",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Template"
   },
   {
@@ -400,22 +414,113 @@
    "label": "Template Task"
   },
   {
-   "fieldname": "dependencies_tab",
-   "fieldtype": "Tab Break",
-   "label": "Dependencies"
+   "depends_on": "project",
+   "fieldname": "target_achievement_value",
+   "fieldtype": "Section Break",
+   "label": "Target & Achievement"
   },
   {
-   "fieldname": "more_info_tab",
-   "fieldtype": "Tab Break",
-   "label": "More Info"
+   "fieldname": "target_uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM",
+   "read_only": 1
   },
   {
-   "fieldname": "section_break_dafi",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_vvfp",
+   "fieldname": "cb_tav_1",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_quantity",
+   "fieldtype": "Float",
+   "label": "Target",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_tav_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_quantity_complete",
+   "fieldtype": "Float",
+   "label": "Achievement",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "project",
+   "fieldname": "additional_task",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is Additional Task?"
+  },
+  {
+   "depends_on": "project",
+   "fieldname": "work_quantity",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Work Quantity in Percentage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "work_quantity_complete",
+   "fieldtype": "Percent",
+   "label": "Work Quantity Complete",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Activity"
+  },
+  {
+   "fieldname": "task_idx",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "task idx"
+  },
+  {
+   "fieldname": "grp_exp_start_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Group Expected Start Date"
+  },
+  {
+   "fieldname": "grp_exp_end_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Group Expected End Date"
+  },
+  {
+   "fieldname": "grp_work_quantity",
+   "fieldtype": "Percent",
+   "hidden": 1,
+   "label": "Group Work Quantity"
+  },
+  {
+   "fieldname": "grp_work_quantity_complete",
+   "fieldtype": "Percent",
+   "hidden": 1,
+   "label": "Group Work Quantity Complete"
   }
  ],
  "icon": "fa fa-check",
@@ -423,11 +528,11 @@
  "is_tree": 1,
  "links": [],
  "max_attachments": 5,
- "modified": "2026-04-09 19:12:27.153143",
+ "modified": "2024-11-27 12:42:15.264797",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Task",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "nsm_parent_field": "parent_task",
  "owner": "Administrator",
  "permissions": [
@@ -441,28 +546,13 @@
    "role": "Projects User",
    "share": 1,
    "write": 1
-  },
-  {
-   "role": "HR User",
-   "select": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "read": 1,
-   "role": "HR Manager",
-   "share": 1,
-   "write": 1
   }
  ],
  "quick_entry": 1,
- "row_format": "Dynamic",
  "search_fields": "subject",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,
- "sort_field": "creation",
+ "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
  "timeline_field": "project",

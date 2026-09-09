@@ -1,0 +1,345 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "PJA.YYYY.MM.####",
+ "creation": "2024-09-25 10:31:34.530980",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_zank",
+  "amended_from",
+  "advance_date",
+  "project",
+  "company",
+  "branch",
+  "cost_center",
+  "column_break_iwgi",
+  "party_type",
+  "party",
+  "party_address",
+  "customer",
+  "customer_details",
+  "supplier",
+  "supplier_details",
+  "sb_payment_details",
+  "payment_type",
+  "currency",
+  "exchange_rate",
+  "exchange_rate_original",
+  "advance_amount_requested",
+  "advance_amount",
+  "cb_pd_1",
+  "received_amount",
+  "paid_amount",
+  "adjustment_amount",
+  "balance_amount",
+  "sb_references",
+  "reference_no",
+  "cb_r_1",
+  "reference_date",
+  "section_break_ltvu",
+  "remarks",
+  "status",
+  "sb_additional_information",
+  "journal_entry_html",
+  "journal_entry",
+  "journal_entry_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_zank",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Advance",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "advance_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Entry Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.branch",
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_iwgi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "project.party_type",
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "label": "Party Type",
+   "options": "DocType",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "label": "Party",
+   "options": "party_type",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "party_address",
+   "fieldtype": "Text",
+   "label": "Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_details",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Supplier",
+   "options": "Supplier",
+   "read_only": 1
+  },
+  {
+   "fieldname": "supplier_details",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_payment_details",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "payment_type",
+   "fieldtype": "Select",
+   "label": "Payment Type",
+   "options": "\nReceive\nPay",
+   "read_only": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "precision": "9"
+  },
+  {
+   "fieldname": "exchange_rate_original",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Exchange Rate Original",
+   "precision": "9",
+   "read_only": 1
+  },
+  {
+   "fieldname": "advance_amount_requested",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "advance_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "options": "Company:company:default_currency\n",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_pd_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0.0",
+   "depends_on": "doc.payment_type == \"Receive\"",
+   "fieldname": "received_amount",
+   "fieldtype": "Currency",
+   "label": "Received Amount (A)",
+   "options": "Company:company:default_currency",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount (A)",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "adjustment_amount",
+   "fieldtype": "Currency",
+   "label": "Advance Adjusted (B)",
+   "options": "Company:company:default_currency",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "label": "Balance Amount (C=A-B)",
+   "options": "Company:company:default_currency",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_references",
+   "fieldtype": "Section Break",
+   "label": "REFERENCES"
+  },
+  {
+   "fieldname": "reference_no",
+   "fieldtype": "Data",
+   "label": "Reference No.",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_r_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ltvu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Remarks"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nSubmitted\nCancelled"
+  },
+  {
+   "fieldname": "sb_additional_information",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "journal_entry_html",
+   "fieldtype": "HTML",
+   "label": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "journal_entry",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "journal_entry_status",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Journal Entry Status",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-10-14 10:12:15.360542",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Project Advance",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

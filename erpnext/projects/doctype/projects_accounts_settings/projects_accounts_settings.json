@@ -1,0 +1,209 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-08 14:37:11.898027",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sb_mr_gep",
+  "mr_html",
+  "mr_overtime_account",
+  "mr_wages_account",
+  "column_break_2",
+  "gep_html",
+  "gep_overtime_account",
+  "gep_wages_account",
+  "mess_deduction_account",
+  "section_break_10",
+  "advance_account_internal",
+  "invoice_account_internal",
+  "sb_external",
+  "sb_customer",
+  "project_advance_account",
+  "project_invoice_account",
+  "project_accrued_income_account",
+  "column_break_19",
+  "sb_supplier",
+  "advance_account_supplier",
+  "invoice_account_supplier",
+  "accrued_expense_account",
+  "section_break_9",
+  "inventory_account",
+  "retention_account_receivable"
+ ],
+ "fields": [
+  {
+   "fieldname": "sb_mr_gep",
+   "fieldtype": "Section Break",
+   "label": "Muster Roll & GEP Payment Settings"
+  },
+  {
+   "fieldname": "mr_html",
+   "fieldtype": "HTML",
+   "options": "<h5>Muster Roll Accounts</h5>"
+  },
+  {
+   "fieldname": "mr_overtime_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "MR Overtime Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mr_wages_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "MR Wages Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gep_html",
+   "fieldtype": "HTML",
+   "options": "<h5>GEP Accounts</h5>"
+  },
+  {
+   "fieldname": "gep_overtime_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "GEP Overtime Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "gep_wages_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "GEP Wages Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "INTERNAL PROJECT  SETTINGS"
+  },
+  {
+   "fieldname": "advance_account_internal",
+   "fieldtype": "Link",
+   "label": "Advance Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "invoice_account_internal",
+   "fieldtype": "Link",
+   "label": "Invoice Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "sb_external",
+   "fieldtype": "Section Break",
+   "label": "PROJECT TYPE SETTINGS"
+  },
+  {
+   "fieldname": "sb_customer",
+   "fieldtype": "HTML",
+   "options": "<h5>Internal Project Settings(Customer)</h5>"
+  },
+  {
+   "fieldname": "project_advance_account",
+   "fieldtype": "Link",
+   "label": "Advance Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_invoice_account",
+   "fieldtype": "Link",
+   "label": "Invoice Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_accrued_income_account",
+   "fieldtype": "Link",
+   "label": "Accrued Income Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sb_supplier",
+   "fieldtype": "HTML",
+   "options": "<h5>External Project Settings(Supplier)</h5>"
+  },
+  {
+   "fieldname": "advance_account_supplier",
+   "fieldtype": "Link",
+   "label": "Advance Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "invoice_account_supplier",
+   "fieldtype": "Link",
+   "label": "Invoice Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "accrued_expense_account",
+   "fieldtype": "Link",
+   "label": "Accrued Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break",
+   "label": "OTHER SETTINGS"
+  },
+  {
+   "fieldname": "inventory_account",
+   "fieldtype": "Link",
+   "label": "Sale of Inventory Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "description": "*This account will be checked at Project Payment to update Retention Money section in Project.",
+   "fieldname": "retention_account_receivable",
+   "fieldtype": "Link",
+   "label": "Retention Account Receivable",
+   "options": "Account"
+  },
+  {
+   "fieldname": "mess_deduction_account",
+   "fieldtype": "Link",
+   "label": "Mess Deduction Account",
+   "options": "Account"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-12-16 12:51:06.212985",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Projects Accounts Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

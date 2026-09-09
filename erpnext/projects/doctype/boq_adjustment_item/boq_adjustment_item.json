@@ -1,0 +1,307 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-19 11:12:16.224255",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "boq_code",
+  "currency",
+  "uom",
+  "is_group",
+  "column_break_btmt",
+  "item",
+  "sb_balance_before_adj",
+  "quantity",
+  "claimed_quantity",
+  "booked_quantity",
+  "received_quantity",
+  "balance_quantity",
+  "cb_bba_1",
+  "rate",
+  "balance_rate",
+  "cb_bba_2",
+  "amount",
+  "claimed_amount",
+  "booked_amount",
+  "received_amount",
+  "balance_amount",
+  "sb_adjustment",
+  "adjustment_type",
+  "cb_a_1",
+  "html_timl",
+  "sb_adj",
+  "balance_quantity_adj",
+  "adjustment_quantity",
+  "cb_adj_1",
+  "balance_rate_adj",
+  "adjustment_rate",
+  "cb_adj_2",
+  "balance_amount_adj",
+  "adjustment_amount",
+  "section_break_abjk",
+  "remarks",
+  "project",
+  "parent_item",
+  "boq_item_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "boq_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "BOQ Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Group Item?"
+  },
+  {
+   "fieldname": "column_break_btmt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_balance_before_adj",
+   "fieldtype": "Section Break",
+   "label": "BALANCE BEFORE ADJUSTMENT"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Initial Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "claimed_quantity",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Claimed Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_quantity",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Booked Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "received_quantity",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Received Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Balance Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_bba_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Initial Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_rate",
+   "fieldtype": "Float",
+   "label": "Balance Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_bba_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Initial Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "claimed_amount",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Claimed Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_amount",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Booked Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "received_amount",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Received Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Balance Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_adjustment",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "ADJUSTMENT"
+  },
+  {
+   "fieldname": "adjustment_type",
+   "fieldtype": "Select",
+   "label": "Adjustment Type",
+   "options": "Update existing balance"
+  },
+  {
+   "fieldname": "cb_a_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "html_timl",
+   "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "sb_adj",
+   "fieldtype": "Section Break",
+   "label": "ADJUSTMENT"
+  },
+  {
+   "fieldname": "balance_quantity_adj",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Balance Quantity Adj.",
+   "precision": "5"
+  },
+  {
+   "fieldname": "adjustment_quantity",
+   "fieldtype": "Float",
+   "label": "Add. Quantity (+/-)",
+   "precision": "5"
+  },
+  {
+   "fieldname": "cb_adj_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "balance_rate_adj",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Balance Rate Adj."
+  },
+  {
+   "fieldname": "adjustment_rate",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Add. Rate",
+   "precision": "2"
+  },
+  {
+   "fieldname": "cb_adj_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "balance_amount_adj",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Balance Amount Adj."
+  },
+  {
+   "fieldname": "adjustment_amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Add. Amount (+/-)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "section_break_abjk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text Editor",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "parent_item",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Parent Item"
+  },
+  {
+   "fieldname": "boq_item_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "BOQ Item Name",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-01 21:09:15.845363",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "BOQ Adjustment Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
