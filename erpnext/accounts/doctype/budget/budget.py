@@ -164,7 +164,7 @@ class Budget(Document):
 	@frappe.whitelist()
 	def set_initial_budget(self):
 		for d in self.accounts:
-			initial_budget = flt(d.january) + flt(d.february) + flt(d.march) + flt(d.april)+ flt(d.may) +flt(d.june) +flt(d.july) +flt(d.august) + flt(d.september) +flt(d.october) +flt(d.november) +flt(d.december)+flt(d.budget_allocate)
+			initial_budget = flt(d.january) + flt(d.february) + flt(d.march) + flt(d.april)+ flt(d.may) +flt(d.june) +flt(d.july) +flt(d.august) + flt(d.september) +flt(d.october) +flt(d.november) +flt(d.december)
 			d.db_set("initial_budget", initial_budget)
 			d.db_set("budget_amount", flt(initial_budget) + flt(d.supplementary_budget) + flt(d.budget_received) - flt(d.budget_sent))
 
@@ -172,8 +172,8 @@ class Budget(Document):
 	def get_accounts(self):
 		condition = " and a.budget_type = '{}'".format(self.budget_type) if self.budget_type else ""
 		entries = frappe.db.sql("""
-		                select parent_account, 
-		                    a.name as account, 
+						select parent_account, 
+							a.name as account, 
 							a.budget_type, 
 							account_number
 						from tabAccount a
@@ -192,9 +192,9 @@ class Budget(Document):
 								and b.name != '{name}'
 							)
 							and EXISTS(select 1 
-                                    from `tabBudget Settings Account Types` s
-                                    where s.parent = 'Budget Settings'
-                                    and s.account_type = a.account_type)
+									from `tabBudget Settings Account Types` s
+									where s.parent = 'Budget Settings'
+									and s.account_type = a.account_type)
 							{condition}
 
 							
@@ -234,6 +234,7 @@ def delete_committed_consumed_budget(reference=None, reference_no=None):
 						""".format(reference_type=reference, reference_no=reference_no))
 
 def validate_expense_against_budget(args, throw_error=True):
+
 	args = frappe._dict(args)
 	if args.is_cancelled:
 		delete_committed_consumed_budget(args.voucher_type, args.voucher_no)
@@ -247,11 +248,18 @@ def validate_expense_against_budget(args, throw_error=True):
 
 	if not args.account:
 		args.account = args.get("expense_account")
-
+ 
 	if not args.get("account") and args.item_code:
 		args.account = get_item_details(args)
-	if not args.cost_center:
+
+	
+	# if not args.cost_center:
+	# 	frappe.throw("Cost Center is missing for budget check")
+	if args.budget_against == "Cost Center" and not args.cost_center:
 		frappe.throw("Cost Center is missing for budget check")
+
+	if args.budget_against == "Project" and not args.project:
+		frappe.throw("Project is missing for budget check")
 
 	if not args.account:
 		frappe.msgprint("Budget Head/Account is missing. Please provide account to check budget", raise_exception=True)
@@ -406,13 +414,14 @@ def compare_expense_with_budget(args, error, budget_amount, action_for, action, 
 		if args.doctype in ("Purchase Order", "Purchase Invoice"):
 			message = f" until #Row. {args.idx} with Item Code #{args.item_code}."
 
-		msg = _("{0} Budget for Account {1} against {2} {3} is {4} and available budget is {5} Including (Supplementary Budget,Budget Received,Budget Sent). It exceed by {6}{7}").format(
+		msg = _("{0} Budget for Account {1} against {2} {3} is {4} and available budget is {5} Including (Supplementary Budget,Budget Received,Budget Sent).You attempted {6} and It exceed by {7}{8}").format(
 			_(action_for),
 			frappe.bold(args.account),
 			args.budget_against_field,
 			frappe.bold(budget_against),
 			frappe.bold(fmt_money(budget_amount, currency=currency)),
 			frappe.bold(fmt_money(available_budget, currency=currency)),
+			frappe.bold(fmt_money(total_expense_amount, currency=currency)),
 			frappe.bold(fmt_money(diff, currency=currency)),
 			message,
 		)
