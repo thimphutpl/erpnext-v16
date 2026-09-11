@@ -24,6 +24,7 @@
   "initial_total",
   "column_break_14",
   "supp_total",
+  "column_break_eidx",
   "actual_total",
   "section_break_6",
   "applicable_on_material_request",
@@ -252,13 +253,17 @@
    "fieldtype": "Select",
    "label": "Action if Accumulated Monthly Budget Exceeded on Actual",
    "options": "\nStop\nWarn\nIgnore"
+  },
+  {
+   "fieldname": "column_break_eidx",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-04 20:41:21.303961",
+ "modified": "2026-09-10 19:57:31.029945",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Budget",
