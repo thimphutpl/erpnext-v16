@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-03 11:14:05.243737",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+    "pol",
+    "pol_item_code",
+    "item_name",
+    "column_break_3",
+    "payable_amount",
+    "allocated_amount",
+    "balance_amount",
+    "memo_number"
+   ],
+   "fields": [
+    {
+     "fieldname": "pol",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Receive POL Reference",
+     "options": "POL Receive",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "pol_item_code",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "POL Item Code",
+     "options": "Item",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "item_name",
+     "fieldtype": "Data",
+     "label": "Item Name",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_3",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "payable_amount",
+     "fieldtype": "Currency",
+     "in_list_view": 1,
+     "label": "Payable Amount",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "allocated_amount",
+     "fieldtype": "Currency",
+     "in_list_view": 1,
+     "label": "Allocated Amount",
+     "reqd": 1
+    },
+    {
+     "fieldname": "balance_amount",
+     "fieldtype": "Currency",
+     "label": "Balance Amount",
+     "read_only": 1
+    },
+    {
+     "fieldname": "memo_number",
+     "fieldtype": "Data",
+     "in_list_view": 1,
+     "label": "Cash Memo Number",
+     "read_only": 1
+    }
+   ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-03 11:14:05.243737",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "HSD Payment Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

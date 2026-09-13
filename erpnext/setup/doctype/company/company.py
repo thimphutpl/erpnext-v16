@@ -99,6 +99,7 @@ class Company(NestedSet):
 		exchange_gain_loss_account: DF.Link | None
 		existing_company: DF.Link | None
 		fax: DF.Data | None
+		insurance_expense_account: DF.Link | None
 		is_group: DF.Check
 		lft: DF.Int
 		monthly_sales_target: DF.Currency
@@ -106,6 +107,7 @@ class Company(NestedSet):
 		parent_company: DF.Link | None
 		payment_terms: DF.Link | None
 		phone_no: DF.Data | None
+		pol_advance_account: DF.Link | None
 		purchase_expense_account: DF.Link | None
 		purchase_expense_contra_account: DF.Link | None
 		reconcile_on_advance_payment_date: DF.Check

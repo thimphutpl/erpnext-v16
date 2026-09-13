@@ -1,0 +1,127 @@
+// Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and contributors
+// For license information, please see license.txt
+
+frappe.ui.form.on('Insurance and Registration', {
+	onload: function (frm) {
+		if (!frm.doc.posting_date) {
+			frm.set_value("posting_date", get_today());
+		}
+	},
+	settle_imprest_advance: function (frm) {
+		if (frm.doc.settle_imprest_advance == 0 || frm.doc.settle_imprest_advance == undefined) {
+			frm.set_value("imprest_party", null);
+			frm.refresh_field("imprest_party");
+		}
+	},
+	refresh: function (frm) {
+		frm.set_query("equipment", function (doc) {
+			return {
+				filters: {
+					// "hired_equipment": 0,
+					"company": doc.company,
+					"disabled": 0
+				}
+			}
+		})
+		if (frm.doc.docstatus === 1) {
+            frm.add_custom_button(__('Accounting Ledger'), function() {
+                frappe.route_options = {
+                    voucher_no: frm.doc.name,
+                    from_date: frm.doc.posting_date,
+                    to_date: frm.doc.posting_date,
+                    company: frm.doc.company,
+                    group_by_voucher: false
+                };
+                frappe.set_route("query-report", "General Ledger");
+            }, __("View"));
+        }
+	},
+
+	post_je: function (frm) { 
+		frappe.call({
+			method: "post_je",
+			doc: frm.doc,
+			callback: function (r) {
+				if (r.message) {
+					frm.refresh_field("insurance_item")
+				}
+			}
+		})
+	}
+});
+frappe.ui.form.on("Insurance Details", {
+	"post_bank_entry": function (frm, cdt, cdn) {
+		let row = locals[cdt][cdn]
+		frappe.call({
+			method: "create_je",
+			doc: frm.doc,
+			args: row,
+			callback: function (r) {
+				if (r.message) {
+					frappe.model.set_value(cdt, cdn, "journal_entry", r.message);
+					frm.refresh_field("insurance_item")
+					frm.dirty()
+				}
+			}
+		})
+	},
+});
+
+frappe.ui.form.on("Registration Details", {
+	"post_bank_entry": function (frm, cdt, cdn) {
+		let row = locals[cdt][cdn]
+		frappe.call({
+			method: "post_to_account",
+			doc: frm.doc,
+			args: row,
+			callback: function (r) {
+				if (r.message) {
+					frappe.model.set_value(cdt, cdn, "journal_entry", r.message);
+					frm.refresh_field("registration_item")
+					frm.dirty()
+				}
+			}
+		})
+	},
+});
+
+
+frappe.ui.form.on("Bluebook and Emission", {
+	"amount": function (frm, cdt, cdn) {
+		set_total_amount(frm, cdt, cdn);
+	},
+	"penalty_amount": function (frm, cdt, cdn) {
+		set_total_amount(frm, cdt, cdn);
+	},
+	"post_bank_entry": function (frm, cdt, cdn) {
+		let row = locals[cdt][cdn]
+		frappe.call({
+			method: "create_je",
+			doc: frm.doc,
+			args: row,
+			callback: function (r) {
+				if (r.message) {
+					frappe.model.set_value(cdt, cdn, "journal_entry", r.message);
+					frm.refresh_field("items")
+					frm.dirty()
+				}
+			}
+		})
+	},
+});
+var set_total_amount = function (frm, cdt, cdn) {
+	var item = locals[cdt][cdn];
+	if (flt(item.amount) > 0) {
+		if (flt(item.penalty_amount) > 0) {
+			var total = 0
+			total = flt(item.amount) + flt(item.penalty_amount)
+			frappe.model.set_value(cdt, cdn, "total_amount", total);
+		}
+		else {
+			frappe.model.set_value(cdt, cdn, "total_amount", item.amount);
+		}
+	} else {
+		frappe.throw("Amount Cannot be less than 0")
+	}
+
+}

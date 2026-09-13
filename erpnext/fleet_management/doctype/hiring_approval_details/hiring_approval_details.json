@@ -1,0 +1,281 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-04 11:11:36.775187",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "equipment_request_details_section",
+  "equipment_type",
+  "column_break_ntii",
+  "from_date",
+  "from_time",
+  "column_break_yuuz",
+  "to_date",
+  "to_time",
+  "column_break_mjic",
+  "total_hours",
+  "equipment_approved_details_section",
+  "equipment",
+  "registration_number",
+  "equipment_model",
+  "column_break_cwlv",
+  "rate_type",
+  "place",
+  "column_break_pvzv",
+  "rate",
+  "idle_rate",
+  "column_break_qeii",
+  "diff_rate",
+  "work_rate_column",
+  "rate3",
+  "rate4",
+  "rate5",
+  "idle_rate_column",
+  "irate1",
+  "irate2",
+  "irate3",
+  "irate4",
+  "irate5",
+  "section_break_drly",
+  "grand_total",
+  "column_break_lynh",
+  "remarks",
+  "request_reference"
+ ],
+ "fields": [
+  {
+   "fieldname": "equipment_request_details_section",
+   "fieldtype": "Section Break",
+   "label": "Equipment Request Details"
+  },
+  {
+   "fieldname": "equipment_type",
+   "fieldtype": "Link",
+   "label": "Equipment Type",
+   "options": "Equipment Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ntii",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.from_date",
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time"
+  },
+  {
+   "fieldname": "column_break_yuuz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.from_time && doc.to_date",
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "label": "To Time"
+  },
+  {
+   "fieldname": "column_break_mjic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.from_date && doc.to_date",
+   "fieldname": "total_hours",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Total Hours",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.total_hours",
+   "fieldname": "equipment_approved_details_section",
+   "fieldtype": "Section Break",
+   "label": "Equipment Approved Details"
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "label": "Equipment",
+   "options": "Equipment"
+  },
+  {
+   "fetch_from": "equipment.equipment_model",
+   "fieldname": "equipment_model",
+   "fieldtype": "Read Only",
+   "label": "Equipment Model"
+  },
+  {
+   "fieldname": "column_break_cwlv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.equipment",
+   "fieldname": "rate_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Rate Type",
+   "options": "\nWith Fuel\nWithout Fuel"
+  },
+  {
+   "depends_on": "eval:doc.equipment",
+   "fieldname": "place",
+   "fieldtype": "Data",
+   "label": "Place"
+  },
+  {
+   "fieldname": "column_break_pvzv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate (Work)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "idle_rate",
+   "fieldtype": "Currency",
+   "label": "Rate (Idle)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_qeii",
+   "fieldtype": "Column Break",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.rate_type",
+   "fieldname": "diff_rate",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Assign Different Rate"
+  },
+  {
+   "fieldname": "work_rate_column",
+   "fieldtype": "Column Break",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "rate3",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.accessory4",
+   "fieldname": "rate4",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "rate5",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "fieldname": "idle_rate_column",
+   "fieldtype": "Column Break",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.accessory1",
+   "fieldname": "irate1",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.accessory2",
+   "fieldname": "irate2",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.accessory3",
+   "fieldname": "irate3",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "irate4",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.accessory5",
+   "fieldname": "irate5",
+   "fieldtype": "Currency",
+   "hidden": 1
+  },
+  {
+   "fieldname": "section_break_drly",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Grand Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lynh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.equipment",
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "request_reference",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Request Reference"
+  },
+  {
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Equipment Number",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-06 15:00:02.781442",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Hiring Approval Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

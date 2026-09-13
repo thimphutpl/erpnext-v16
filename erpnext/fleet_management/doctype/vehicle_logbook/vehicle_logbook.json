@@ -1,0 +1,612 @@
+{
+ "actions": [],
+ "autoname": "VLB.YY.MM.####",
+ "creation": "2024-07-23 11:08:38.731025",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "branch",
+  "vehicle_logbook",
+  "column_break_1",
+  "ehf_name",
+  "column_break_4",
+  "equipment",
+  "pol_type",
+  "pool_equipment",
+  "column_break_xgbl",
+  "registration_number",
+  "equipment_operator",
+  "pool_equipment_number",
+  "section_break_9",
+  "rate_type",
+  "column_break_11",
+  "work_rate",
+  "column_break_13",
+  "idle_rate",
+  "cb_14",
+  "place",
+  "column_break_18",
+  "from_date",
+  "from_time",
+  "column_break_20",
+  "to_date",
+  "to_time",
+  "cb_100",
+  "customer",
+  "customer_type",
+  "section_break_mfia",
+  "idle_charge",
+  "working_hours",
+  "column_break_tvhj",
+  "equipment_run_by_electric",
+  "section_break_qcra",
+  "lph",
+  "column_break_xpnm",
+  "kph",
+  "section_break_8",
+  "initial_hour",
+  "column_break_21",
+  "final_hour",
+  "column_break_23",
+  "total_work_time",
+  "column_break_10",
+  "total_idle_time",
+  "section_break_22",
+  "initial_km",
+  "column_break_24",
+  "final_km",
+  "column_break_26",
+  "distance_km",
+  "cb_120",
+  "section_break_34",
+  "hour_taken",
+  "col_break_34",
+  "hour_adjustment_reason",
+  "tank_balance",
+  "column_break_yzkx",
+  "hsd_amount",
+  "section_break_4",
+  "vlogs",
+  "section_break_31",
+  "include_km",
+  "ys_km",
+  "consumption_km",
+  "column_break_34",
+  "include_hour",
+  "ys_hours",
+  "consumption_hours",
+  "column_break_37",
+  "other_consumption",
+  "hsd_received",
+  "reason",
+  "consumption",
+  "opening_balance",
+  "closing_balance",
+  "section_break_12",
+  "amended_from",
+  "invoice_created",
+  "payment_completed",
+  "section_break_remarks",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment_operator",
+   "fieldtype": "Data",
+   "label": "Equipment Operator",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "rate_type",
+   "fieldtype": "Data",
+   "label": "Rate Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "work_rate",
+   "fieldtype": "Currency",
+   "label": "Work Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "idle_rate",
+   "fieldtype": "Currency",
+   "label": "Idle Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "place",
+   "fieldtype": "Data",
+   "label": "Place",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "label": "To Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_100",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break",
+   "label": "Time Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "initial_hour",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Initial Hour ",
+   "width": "104"
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.initial_hour >= 0",
+   "fieldname": "final_hour",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Final Hour",
+   "width": "113"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_work_time",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total Work Time (Hours)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_idle_time",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total Idle Time (Hours)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "initial_km",
+   "fieldtype": "Int",
+   "label": "Initial KM",
+   "precision": "1"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.initial_km >= 0",
+   "fieldname": "final_km",
+   "fieldtype": "Int",
+   "label": "Final KM",
+   "precision": "1"
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "distance_km",
+   "fieldtype": "Int",
+   "label": "Distance KM",
+   "precision": "1"
+  },
+  {
+   "fieldname": "cb_120",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_34",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Hours to be added to invoice should be (+) and deducted should be (-)",
+   "fieldname": "hour_taken",
+   "fieldtype": "Int",
+   "label": "Hour Adjustment"
+  },
+  {
+   "fieldname": "col_break_34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.hour_taken",
+   "fieldname": "hour_adjustment_reason",
+   "fieldtype": "Data",
+   "label": "Hour Adjustment Reason"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Vehicle Log Details"
+  },
+  {
+   "fieldname": "vlogs",
+   "fieldtype": "Data",
+   "options": "Vehicle Log"
+  },
+  {
+   "fieldname": "section_break_31",
+   "fieldtype": "Section Break",
+   "label": "HSD Consumption Report",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "include_km",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Include KM Consumption"
+  },
+  {
+   "fieldname": "ys_km",
+   "fieldtype": "Float",
+   "label": "Based on KM",
+   "read_only": 1
+  },
+  {
+   "fieldname": "consumption_km",
+   "fieldtype": "Float",
+   "label": "Consumption Based KM Yardstick",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "include_hour",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Include Hour Consumption"
+  },
+  {
+   "fieldname": "ys_hours",
+   "fieldtype": "Float",
+   "label": "Based on H",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "consumption_hours",
+   "fieldtype": "Float",
+   "label": "Consumption Based on Hours Yardstick",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_37",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "other_consumption",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Other Consumption"
+  },
+  {
+   "fieldname": "hsd_received",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "HSD Received",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.other_consumption",
+   "fieldname": "reason",
+   "fieldtype": "Data",
+   "label": "Other Consumption Reason"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "consumption",
+   "fieldtype": "Float",
+   "label": "HSD Consumption",
+   "read_only": 1
+  },
+  {
+   "fieldname": "opening_balance",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Opening Balance"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "closing_balance",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Closing Balance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Vehicle Logbook",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "invoice_created",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Invoice Created"
+  },
+  {
+   "default": "0",
+   "fieldname": "payment_completed",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Payment Completed"
+  },
+  {
+   "fieldname": "section_break_remarks",
+   "fieldtype": "Section Break",
+   "label": "REMARKS"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "depends_on": "eval:doc.vehicle_logbook == 'Equipment Hiring Form'",
+   "fieldname": "ehf_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment Hiring Form",
+   "options": "Equipment Hiring Form"
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment",
+   "options": "Equipment"
+  },
+  {
+   "fieldname": "pol_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "POL Type"
+  },
+  {
+   "fieldname": "column_break_xgbl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "equipment.registration_number",
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Registration Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.customer_type",
+   "fieldname": "customer_type",
+   "fieldtype": "Data",
+   "label": "Customer Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "ehf_name.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_yzkx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hsd_amount",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "HSD Amount"
+  },
+  {
+   "depends_on": "eval:doc.branch",
+   "fieldname": "vehicle_logbook",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Select Equipment Hiring Form/Pool Vehicle",
+   "options": "\nEquipment Hiring Form"
+  },
+  {
+   "fieldname": "section_break_qcra",
+   "fieldtype": "Section Break",
+   "label": "Yardstick"
+  },
+  {
+   "depends_on": "eval:doc.equipment",
+   "fieldname": "lph",
+   "fieldtype": "Float",
+   "label": "Based on Hours",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xpnm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.equipment",
+   "fieldname": "kph",
+   "fieldtype": "Float",
+   "label": "Based on Kilometers",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.vehicle_logbook == 'Pool Vehicle'",
+   "fieldname": "pool_equipment",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Pool Equipment",
+   "options": "Equipment"
+  },
+  {
+   "depends_on": "eval:doc.vehicle_logbook == 'Pool Vehicle'",
+   "fieldname": "pool_equipment_number",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Pool Equipment Number"
+  },
+  {
+   "depends_on": "eval:doc.equipment",
+   "fieldname": "tank_balance",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Tank Balance"
+  },
+  {
+   "fieldname": "section_break_mfia",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "idle_charge",
+   "fieldtype": "Check",
+   "label": "Idle Charge"
+  },
+  {
+   "depends_on": "eval: doc.idle_charge",
+   "fieldname": "working_hours",
+   "fieldtype": "Int",
+   "label": "Working Hours"
+  },
+  {
+   "fieldname": "column_break_tvhj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "equipment_run_by_electric",
+   "fieldtype": "Check",
+   "label": "Equipment Run By Electricity / Non HSD Consumption"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-11 12:02:31.519349",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Vehicle Logbook",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

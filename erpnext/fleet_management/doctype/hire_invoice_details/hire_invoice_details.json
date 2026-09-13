@@ -1,0 +1,161 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-04 14:06:14.320007",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+    "vehicle_logbook",
+    "column_break_200",
+    "registration_number",
+    "column_break_2",
+    "equipment",
+    "section_break_6",
+    "rate_type",
+    "col_break_8",
+    "number_of_days",
+    "section_break_4",
+    "total_work_hours",
+    "work_rate",
+    "amount_work",
+    "column_break_20",
+    "total_idle_hours",
+    "idle_rate",
+    "amount_idle",
+    "section_break_xwgy",
+    "total_amount"
+   ],
+   "fields": [
+    {
+     "fieldname": "vehicle_logbook",
+     "fieldtype": "Link",
+     "label": "Vehicle Logbook",
+     "options": "Vehicle Logbook",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_200",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "column_break_2",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "equipment",
+     "fieldtype": "Link",
+     "label": "Equipment",
+     "options": "Equipment",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "section_break_6",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "rate_type",
+     "fieldtype": "Data",
+     "label": "Rate Type",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "col_break_8",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "number_of_days",
+     "fieldtype": "Int",
+     "in_list_view": 1,
+     "label": "Number of Days",
+     "read_only": 1
+    },
+    {
+     "fieldname": "section_break_4",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "column_break_20",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "total_work_hours",
+     "fieldtype": "Data",
+     "label": "Total Work Hours",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "work_rate",
+     "fieldtype": "Currency",
+     "label": "Work Rate",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "amount_work",
+     "fieldtype": "Currency",
+     "in_list_view": 1,
+     "label": "Amount Work",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "total_idle_hours",
+     "fieldtype": "Data",
+     "label": "Total Idle Hours",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "idle_rate",
+     "fieldtype": "Currency",
+     "label": "Idle Rate",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "amount_idle",
+     "fieldtype": "Currency",
+     "in_list_view": 1,
+     "label": "Amount Idle",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "section_break_xwgy",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "total_amount",
+     "fieldtype": "Currency",
+     "in_list_view": 1,
+     "label": "Total Amount",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "registration_number",
+     "fieldtype": "Data",
+     "in_list_view": 1,
+     "label": "Equipment Number",
+     "read_only": 1,
+     "reqd": 1
+    }
+   ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-04 14:06:14.320007",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Hire Invoice Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

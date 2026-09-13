@@ -1,0 +1,303 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:registration_number",
+ "creation": "2025-01-08 16:02:15.683995",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "registration_number",
+  "branch",
+  "cost_center",
+  "column_break_glbw",
+  "company",
+  "disabled",
+  "yardstick_details_for_pool_vehicles_section",
+  "lph",
+  "column_break_ewuk",
+  "kph",
+  "section_break_qvyl",
+  "fuelbook",
+  "equipment_name",
+  "engine_number",
+  "chasis_number",
+  "column_break_pnyd",
+  "equipment_type",
+  "equipment_category",
+  "equipment_model",
+  "fuel_type",
+  "section_break_zjyx",
+  "initial_km_reading",
+  "column_break_voxc",
+  "section_break_qgjv",
+  "current_operator",
+  "column_break_reyw",
+  "current_km_reading",
+  "column_break_xmyp",
+  "current_hr_reading",
+  "other_details_tab",
+  "asset_code",
+  "column_break_vpgc",
+  "initial_reading",
+  "reading_uom",
+  "section_break_wunf",
+  "table_qptk"
+ ],
+ "fields": [
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_glbw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "branch.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Registration Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_qvyl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_pnyd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "asset_code",
+   "fieldtype": "Link",
+   "label": "Asset Code",
+   "options": "Asset"
+  },
+  {
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number"
+  },
+  {
+   "fieldname": "chasis_number",
+   "fieldtype": "Data",
+   "label": "Chasis Number"
+  },
+  {
+   "fieldname": "other_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "table_qptk",
+   "fieldtype": "Table",
+   "options": "Equipment Operator Item"
+  },
+  {
+   "fieldname": "section_break_wunf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_vpgc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "initial_reading",
+   "fieldtype": "Float",
+   "label": "Initial Reading"
+  },
+  {
+   "fieldname": "reading_uom",
+   "fieldtype": "Link",
+   "label": "Reading UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "label": "Equipment Name"
+  },
+  {
+   "fieldname": "equipment_model",
+   "fieldtype": "Link",
+   "label": "Equipment Model",
+   "options": "Equipment Model",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_zjyx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equipment_category",
+   "fieldtype": "Link",
+   "label": "Equipment Category",
+   "options": "Equipment Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_voxc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment Type",
+   "options": "Equipment Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "initial_km_reading",
+   "fieldtype": "Float",
+   "label": "Initial KM Reading"
+  },
+  {
+   "fieldname": "section_break_qgjv",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "current_operator",
+   "fieldtype": "Data",
+   "label": "Current Operator"
+  },
+  {
+   "fieldname": "column_break_reyw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "current_km_reading",
+   "fieldtype": "Data",
+   "label": "Current KM Reading"
+  },
+  {
+   "fieldname": "column_break_xmyp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "current_hr_reading",
+   "fieldtype": "Data",
+   "label": "Current Hour Reading"
+  },
+  {
+   "fieldname": "yardstick_details_for_pool_vehicles_section",
+   "fieldtype": "Section Break",
+   "label": "Yardstick Details"
+  },
+  {
+   "fieldname": "lph",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Based on Hours",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_ewuk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "kph",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Based on Kilometers",
+   "precision": "2"
+  },
+  {
+   "fieldname": "fuel_type",
+   "fieldtype": "Link",
+   "label": "Fuel Type",
+   "options": "Item"
+  },
+  {
+   "fieldname": "fuelbook",
+   "fieldtype": "Link",
+   "label": "Fuelbook",
+   "options": "Fuelbook"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-12 14:18:43.301139",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Equipment",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Fleet Master",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Fleet Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Fleet User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
