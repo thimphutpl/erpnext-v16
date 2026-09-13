@@ -1,0 +1,351 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-04 14:01:29.536357",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+    "section_break_1",
+    "owned_by",
+    "column_break_22",
+    "receive_payment",
+    "section_break_5",
+    "branch",
+    "column_break_2",
+    "cost_center",
+    "col_break_10",
+    "close",
+    "section_break_10",
+    "ehf_name",
+    "column_break_4",
+    "customer",
+    "column_break_6",
+    "posting_date",
+    "section_break_12",
+    "total_invoice_amount",
+    "advance_amount",
+    "balance_advance_amount",
+    "column_break_14",
+    "discount_amount",
+    "discount_reason",
+    "column_break_16",
+    "balance_amount",
+    "outstanding_amount",
+    "section_break_25",
+    "get_vehicle_logbooks",
+    "section_break_18",
+    "items",
+    "section_break_20",
+    "get_advances",
+    "advances",
+    "section_break_23",
+    "invoice_jv",
+    "column_break_33",
+    "payment_jv",
+    "column_break_ssxe",
+    "amended_from",
+    "section_break_41",
+    "currency",
+    "workflow_state",
+    "status",
+    "column_break_43",
+    "company"
+   ],
+   "fields": [
+    {
+     "fieldname": "section_break_1",
+     "fieldtype": "Section Break",
+     "hidden": 1,
+     "label": "Status",
+     "options": "Draft\nSubmitted\nCancelled"
+    },
+    {
+     "fieldname": "owned_by",
+     "fieldtype": "Data",
+     "hidden": 1,
+     "label": "Owned By"
+    },
+    {
+     "fieldname": "column_break_22",
+     "fieldtype": "Column Break"
+    },
+    {
+     "allow_on_submit": 1,
+     "description": "Receive Payment on the Invoice Raised",
+     "fieldname": "receive_payment",
+     "fieldtype": "Button",
+     "hidden": 1,
+     "label": "Receive Payment"
+    },
+    {
+     "fieldname": "section_break_5",
+     "fieldtype": "Section Break",
+     "label": "Hiring Details"
+    },
+    {
+     "fieldname": "branch",
+     "fieldtype": "Link",
+     "label": "Branch",
+     "options": "Branch",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_2",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fetch_from": "branch.cost_center",
+     "fieldname": "cost_center",
+     "fieldtype": "Link",
+     "label": "Cost Center",
+     "options": "Cost Center",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "col_break_10",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "section_break_10",
+     "fieldtype": "Section Break"
+    },
+    {
+     "depends_on": "eval:doc.branch",
+     "fieldname": "ehf_name",
+     "fieldtype": "Link",
+     "label": "Equipment Hiring Form",
+     "options": "Equipment Hiring Form",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_4",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "customer",
+     "fieldtype": "Link",
+     "label": "Customer",
+     "options": "Customer",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_6",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "posting_date",
+     "fieldtype": "Date",
+     "in_list_view": 1,
+     "label": "Invoice Date",
+     "reqd": 1
+    },
+    {
+     "fieldname": "section_break_12",
+     "fieldtype": "Section Break",
+     "label": "Invoice Amount Details"
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "total_invoice_amount",
+     "fieldtype": "Currency",
+     "in_list_view": 1,
+     "label": "Total Invoice Amount",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "advance_amount",
+     "fieldtype": "Currency",
+     "label": "Adjusted Advance Amount",
+     "read_only": 1
+    },
+    {
+     "fieldname": "balance_advance_amount",
+     "fieldtype": "Currency",
+     "hidden": 1,
+     "label": "Balance Advance Amount"
+    },
+    {
+     "fieldname": "column_break_14",
+     "fieldtype": "Column Break"
+    },
+    {
+     "default": "0",
+     "fieldname": "discount_amount",
+     "fieldtype": "Currency",
+     "label": "Discount Amount",
+     "read_only": 1
+    },
+    {
+     "depends_on": "eval:doc.discount_amount",
+     "fieldname": "discount_reason",
+     "fieldtype": "Text",
+     "label": "Discount Reason"
+    },
+    {
+     "fieldname": "column_break_16",
+     "fieldtype": "Column Break"
+    },
+    {
+     "allow_on_submit": 1,
+     "default": "0",
+     "description": "(Total Invoice Amount - Adjusted Advance Amount - Discount Amount - TDS Amount)",
+     "fieldname": "balance_amount",
+     "fieldtype": "Currency",
+     "label": "Balance Amount",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "default": "0",
+     "description": "(Outstanding payment to be received or adjusted from finance)",
+     "fieldname": "outstanding_amount",
+     "fieldtype": "Currency",
+     "label": "Outstanding Amount",
+     "read_only": 1
+    },
+    {
+     "fieldname": "section_break_25",
+     "fieldtype": "Section Break"
+    },
+    {
+     "description": "Get all vehicle logbooks which are not invoiced for the Equipment Hiring Form Mentioned Above",
+     "fieldname": "get_vehicle_logbooks",
+     "fieldtype": "Button",
+     "label": "Get Vehicle Logbooks"
+    },
+    {
+     "fieldname": "section_break_18",
+     "fieldtype": "Section Break",
+     "label": "Hire Invoice Details"
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "items",
+     "fieldtype": "Table",
+     "options": "Hire Invoice Details",
+     "read_only": 1
+    },
+    {
+     "collapsible": 1,
+     "collapsible_depends_on": "eval:doc.advances",
+     "fieldname": "section_break_20",
+     "fieldtype": "Section Break",
+     "label": "Advance Details"
+    },
+    {
+     "fieldname": "get_advances",
+     "fieldtype": "Button",
+     "label": "Get Advances"
+    },
+    {
+     "fieldname": "advances",
+     "fieldtype": "Table",
+     "options": "Hire Invoice Advance"
+    },
+    {
+     "fieldname": "section_break_23",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "column_break_33",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "amended_from",
+     "fieldtype": "Link",
+     "label": "Amended From",
+     "no_copy": 1,
+     "options": "Hire Charge Invoice",
+     "print_hide": 1,
+     "read_only": 1
+    },
+    {
+     "fieldname": "section_break_41",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "currency",
+     "fieldtype": "Link",
+     "label": "Currency",
+     "options": "Currency",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_43",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "company",
+     "fieldtype": "Link",
+     "label": "Company",
+     "options": "Company",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "workflow_state",
+     "fieldtype": "Link",
+     "hidden": 1,
+     "label": "Workflow State",
+     "options": "Workflow State"
+    },
+    {
+     "default": "0",
+     "fieldname": "close",
+     "fieldtype": "Check",
+     "label": "Final Settlement?"
+    },
+    {
+     "fieldname": "invoice_jv",
+     "fieldtype": "Data",
+     "label": "Invoice Journal Entry",
+     "read_only": 1
+    },
+    {
+     "fieldname": "payment_jv",
+     "fieldtype": "Data",
+     "label": "Payment Journal Entry",
+     "read_only": 1
+    },
+    {
+     "fieldname": "column_break_ssxe",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "status",
+     "fieldtype": "Select",
+     "label": "Status",
+     "options": "\nPayment Received\nPending Payment",
+     "read_only": 1
+    }
+   ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-03-04 14:01:29.536357",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Hire Charge Invoice",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

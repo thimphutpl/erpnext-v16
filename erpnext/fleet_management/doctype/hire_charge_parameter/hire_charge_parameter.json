@@ -1,0 +1,248 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "HCP.YYYY.####",
+ "creation": "2025-03-04 11:43:01.794979",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_d2nj",
+  "amended_from",
+  "equipment",
+  "registration_number",
+  "column_break_lhne",
+  "equipment_model",
+  "column_break_erjd",
+  "equipment_type",
+  "external_rate_section",
+  "without_fuel",
+  "column_break_xfid",
+  "with_fuel",
+  "column_break_iebd",
+  "idle",
+  "internal_rate_section",
+  "without_fuel_internal",
+  "column_break_vgbt",
+  "with_fuel_internal",
+  "column_break_hmhm",
+  "idle_internal",
+  "yardstick_details_section",
+  "lph",
+  "column_break_yjau",
+  "kph",
+  "section_break_qdun",
+  "benchmark",
+  "column_break_mbjj",
+  "interval",
+  "hire_charge_parameters_section",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_d2nj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Hire Charge Parameter",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "equipment.equipment_type",
+   "fieldname": "equipment_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment Type",
+   "options": "Equipment Type",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_erjd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "equipment.equipment_model",
+   "fieldname": "equipment_model",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment Model",
+   "options": "Equipment Model",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "external_rate_section",
+   "fieldtype": "Section Break",
+   "label": "External Rate"
+  },
+  {
+   "fieldname": "without_fuel",
+   "fieldtype": "Currency",
+   "label": "Without Fuel",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xfid",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "with_fuel",
+   "fieldtype": "Currency",
+   "label": "With Fuel",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_iebd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "idle",
+   "fieldtype": "Currency",
+   "label": "Idle Charge",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "internal_rate_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Internal Rate"
+  },
+  {
+   "fieldname": "without_fuel_internal",
+   "fieldtype": "Currency",
+   "label": "Without Fuel Internal",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_vgbt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "with_fuel_internal",
+   "fieldtype": "Currency",
+   "label": "With Fuel Internal",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_hmhm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "idle_internal",
+   "fieldtype": "Currency",
+   "label": "Idle Charge Internal",
+   "read_only": 1
+  },
+  {
+   "fieldname": "yardstick_details_section",
+   "fieldtype": "Section Break",
+   "label": "Yardstick Details"
+  },
+  {
+   "fieldname": "lph",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Based on Hours",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_yjau",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "kph",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Based on Kilometers",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_qdun",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "benchmark",
+   "fieldtype": "Float",
+   "label": "Current Benchmark",
+   "precision": "1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_mbjj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "interval",
+   "fieldtype": "Float",
+   "label": "Current Maintenance Interval",
+   "precision": "1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "hire_charge_parameters_section",
+   "fieldtype": "Section Break",
+   "label": "Hire Charge Parameters"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "options": "Hire Charge Item"
+  },
+  {
+   "fieldname": "column_break_lhne",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "equipment.registration_number",
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Registration Number",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "label": "Equipment",
+   "options": "Equipment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-06 15:00:59.006343",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Hire Charge Parameter",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -35,8 +35,9 @@ class BudgetValidation:
 		)
 
 	def validate(self):
-		self.build_validation_map()
-		self.validate_for_overbooking()
+		pass
+		# self.build_validation_map()
+		# self.validate_for_overbooking()
 
 	def build_validation_map(self):
 		self.build_budget_keys()

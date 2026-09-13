@@ -406,6 +406,10 @@ doc_events = {
 	"Integration Request": {
 		"validate": "erpnext.accounts.doctype.payment_request.payment_request.validate_payment"
 	},
+	"Journal Entry": {
+        "on_submit": "erpnext.fleet_management.doctype.pol_advance.pol_advance.update_pol_advance_status_on_je_submit",
+        "on_cancel": "erpnext.fleet_management.doctype.pol_advance.pol_advance.update_pol_advance_status_on_je_submit",
+    }
 }
 
 # function should expect the variable and doc as arguments

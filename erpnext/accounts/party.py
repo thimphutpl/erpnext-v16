@@ -1024,11 +1024,12 @@ def get_default_contact(doctype: str, name: str) -> str | None:
 		],
 		or_filters=[
 			["is_primary_contact", "=", 1],
-			["is_billing_contact", "=", 1],
+			# ["is_billing_contact", "=", 1],
 		],
 		pluck="name",
 		limit=1,
-		order_by="is_primary_contact DESC, is_billing_contact DESC",
+		order_by="is_primary_contact DESC",
+		# order_by="is_primary_contact DESC, is_billing_contact DESC",
 	)
 
 	return contacts[0] if contacts else None

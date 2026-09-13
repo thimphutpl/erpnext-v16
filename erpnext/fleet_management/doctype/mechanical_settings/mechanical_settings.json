@@ -1,0 +1,44 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-04 15:59:09.578734",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+    "hire_rate_based_on"
+   ],
+   "fields": [
+    {
+     "description": "The hire rates in logbook, hire extensions, and invoices will be based on the selected document",
+     "fieldname": "hire_rate_based_on",
+     "fieldtype": "Select",
+     "in_list_view": 1,
+     "label": "Hire Rate Based On",
+     "options": "\nEquipment Hiring Form\nHire Charge Parameter",
+     "reqd": 1
+    }
+   ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-03-04 15:59:09.578734",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Mechanical Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

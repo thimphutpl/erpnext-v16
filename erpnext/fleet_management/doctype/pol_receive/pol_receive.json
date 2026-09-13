@@ -1,0 +1,362 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:POLR-{YY}-{MM}-{DD}-{###}",
+ "creation": "2025-01-08 22:04:17.819249",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_1",
+  "for_machineries",
+  "branch",
+  "cost_center",
+  "column_break_zeja",
+  "equipment",
+  "equipment_name",
+  "equipment_category",
+  "column_break_rszp",
+  "posting_date",
+  "posting_time",
+  "section_break_6",
+  "fuelbook",
+  "supplier",
+  "column_break_waxq",
+  "fuel_type",
+  "item_name",
+  "column_break_wecb",
+  "uom",
+  "section_break_zdgm",
+  "items",
+  "total_qty",
+  "section_break_ozym",
+  "get_advances",
+  "advances",
+  "mileage_details",
+  "column_break_uzts",
+  "previous_km",
+  "column_break_jijy",
+  "current_km",
+  "column_break_31",
+  "km_difference",
+  "column_break_33",
+  "mileage",
+  "section_break_10",
+  "total_amount",
+  "column_break_npwy",
+  "total_allocated_amount",
+  "od_amount",
+  "section_break_8",
+  "column_break_nike",
+  "remarks",
+  "jv",
+  "column_break_tmap",
+  "company",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Location Information"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "branch.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break",
+   "label": "Equipment Details"
+  },
+  {
+   "fetch_from": "fuelbook.supplier",
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Supplier",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "fuel_type.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Amount Details"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "no_copy": 1,
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "km_difference",
+   "fieldtype": "Float",
+   "label": "KM Difference",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mileage",
+   "fieldtype": "Float",
+   "label": "Mileage",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.for_machineries === 0;",
+   "fieldname": "fuelbook",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Fuelbook",
+   "mandatory_depends_on": "eval: doc.for_machineries === 0;",
+   "options": "Fuelbook"
+  },
+  {
+   "fieldname": "previous_km",
+   "fieldtype": "Float",
+   "label": "Previous KM",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:!doc.hired_equipment",
+   "fieldname": "mileage_details",
+   "fieldtype": "Section Break",
+   "label": "Mileage Details"
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_33",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zeja",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_tmap",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_nike",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_zdgm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_waxq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "equipment.fuel_type",
+   "fieldname": "fuel_type",
+   "fieldtype": "Link",
+   "label": "Fuel Type",
+   "options": "Item",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "POL Receive",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Equipment",
+   "options": "Equipment",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "equipment.equipment_name",
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "label": "Equipment Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_rszp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ozym",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "advances",
+   "fieldtype": "Table",
+   "label": "POL Advance",
+   "options": "POL Receive Advance"
+  },
+  {
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "label": "Total Qty.",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_jijy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "POL Receive Details",
+   "options": "POL Receive Item"
+  },
+  {
+   "fieldname": "column_break_wecb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "fuel_type.stock_uom",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_uzts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "current_km",
+   "fieldtype": "Float",
+   "label": "Current KM"
+  },
+  {
+   "fieldname": "column_break_npwy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_allocated_amount",
+   "fieldtype": "Currency",
+   "label": "Total Allocated Amount",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "od_amount",
+   "fieldtype": "Currency",
+   "label": "OD Amount",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "Check this button only if you are going to recive POL to machinery other than vehicles",
+   "fieldname": "for_machineries",
+   "fieldtype": "Check",
+   "label": "For Machineries"
+  },
+  {
+   "fieldname": "get_advances",
+   "fieldtype": "Button",
+   "label": "Get Advances"
+  },
+  {
+   "fetch_from": "equipment.equipment_category",
+   "fieldname": "equipment_category",
+   "fieldtype": "Link",
+   "label": "Equipment Category",
+   "options": "Equipment Category"
+  },
+  {
+   "fieldname": "jv",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Journal Entry"
+  },
+  {
+   "fieldname": "posting_time",
+   "fieldtype": "Time",
+   "label": "Posting Time"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-11 06:51:17.600410",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "POL Receive",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

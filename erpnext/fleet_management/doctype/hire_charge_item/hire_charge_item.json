@@ -1,0 +1,153 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-04 11:38:16.954681",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_date",
+  "column_break_qxtz",
+  "to_date",
+  "section_break_aayv",
+  "external_customer_column",
+  "rate_fuel",
+  "rate_wofuel",
+  "idle_rate",
+  "column_break_cahz",
+  "rate_fuel_internal",
+  "rate_wofuel_internal",
+  "idle_rate_internal",
+  "section_break_xifj",
+  "yardstick_rates_column",
+  "yard_hours",
+  "yard_distance",
+  "column_break_njrx",
+  "perf_bench",
+  "main_int"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "column_break_qxtz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_aayv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "external_customer_column",
+   "fieldtype": "Column Break",
+   "label": "External Customer"
+  },
+  {
+   "fieldname": "rate_fuel",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "With Fuel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_cahz",
+   "fieldtype": "Column Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "rate_wofuel",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Without Fuel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "idle_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Idle Rate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate_fuel_internal",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "With Fuel"
+  },
+  {
+   "fieldname": "rate_wofuel_internal",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Without Fuel"
+  },
+  {
+   "fieldname": "idle_rate_internal",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Idle Rate"
+  },
+  {
+   "fieldname": "section_break_xifj",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "yardstick_rates_column",
+   "fieldtype": "Column Break",
+   "label": "Yardstick Rates"
+  },
+  {
+   "fieldname": "yard_hours",
+   "fieldtype": "Float",
+   "in_standard_filter": 1,
+   "label": "Based on Hours",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_njrx",
+   "fieldtype": "Column Break",
+   "label": "Performance & Maintenance"
+  },
+  {
+   "fieldname": "yard_distance",
+   "fieldtype": "Float",
+   "label": "Based on Distance",
+   "precision": "2"
+  },
+  {
+   "fieldname": "perf_bench",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Performance Benchmark"
+  },
+  {
+   "fieldname": "main_int",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Maintenance Interval",
+   "precision": "1"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-06 15:23:26.842078",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Hire Charge Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

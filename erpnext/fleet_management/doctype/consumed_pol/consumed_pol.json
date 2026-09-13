@@ -1,0 +1,115 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-17 15:21:39.894759",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+    "branch",
+    "equipment",
+    "pol_type",
+    "date",
+    "qty",
+    "amended_from",
+    "reference_type",
+    "reference_name",
+    "sc12",
+    "company"
+   ],
+   "fields": [
+    {
+     "fieldname": "branch",
+     "fieldtype": "Link",
+     "label": "Branch",
+     "options": "Branch",
+     "reqd": 1
+    },
+    {
+     "fieldname": "equipment",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Equipment",
+     "options": "Equipment",
+     "reqd": 1
+    },
+    {
+     "fieldname": "pol_type",
+     "fieldtype": "Data",
+     "label": "POL Type",
+     "reqd": 1
+    },
+    {
+     "fieldname": "date",
+     "fieldtype": "Date",
+     "label": "Date",
+     "reqd": 1
+    },
+    {
+     "fieldname": "qty",
+     "fieldtype": "Float",
+     "in_list_view": 1,
+     "label": "Quantity",
+     "precision": "2",
+     "reqd": 1
+    },
+    {
+     "fieldname": "amended_from",
+     "fieldtype": "Link",
+     "label": "Amended From",
+     "no_copy": 1,
+     "options": "Consumed POL",
+     "print_hide": 1,
+     "read_only": 1
+    },
+    {
+     "fieldname": "reference_type",
+     "fieldtype": "Select",
+     "label": "Reference Type",
+     "options": "\nPOL\nIssue POL\nEquipment POL Transfer"
+    },
+    {
+     "fieldname": "reference_name",
+     "fieldtype": "Dynamic Link",
+     "label": "Reference Name",
+     "options": "reference_type"
+    },
+    {
+     "fieldname": "sc12",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "company",
+     "fieldtype": "Link",
+     "label": "Company",
+     "options": "Company",
+     "read_only": 1,
+     "reqd": 1
+    }
+   ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-02-17 15:21:39.894759",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Consumed POL",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-03 09:46:38.140954",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "equipment",
+  "equipment_category",
+  "column_break_3",
+  "qty",
+  "column_break_11",
+  "equipment_balance",
+  "section_break_9",
+  "warehouse",
+  "cost_center",
+  "item_code",
+  "equipment_number",
+  "equipment_warehouse",
+  "column_break_6",
+  "equipment_branch",
+  "equipment_cost_center",
+  "hiring_branch",
+  "hiring_cost_center",
+  "column_break_13",
+  "hiring_warehouse",
+  "expense_account",
+  "serial_and_batch_bundle"
+ ],
+ "fields": [
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "label": "Equipment",
+   "options": "Equipment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "equipment.registration_number",
+   "fieldname": "equipment_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Equipment Number",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.equipment_branch",
+   "fieldname": "equipment_warehouse",
+   "fieldtype": "Link",
+   "label": "Equipment Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "equipment.branch",
+   "fieldname": "equipment_branch",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Equipment Branch",
+   "options": "equipment.branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "equipment_cost_center",
+   "fieldtype": "Link",
+   "label": "Equipment Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hiring_branch",
+   "fieldtype": "Data",
+   "label": "Hiring Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hiring_cost_center",
+   "fieldtype": "Data",
+   "label": "Hiring Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.hiring_branch",
+   "fieldname": "hiring_warehouse",
+   "fieldtype": "Data",
+   "label": "Hiring Warehouse"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Expense Account",
+   "options": "Account",
+   "read_only": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "equipment_category",
+   "fieldtype": "Link",
+   "label": "Equipment Category",
+   "options": "Equipment Category",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.equipment",
+   "fieldname": "equipment_balance",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "label": "Equipment Balance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "serial_and_batch_bundle",
+   "fieldtype": "Data",
+   "label": "Serial And Batch Bundle"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-03 10:36:26.768346",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "POL Issue Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

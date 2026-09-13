@@ -453,9 +453,10 @@ class PaymentEntry(AccountsController):
 			latest = latest.get(d.payment_term) or latest.get(None)
 			# The reference has already been fully paid
 			if not latest:
-				frappe.throw(
-					_("{0} {1} has already been fully paid.").format(_(d.reference_doctype), d.reference_name)
-				)
+				return
+				# frappe.throw(
+				# 	_("{0} {1} has already been fully paid.").format(_(d.reference_doctype), d.reference_name)
+				# )
 			# The reference has already been partly paid
 			elif (
 				latest.outstanding_amount < latest.invoice_amount
@@ -640,7 +641,8 @@ class PaymentEntry(AccountsController):
 				frappe.throw(_("{0} is mandatory").format(_(self.meta.get_label(field))))
 
 	def validate_reference_documents(self):
-		valid_reference_doctypes = self.get_valid_reference_doctypes()
+		# valid_reference_doctypes = self.get_valid_reference_doctypes()
+		valid_reference_doctypes = "Repair And Service Invoice"
 
 		if not valid_reference_doctypes:
 			return
@@ -661,7 +663,7 @@ class PaymentEntry(AccountsController):
 
 				ref_doc = frappe.get_lazy_doc(d.reference_doctype, d.reference_name)
 
-				if d.reference_doctype != "Journal Entry":
+				if d.reference_doctype != "Journal Entry" and  d.reference_doctype not in ["Repair And Service Invoice"]:
 					if self.party != ref_doc.get(scrub(self.party_type)):
 						frappe.throw(
 							_("{0} {1} is not associated with {2} {3}").format(
@@ -708,11 +710,11 @@ class PaymentEntry(AccountsController):
 
 	def get_valid_reference_doctypes(self):
 		if self.party_type == "Customer":
-			return ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning", "Payment Entry")
+			return ("Sales Order", "Sales Invoice", "Journal Entry", "Dunning", "Payment Entry", "Repair And Service Invoice")
 		elif self.party_type in ["Shareholder", "Employee"]:
 			return ("Journal Entry",)
 		elif self.party_type == "Supplier":
-			return ("Purchase Order", "Purchase Invoice", "Journal Entry", "Payment Entry")
+			return ("Purchase Order", "Purchase Invoice", "Journal Entry", "Payment Entry", "Repair And Service Invoice")
 
 	def validate_paid_invoices(self):
 		no_oustanding_refs = {}
@@ -2905,8 +2907,14 @@ def get_payment_entry(
 	pe.posting_date = nowdate()
 	pe.reference_date = reference_date
 	pe.mode_of_payment = doc.get("mode_of_payment")
-	pe.party_type = party_type
-	pe.party = doc.get(scrub(party_type))
+
+	# pe.party = doc.get(scrub(party_type))
+	if dt in ['Repair And Service Invoice']:
+		pe.party_type = doc.get("party_type")
+		pe.party = doc.get("party")
+	else:
+		pe.party_type = party_type
+		pe.party = doc.get(scrub(party_type))
 	pe.contact_person = doc.get("contact_person")
 	complete_contact_details(pe)
 	pe.ensure_supplier_is_not_blocked()

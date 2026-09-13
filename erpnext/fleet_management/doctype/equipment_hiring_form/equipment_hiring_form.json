@@ -1,0 +1,326 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "EHF.YY.MM.####",
+ "creation": "2024-07-23 10:52:22.208880",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hiring_status",
+  "section_break_1",
+  "branch",
+  "column_break_cfeu",
+  "cost_center",
+  "col_break_3",
+  "private",
+  "section_break_fxma",
+  "customer",
+  "address",
+  "location",
+  "column_break_cmcm",
+  "private_customer_name",
+  "private_customer_address",
+  "column_break_dalm",
+  "request_date",
+  "contact_number",
+  "section_break_3",
+  "request_items",
+  "equipment_approved_details_section",
+  "approved_items",
+  "advance_details_if_private_section",
+  "total_hiring_amount",
+  "column_break_qkts",
+  "advance_amount",
+  "column_break_nbsx",
+  "advance_journal",
+  "section_break_15",
+  "start_date",
+  "end_date",
+  "column_break_18",
+  "rate",
+  "rate_based_on",
+  "reading_based_on",
+  "section_break_20",
+  "amended_from",
+  "payment_completed",
+  "section_break_32",
+  "tc_name",
+  "terms",
+  "sb12",
+  "workflow_state"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "hiring_status",
+   "fieldtype": "Check",
+   "hidden": 1
+  },
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "col_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "request_date",
+   "fieldtype": "Date",
+   "label": "Request Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Data",
+   "label": "Contact Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Equipment Request Details"
+  },
+  {
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Equipment Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Equipment End Date"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Hiring Rate"
+  },
+  {
+   "fieldname": "rate_based_on",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Rate Based On",
+   "options": "\nDaily\nKilometer\nLumpsum\nPer Hour\nPer Pack"
+  },
+  {
+   "fieldname": "reading_based_on",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Reading Based On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_20",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Equipment Hiring Form",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_32",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "tc_name",
+   "fieldtype": "Link",
+   "label": "Terms and Conditions",
+   "options": "Terms and Conditions"
+  },
+  {
+   "fieldname": "terms",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "sb12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Workflow State",
+   "options": "Workflow State",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_cfeu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Is the Hire for Private?",
+   "fieldname": "private",
+   "fieldtype": "Select",
+   "label": "Machinery Type",
+   "options": "Own",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_fxma",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Customer Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_cmcm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.private == 'Private' && doc.customer",
+   "fieldname": "private_customer_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer Name"
+  },
+  {
+   "depends_on": "eval:doc.private == 'Private' && doc.customer",
+   "description": "* For private customers where individual customer creation may not be applicable.",
+   "fieldname": "private_customer_address",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "Customer Address"
+  },
+  {
+   "fieldname": "column_break_dalm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "request_items",
+   "fieldtype": "Table",
+   "label": "Request Items",
+   "options": "Hiring Request Details"
+  },
+  {
+   "fieldname": "equipment_approved_details_section",
+   "fieldtype": "Section Break",
+   "label": "Equipment Approved Details"
+  },
+  {
+   "fieldname": "approved_items",
+   "fieldtype": "Table",
+   "label": "Approved Items",
+   "options": "Hiring Approval Details",
+   "reqd": 1
+  },
+  {
+   "fieldname": "advance_details_if_private_section",
+   "fieldtype": "Section Break",
+   "label": "Advance Details (If Private)"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_hiring_amount",
+   "fieldtype": "Currency",
+   "label": "Total Hiring Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_qkts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "advance_amount",
+   "fieldtype": "Currency",
+   "label": "Advance Amount"
+  },
+  {
+   "fieldname": "column_break_nbsx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "advance_journal",
+   "fieldtype": "Link",
+   "label": "Advance Journal",
+   "options": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "If the payment has been completed for the hire or not",
+   "fieldname": "payment_completed",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Payment Completed"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Location",
+   "options": "Location"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-03-05 15:40:09.151571",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Equipment Hiring Form",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "customer, request_date",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

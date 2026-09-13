@@ -1,0 +1,292 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "HSDP.YY.MM.#####",
+ "creation": "2025-03-03 11:09:37.275465",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+    "branch",
+    "column_break_wkkx",
+    "cost_center",
+    "column_break_htla",
+    "posting_date",
+    "fuelbook_information_section",
+    "fuelbook",
+    "column_break_vhsv",
+    "supplier",
+    "column_break_vovm",
+    "get_pol_invoices",
+    "section_break_xfou",
+    "final_settlement",
+    "bank_account",
+    "amount",
+    "actual_amount",
+    "column_break_yawd",
+    "remarks",
+    "section_break_uvdy",
+    "items",
+    "section_break_lslk",
+    "assign_from_cheque_lot",
+    "cheque_lot",
+    "clearance_date",
+    "status",
+    "bank_payment",
+    "payment_status",
+    "amended_from",
+    "column_break_2",
+    "cheque__no",
+    "column_break_ucvw",
+    "cheque_date",
+    "company",
+    "section_break_hjjr",
+    "approver",
+    "verifier"
+   ],
+   "fields": [
+    {
+     "fieldname": "branch",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Branch",
+     "options": "Branch",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_2",
+     "fieldtype": "Column Break"
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "cost_center",
+     "fieldtype": "Link",
+     "label": "Cost Center",
+     "options": "Cost Center",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "fieldname": "posting_date",
+     "fieldtype": "Date",
+     "label": "Posting Date",
+     "reqd": 1
+    },
+    {
+     "depends_on": "eval:doc.branch",
+     "fieldname": "fuelbook",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Fuelbook",
+     "options": "Fuelbook",
+     "reqd": 1
+    },
+    {
+     "fieldname": "supplier",
+     "fieldtype": "Link",
+     "label": "Supplier",
+     "options": "Supplier",
+     "reqd": 1
+    },
+    {
+     "fieldname": "get_pol_invoices",
+     "fieldtype": "Button",
+     "label": "Get POL Invoices"
+    },
+    {
+     "default": "0",
+     "fieldname": "final_settlement",
+     "fieldtype": "Check",
+     "label": "Final Settlement"
+    },
+    {
+     "fieldname": "bank_account",
+     "fieldtype": "Link",
+     "label": "Bank Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "default": "0",
+     "depends_on": "eval:doc.items",
+     "fieldname": "amount",
+     "fieldtype": "Currency",
+     "label": "Amount",
+     "reqd": 1
+    },
+    {
+     "fieldname": "actual_amount",
+     "fieldtype": "Currency",
+     "label": "Actual Amount"
+    },
+    {
+     "fieldname": "remarks",
+     "fieldtype": "Small Text",
+     "label": "Narration"
+    },
+    {
+     "fieldname": "items",
+     "fieldtype": "Table",
+     "options": "HSD Payment Item",
+     "reqd": 1
+    },
+    {
+     "allow_on_submit": 1,
+     "default": "0",
+     "fieldname": "assign_from_cheque_lot",
+     "fieldtype": "Check",
+     "label": "Assign From Cheque Lot"
+    },
+    {
+     "allow_on_submit": 1,
+     "depends_on": "eval:doc.assign_from_cheque_lot",
+     "fieldname": "cheque_lot",
+     "fieldtype": "Link",
+     "label": "Cheque Lot",
+     "options": "Cheque Lot"
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "cheque__no",
+     "fieldtype": "Data",
+     "label": "Cheque  No"
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "cheque_date",
+     "fieldtype": "Date",
+     "label": "Cheque Date"
+    },
+    {
+     "fieldname": "clearance_date",
+     "fieldtype": "Date",
+     "label": "Clearance Date",
+     "read_only": 1
+    },
+    {
+     "fieldname": "status",
+     "fieldtype": "Select",
+     "hidden": 1,
+     "in_list_view": 1,
+     "label": "Status",
+     "options": "Draft\nSubmitted\nCancelled"
+    },
+    {
+     "fieldname": "company",
+     "fieldtype": "Link",
+     "label": "Company",
+     "options": "Company",
+     "read_only": 1,
+     "reqd": 1
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "payment_status",
+     "fieldtype": "Data",
+     "label": "Payment status",
+     "read_only": 1
+    },
+    {
+     "allow_on_submit": 1,
+     "fieldname": "bank_payment",
+     "fieldtype": "Data",
+     "label": "Bank payment",
+     "read_only": 1
+    },
+    {
+     "fieldname": "amended_from",
+     "fieldtype": "Link",
+     "label": "Amended From",
+     "no_copy": 1,
+     "options": "HSD Payment",
+     "print_hide": 1,
+     "read_only": 1
+    },
+    {
+     "fieldname": "column_break_wkkx",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "column_break_htla",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "section_break_lslk",
+     "fieldtype": "Section Break",
+     "label": "Cheque Information"
+    },
+    {
+     "fieldname": "column_break_ucvw",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "fuelbook_information_section",
+     "fieldtype": "Section Break",
+     "label": "Fuelbook Information"
+    },
+    {
+     "fieldname": "column_break_vhsv",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "column_break_vovm",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "section_break_xfou",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "column_break_yawd",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "section_break_uvdy",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "section_break_hjjr",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "approver",
+     "fieldtype": "Link",
+     "label": "Approver",
+     "options": "User",
+     "read_only": 1
+    },
+    {
+     "fieldname": "verifier",
+     "fieldtype": "Link",
+     "label": "Verifier",
+     "options": "User",
+     "read_only": 1
+    }
+   ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-03-03 11:10:14.360822",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "HSD Payment",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
