@@ -143,6 +143,10 @@ class JournalEntry(AccountsController):
 		if self.is_new() or not self.title:
 			self.title = self.get_title()
 
+	
+
+				
+
 	def validate_advance_accounts(self):
 		journal_accounts = set([x.account for x in self.accounts])
 		advance_accounts = set()
@@ -176,6 +180,8 @@ class JournalEntry(AccountsController):
 		else:
 			return self._cancel()
 
+		self.update_advance_paid()
+
 	def before_submit(self):
 		# Do not validate while importing via data import
 		if not frappe.flags.in_import:
@@ -187,9 +193,22 @@ class JournalEntry(AccountsController):
 		self.check_credit_limit()
 		self.update_asset_value()
 		self.update_inter_company_jv()
+		self.update_advance_paid()
 		self.update_invoice_discounting()
 		JournalTaxWithholding(self).on_submit()
 
+	def update_advance_paid(self):
+		# frappe.throw("hi")
+		advance_paid = frappe._dict()
+		for d in self.get("accounts"):
+			
+			if d.is_advance:
+				
+				if d.reference_type in frappe.get_hooks("advance_payment_doctypes"):
+					
+					advance_paid.setdefault(d.reference_type, []).append(
+						d.reference_name
+					)
 	@frappe.whitelist()
 	def get_balance_for_periodic_accounting(self):
 		self.validate_company_for_periodic_accounting()

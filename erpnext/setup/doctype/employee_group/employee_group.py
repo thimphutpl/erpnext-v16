@@ -14,7 +14,7 @@ class EmployeeGroup(Document):
 	if TYPE_CHECKING:
 		from erpnext.setup.doctype.employee_group_table.employee_group_table import EmployeeGroupTable
 		from frappe.types import DF
-		from hrms.hr.doctype.employee_group_item.employee_group_item import EmployeeGroupItem
+		from integrasuite.integrasuite_hr.doctype.employee_group_item.employee_group_item import EmployeeGroupItem
 
 		employee_group_name: DF.Data
 		employee_list: DF.Table[EmployeeGroupTable]
@@ -31,6 +31,7 @@ class EmployeeGroup(Document):
 		leave_encashment_type: DF.Literal["", "Flat Amount", "Basic Pay", "Gross Pay"]
 		limit_multiplier: DF.Float
 		max_encashment_days: DF.Float
+		maximum_number_of_months_allowed: DF.Currency
 		min_encashment_days: DF.Float
 		minimum_months: DF.Float
 		no_of_installment_for_salary: DF.Literal["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
