@@ -121,6 +121,7 @@
   "pricing_rules",
   "raw_materials_supplied",
   "supplied_items",
+  "connections_tab",
   "payments_tab",
   "payments_section",
   "mode_of_payment",
@@ -207,8 +208,7 @@
   "column_break_147",
   "inter_company_invoice_reference",
   "is_old_subcontracting_flow",
-  "remarks",
-  "connections_tab"
+  "remarks"
  ],
  "fields": [
   {
@@ -1479,8 +1479,9 @@
    "label": "More Info"
   },
   {
+   "collapsible": 1,
    "fieldname": "connections_tab",
-   "fieldtype": "Tab Break",
+   "fieldtype": "Section Break",
    "label": "Connections",
    "show_dashboard": 1
   },

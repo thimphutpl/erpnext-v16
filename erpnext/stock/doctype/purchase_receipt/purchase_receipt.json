@@ -103,6 +103,7 @@
   "raw_material_details",
   "get_current_stock",
   "supplied_items",
+  "connections_tab",
   "address_and_contact_tab",
   "section_addresses",
   "supplier_address",
@@ -155,8 +156,7 @@
   "range",
   "amended_from",
   "is_old_subcontracting_flow",
-  "other_details",
-  "connections_tab"
+  "other_details"
  ],
  "fields": [
   {
@@ -1168,8 +1168,9 @@
    "label": "More Info"
   },
   {
+   "collapsible": 1,
    "fieldname": "connections_tab",
-   "fieldtype": "Tab Break",
+   "fieldtype": "Section Break",
    "label": "Connections",
    "show_dashboard": 1
   },

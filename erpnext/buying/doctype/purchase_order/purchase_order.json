@@ -97,6 +97,7 @@
   "sec_tax_breakup",
   "other_charges_calculation",
   "item_wise_tax_details",
+  "connections_tab",
   "address_and_contact_tab",
   "section_addresses",
   "supplier_address",
@@ -162,7 +163,6 @@
   "is_internal_supplier",
   "inter_company_order_reference",
   "is_old_subcontracting_flow",
-  "connections_tab",
   "raw_material_details",
   "supplied_items"
  ],
@@ -1216,8 +1216,9 @@
    "label": "Shipping Address"
   },
   {
+   "collapsible": 1,
    "fieldname": "connections_tab",
-   "fieldtype": "Tab Break",
+   "fieldtype": "Section Break",
    "label": "Connections",
    "show_dashboard": 1
   },

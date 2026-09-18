@@ -119,10 +119,6 @@ frappe.ui.form.on("Material Request", {
 		erpnext.buying.prevent_past_schedule_dates(frm);
 		frm.trigger("set_warehouse_label");
 
-		// Connections dashboard (now merged into Details tab) is shown for
-		// every status, including a brand new/unsaved MR.
-		frm.toggle_display("connections_tab", true);
-
 		// Frappe hides the "Connections" dashboard header by default
 		// (hide_label: true in frappe/public/js/frappe/form/dashboard.js).
 		// Turn it into a proper collapsible dropdown title.
