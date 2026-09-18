@@ -1157,6 +1157,7 @@
   {
    "fieldname": "more_info_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "More Info"
   },
   {
@@ -1326,7 +1327,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-08 16:22:06.536643",
+ "modified": "2026-09-18 15:01:23.962507",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
