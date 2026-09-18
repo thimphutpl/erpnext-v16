@@ -27,6 +27,7 @@
   "set_warehouse",
   "items_section",
   "items",
+  "connections_tab",
   "terms_tab",
   "terms_section_break",
   "tc_name",
@@ -45,8 +46,7 @@
   "reference",
   "job_card",
   "column_break_35",
-  "work_order",
-  "connections_tab"
+  "work_order"
  ],
  "fields": [
   {
@@ -331,8 +331,9 @@
    "label": "More Info"
   },
   {
+   "collapsible": 1,
    "fieldname": "connections_tab",
-   "fieldtype": "Tab Break",
+   "fieldtype": "Section Break",
    "label": "Connections",
    "show_dashboard": 1
   },
@@ -379,7 +380,7 @@
  "idx": 70,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-11 12:41:52.872502",
+ "modified": "2026-09-18 11:41:15.869887",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Material Request",
