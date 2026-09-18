@@ -1464,6 +1464,7 @@
   {
    "fieldname": "address_and_contact_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "Address & Contact"
   },
   {
@@ -1474,6 +1475,7 @@
   {
    "fieldname": "more_info_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "More Info"
   },
   {
@@ -1705,7 +1707,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-06 12:46:52.470373",
+ "modified": "2026-09-18 15:02:47.910175",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",

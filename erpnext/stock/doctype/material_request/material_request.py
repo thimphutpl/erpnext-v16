@@ -51,7 +51,7 @@ class MaterialRequest(BuyingController):
 		scan_barcode: DF.Data | None
 		schedule_date: DF.Date
 		select_print_heading: DF.Link | None
-		set_from_warehouse: DF.Link
+		set_from_warehouse: DF.Link | None
 		set_warehouse: DF.Link
 		status: DF.Literal["", "Draft", "Submitted", "Stopped", "Cancelled", "Pending", "Partially Ordered", "Partially Received", "Ordered", "Issued", "Transferred", "Received"]
 		tc_name: DF.Link | None
