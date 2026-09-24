@@ -1550,6 +1550,7 @@ def make_purchase_invoice(source_name, target_doc=None, args=None):
 					"supplier_warehouse": "supplier_warehouse",
 					"is_return": "is_return",
 					"bill_date": "bill_date",
+					"supplier_delivery_note": "bill_no",
 				},
 				"validation": {
 					"docstatus": ["=", 1],
