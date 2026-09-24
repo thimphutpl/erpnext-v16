@@ -107,6 +107,8 @@ frappe.ui.form.on("Purchase Receipt", {
 			// actual connection boxes) was already appended when the section
 			// was first built — so move the title back above the content.
 			links_area.head.insertBefore(links_area.body);
+			// Collapsed by default every time the form loads.
+			links_area.collapse(true);
 		}
 	},
 
