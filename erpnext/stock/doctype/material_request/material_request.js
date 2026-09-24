@@ -214,17 +214,20 @@ frappe.ui.form.on("Material Request", {
 						__("Create")
 					);
 
-					frm.add_custom_button(
-						__("Request for Quotation"),
-						() => frm.events.make_request_for_quotation(frm),
-						__("Create")
-					);
+					// Hidden per client request (2026-09-24) — client doesn't use these yet.
+					// Uncomment to re-enable "Request for Quotation" and "Supplier Quotation"
+					// in the Create dropdown.
+					// frm.add_custom_button(
+					// 	__("Request for Quotation"),
+					// 	() => frm.events.make_request_for_quotation(frm),
+					// 	__("Create")
+					// );
 
-					frm.add_custom_button(
-						__("Supplier Quotation"),
-						() => frm.events.make_supplier_quotation(frm),
-						__("Create")
-					);
+					// frm.add_custom_button(
+					// 	__("Supplier Quotation"),
+					// 	() => frm.events.make_supplier_quotation(frm),
+					// 	__("Create")
+					// );
 				}
 
 				if (frm.doc.material_request_type === "Manufacture") {
