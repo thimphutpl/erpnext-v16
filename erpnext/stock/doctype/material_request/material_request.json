@@ -11,6 +11,7 @@
   "naming_series",
   "title",
   "material_request_type",
+  "branch",
   "customer",
   "company",
   "auto_created_via_reorder",
@@ -27,7 +28,6 @@
   "set_warehouse",
   "items_section",
   "items",
-  "connections_tab",
   "terms_tab",
   "terms_section_break",
   "tc_name",
@@ -332,13 +332,6 @@
   },
   {
    "collapsible": 1,
-   "fieldname": "connections_tab",
-   "fieldtype": "Section Break",
-   "label": "Connections",
-   "show_dashboard": 1
-  },
-  {
-   "collapsible": 1,
    "fieldname": "status_section",
    "fieldtype": "Section Break",
    "label": "Status",
@@ -374,13 +367,20 @@
    "label": "Auto Created (Reorder)",
    "no_copy": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
   }
  ],
  "icon": "fa fa-ticket",
  "idx": 70,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-18 11:41:15.869887",
+ "modified": "2026-09-25 14:37:21.266137",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Material Request",

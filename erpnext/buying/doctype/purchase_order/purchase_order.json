@@ -11,6 +11,7 @@
   "supplier_section",
   "naming_series",
   "supplier",
+  "branch",
   "supplier_name",
   "order_confirmation_no",
   "order_confirmation_date",
@@ -97,7 +98,6 @@
   "sec_tax_breakup",
   "other_charges_calculation",
   "item_wise_tax_details",
-  "connections_tab",
   "address_and_contact_tab",
   "section_addresses",
   "supplier_address",
@@ -1216,13 +1216,6 @@
    "label": "Shipping Address"
   },
   {
-   "collapsible": 1,
-   "fieldname": "connections_tab",
-   "fieldtype": "Section Break",
-   "label": "Connections",
-   "show_dashboard": 1
-  },
-  {
    "fieldname": "advance_payment_status",
    "fieldtype": "Select",
    "hidden": 1,
@@ -1321,6 +1314,13 @@
    "label": "Title",
    "no_copy": 1,
    "print_hide": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
@@ -1328,7 +1328,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-18 15:01:23.962507",
+ "modified": "2026-09-25 14:47:03.403848",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",

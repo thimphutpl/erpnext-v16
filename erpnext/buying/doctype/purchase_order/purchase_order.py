@@ -66,6 +66,7 @@ class PurchaseOrder(BuyingController):
 		base_total_taxes_and_charges: DF.Currency
 		billing_address: DF.Link | None
 		billing_address_display: DF.TextEditor | None
+		branch: DF.Link
 		buying_price_list: DF.Link | None
 		company: DF.Link
 		contact_display: DF.SmallText | None
