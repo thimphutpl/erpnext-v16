@@ -1296,7 +1296,8 @@
    "fieldname": "branch",
    "fieldtype": "Link",
    "label": "Branch",
-   "options": "Branch"
+   "options": "Branch",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
@@ -1304,7 +1305,7 @@
  "idx": 261,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-25 14:41:39.712597",
+ "modified": "2026-09-25 15:10:17.241639",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",
