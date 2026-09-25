@@ -92,7 +92,7 @@ class PurchaseInvoice(BuyingController):
 		bill_no: DF.Data | None
 		billing_address: DF.Link | None
 		billing_address_display: DF.TextEditor | None
-		branch: DF.Link | None
+		branch: DF.Link
 		buying_price_list: DF.Link | None
 		cash_bank_account: DF.Link | None
 		claimed_landed_cost_amount: DF.Currency
