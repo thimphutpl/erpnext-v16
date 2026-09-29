@@ -35,30 +35,30 @@ frappe.listview_settings["Task"] = {
 	},
 	gantt_custom_popup_html: function (ganttobj, task) {
 		let html = `
-			<a class="mb-2 inline-block cursor-pointer"
-				href="/app/task/${ganttobj.id}">
+			<a class="text-white mb-2 inline-block cursor-pointer"
+				href="/app/task/${ganttobj.id}"">
 				${ganttobj.name}
 			</a>
 		`;
 
 		if (task.project) {
 			html += `<p class="mb-1">${__("Project")}:
-				<a class="inline-block"
-					href="/app/project/${task.project}">
+				<a class="text-white inline-block"
+					href="/app/project/${task.project}"">
 					${task.project}
 				</a>
 			</p>`;
 		}
 		html += `<p class="mb-1">
 			${__("Progress")}:
-			<span>${ganttobj.progress}%</span>
+			<span class="text-white">${ganttobj.progress}%</span>
 		</p>`;
 
 		if (task._assign) {
 			const assign_list = JSON.parse(task._assign);
 			const assignment_wrapper = `
 				<span>Assigned to:</span>
-				<span>
+				<span class="text-white">
 					${assign_list.map((user) => frappe.user_info(user).fullname).join(", ")}
 				</span>
 			`;

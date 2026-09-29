@@ -1,0 +1,181 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-19 15:54:34.606059",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "boq_code",
+  "item",
+  "is_group",
+  "column_break_abjw",
+  "uom",
+  "is_selected",
+  "sb_items",
+  "entry_quantity",
+  "cb_i_1",
+  "entry_rate",
+  "cb_i_2",
+  "entry_amount",
+  "sb_bbc",
+  "act_quantity",
+  "cb_bbc_1",
+  "act_rate",
+  "cb_bbc_2",
+  "act_amount",
+  "boq_item_name",
+  "original_quantity",
+  "original_rate",
+  "original_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "boq_code",
+   "fieldtype": "Data",
+   "label": "BOQ Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Item",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is group item?",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_abjw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "is_selected",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Select"
+  },
+  {
+   "fieldname": "sb_items",
+   "fieldtype": "Section Break",
+   "label": "ITEMS"
+  },
+  {
+   "fieldname": "entry_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Entry Quantity",
+   "precision": "5"
+  },
+  {
+   "fieldname": "cb_i_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "entry_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_i_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "entry_amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Entry Amount",
+   "precision": "2"
+  },
+  {
+   "fieldname": "sb_bbc",
+   "fieldtype": "Section Break",
+   "label": "BALANCE BEFORE CLAIM"
+  },
+  {
+   "fieldname": "act_quantity",
+   "fieldtype": "Float",
+   "label": "Balance Quantity",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_bbc_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "act_rate",
+   "fieldtype": "Float",
+   "label": "Balance Rate",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_bbc_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "act_amount",
+   "fieldtype": "Float",
+   "label": "Balance Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq_item_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "BOQ Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "original_quantity",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Original Quantity",
+   "precision": "5"
+  },
+  {
+   "fieldname": "original_rate",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Original Rate",
+   "precision": "2"
+  },
+  {
+   "fieldname": "original_amount",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Original Amount",
+   "precision": "2"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-19 16:20:13.358263",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "MB Entry BOQ",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

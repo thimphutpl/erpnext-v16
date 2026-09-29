@@ -1,0 +1,166 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:EOT-{YY}-{MM}-{###}",
+ "creation": "2024-11-27 17:02:01.409907",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_necm",
+  "amended_from",
+  "title",
+  "projects",
+  "cb_sb_branch",
+  "branch",
+  "project_period_section",
+  "expected_start_date",
+  "extended_end_date",
+  "eot_in_days",
+  "cb_sb_pp1",
+  "expected_end_date",
+  "more_information_section",
+  "reason_for_extension",
+  "cb_sb_mi1",
+  "extension_order"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_necm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Extension of Time",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "projects",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Projects",
+   "options": "Project",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_sb_branch",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_period_section",
+   "fieldtype": "Section Break",
+   "label": "Project Period"
+  },
+  {
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "label": "Expected Start Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "extended_end_date",
+   "fieldtype": "Date",
+   "label": "Extended End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "eot_in_days",
+   "fieldtype": "Int",
+   "label": "Extended EOT in Days"
+  },
+  {
+   "fieldname": "cb_sb_pp1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expected_end_date",
+   "fieldtype": "Date",
+   "label": "Expected End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "more_information_section",
+   "fieldtype": "Section Break",
+   "label": "More Information"
+  },
+  {
+   "fieldname": "reason_for_extension",
+   "fieldtype": "Text Editor",
+   "label": "Reason for Extension",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_sb_mi1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "extension_order",
+   "fieldtype": "Attach",
+   "label": "Attach Extension Order"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-12-09 10:28:56.675691",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Extension of Time",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Project Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title",
+ "track_changes": 1
+}

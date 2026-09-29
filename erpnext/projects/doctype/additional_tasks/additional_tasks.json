@@ -1,0 +1,200 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2024-09-16 10:18:50.564692",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "activity",
+  "task",
+  "status",
+  "edit_task",
+  "view_timesheet",
+  "cb_1",
+  "is_group",
+  "start_date",
+  "end_date",
+  "sb_project_contribution",
+  "work_quantity",
+  "cb_pc",
+  "work_quantity_complete",
+  "sb_target_quantity",
+  "target_uom",
+  "cb_tq",
+  "target_quantity",
+  "cb_tq2",
+  "target_quantity_complete",
+  "sb_description",
+  "description",
+  "task_id",
+  "grp_exp_start_date",
+  "grp_exp_end_date",
+  "grp_work_quantity",
+  "grp_work_quantity_complete"
+ ],
+ "fields": [
+  {
+   "fieldname": "activity",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Activity"
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Task",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Open\nWorking\nPending Review\nClosed\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "edit_task",
+   "fieldtype": "Button",
+   "label": "Edit Task"
+  },
+  {
+   "fieldname": "view_timesheet",
+   "fieldtype": "Button",
+   "label": "View Timesheet"
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date"
+  },
+  {
+   "fieldname": "sb_project_contribution",
+   "fieldtype": "Section Break",
+   "label": "Overall Contribution To Project"
+  },
+  {
+   "fieldname": "work_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Work Quantity in Percentage"
+  },
+  {
+   "fieldname": "cb_pc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "work_quantity_complete",
+   "fieldtype": "Float",
+   "label": "Work Quantity Complete",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_target_quantity",
+   "fieldtype": "Section Break",
+   "label": "Target Quantity/Value"
+  },
+  {
+   "default": "Percent",
+   "fieldname": "target_uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "cb_tq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "100",
+   "fieldname": "target_quantity",
+   "fieldtype": "Float",
+   "label": "Target"
+  },
+  {
+   "fieldname": "cb_tq2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_quantity_complete",
+   "fieldtype": "Float",
+   "label": "Achievement",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_description",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "task_id",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Task ID",
+   "options": "Task"
+  },
+  {
+   "fieldname": "grp_exp_start_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Group Expected Start Date"
+  },
+  {
+   "fieldname": "grp_exp_end_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Group Expected End Date"
+  },
+  {
+   "fieldname": "grp_work_quantity",
+   "fieldtype": "Percent",
+   "hidden": 1,
+   "label": "Group Work Quantity"
+  },
+  {
+   "fieldname": "grp_work_quantity_complete",
+   "fieldtype": "Percent",
+   "hidden": 1,
+   "label": "Group Work Quantity Complete"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-11-26 11:00:59.197173",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Additional Tasks",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

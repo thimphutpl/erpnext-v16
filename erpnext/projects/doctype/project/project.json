@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "naming_series:",
+ "autoname": "PROJ.YY.MM.####",
  "creation": "2013-03-07 11:55:07",
  "doctype": "DocType",
  "document_type": "Setup",
@@ -12,21 +12,71 @@
   "project_name",
   "status",
   "project_type",
+  "project_category",
+  "project_sub_category",
+  "is_active",
   "percent_complete_method",
+  "percent_complete",
   "column_break_5",
   "project_template",
+  "expected_start_date",
+  "expected_end_date",
   "priority",
   "department",
-  "is_active",
-  "percent_complete",
+  "revised_completion_date",
+  "cb_1",
+  "branch",
+  "cost_center",
+  "reference_no",
+  "reference_date",
+  "defect_liability_section_section",
+  "dlp_start_date",
+  "dlp_end_date",
+  "total_no_days",
+  "remaining_days",
+  "cb_sb_dl1",
+  "sent_email_notification",
+  "email_list_items",
+  "customer_details",
+  "party_type",
+  "party",
+  "customer",
+  "project_value",
+  "column_break_14",
+  "sales_order",
+  "users_section",
+  "users",
+  "copied_from",
+  "activity_and_tasks",
+  "tot_wq_percent",
+  "cb_at",
+  "tot_wq_percent_complete",
+  "cb_at_1",
+  "sb_activity_task",
+  "activity_tasks",
+  "sb_additional_tasks",
+  "tot_add_wq_percent",
+  "cb_adt_1",
+  "tot_add_wq_percent_complete",
+  "cb_adt_2",
+  "add_percent_complete",
+  "sb_tab_additional_tasks",
+  "additional_tasks",
+  "sb_advances",
+  "project_advance_item",
+  "boq_section",
+  "project_boq_item",
+  "sb_invoices",
+  "project_invoice_item",
+  "retention_money_section",
+  "retention_money_receivable",
+  "section_break0",
+  "notes",
   "section_break_18",
-  "expected_start_date",
   "actual_start_date",
   "actual_time",
   "column_break_20",
-  "expected_end_date",
   "actual_end_date",
-  "costing_tab",
   "project_details",
   "estimated_costing",
   "total_costing_amount",
@@ -37,12 +87,11 @@
   "total_billable_amount",
   "total_billed_amount",
   "total_consumed_material_cost",
-  "cost_center",
   "margin",
   "gross_margin",
   "column_break_37",
   "per_gross_margin",
-  "monitor_progress_tab",
+  "monitor_progress",
   "collect_progress",
   "holiday_list",
   "frequency",
@@ -54,19 +103,7 @@
   "day_to_send",
   "weekly_time_to_send",
   "column_break_45",
-  "subject",
-  "message",
-  "more_info_tab",
-  "customer_details",
-  "customer",
-  "column_break_14",
-  "sales_order",
-  "users_section",
-  "users",
-  "copied_from",
-  "section_break0",
-  "notes",
-  "connections_tab"
+  "message"
  ],
  "fields": [
   {
@@ -78,21 +115,22 @@
    "unique": 1
   },
   {
-   "default": "Open",
+   "default": "Planning",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_filter": 1,
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
    "oldfieldname": "status",
    "oldfieldtype": "Select",
-   "options": "Open\nCompleted\nCancelled",
+   "options": "Planning\nOngoing\nCompleted\nCancelled",
    "search_index": 1
   },
   {
    "fieldname": "project_type",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Project Type",
    "oldfieldname": "project_type",
@@ -102,6 +140,7 @@
   {
    "fieldname": "is_active",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Is Active",
    "oldfieldname": "is_active",
    "oldfieldtype": "Select",
@@ -111,6 +150,7 @@
    "default": "Task Completion",
    "fieldname": "percent_complete_method",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "% Complete Method",
    "options": "Manual\nTask Completion\nTask Progress\nTask Weight"
   },
@@ -118,7 +158,7 @@
    "bold": 1,
    "fieldname": "percent_complete",
    "fieldtype": "Percent",
-   "in_list_view": 1,
+   "hidden": 1,
    "label": "% Completed",
    "no_copy": 1,
    "read_only": 1
@@ -131,6 +171,7 @@
    "allow_in_quick_entry": 1,
    "fieldname": "project_template",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "From Template",
    "options": "Project Template",
    "set_only_once": 1
@@ -139,7 +180,6 @@
    "bold": 1,
    "fieldname": "expected_start_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
    "label": "Expected Start Date",
    "oldfieldname": "project_start_date",
    "oldfieldtype": "Date"
@@ -148,7 +188,6 @@
    "bold": 1,
    "fieldname": "expected_end_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
    "label": "Expected End Date",
    "oldfieldname": "completion_date",
    "oldfieldtype": "Date"
@@ -165,14 +204,14 @@
   {
    "fieldname": "department",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Department",
    "options": "Department"
   },
   {
-   "collapsible": 1,
    "fieldname": "customer_details",
    "fieldtype": "Section Break",
-   "label": "Customer Details",
+   "label": "Party Details",
    "oldfieldtype": "Section Break",
    "options": "fa fa-user"
   },
@@ -181,11 +220,11 @@
    "fieldtype": "Link",
    "in_global_search": 1,
    "label": "Customer",
-   "no_copy": 1,
    "oldfieldname": "customer",
    "oldfieldtype": "Link",
    "options": "Customer",
    "print_hide": 1,
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -195,14 +234,15 @@
   {
    "fieldname": "sales_order",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Sales Order",
-   "no_copy": 1,
    "options": "Sales Order"
   },
   {
    "collapsible": 1,
    "fieldname": "users_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Users"
   },
   {
@@ -238,7 +278,7 @@
    "collapsible": 1,
    "fieldname": "section_break_18",
    "fieldtype": "Section Break",
-   "label": "Timeline"
+   "label": "Start and End Dates"
   },
   {
    "fieldname": "actual_start_date",
@@ -265,6 +305,7 @@
    "read_only": 1
   },
   {
+   "collapsible": 1,
    "fieldname": "project_details",
    "fieldtype": "Section Break",
    "label": "Costing and Billing",
@@ -329,14 +370,17 @@
    "read_only": 1
   },
   {
+   "fetch_from": "branch.cost_center",
    "fieldname": "cost_center",
    "fieldtype": "Link",
-   "label": "Default Cost Center",
+   "label": "Cost Center",
    "options": "Cost Center"
   },
   {
+   "collapsible": 1,
    "fieldname": "margin",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Margin",
    "oldfieldtype": "Column Break",
    "width": "50%"
@@ -361,6 +405,13 @@
    "oldfieldname": "per_gross_margin",
    "oldfieldtype": "Currency",
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "monitor_progress",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Monitor Progress"
   },
   {
    "default": "0",
@@ -441,40 +492,244 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "no_copy": 1,
    "options": "PROJ-.####",
    "print_hide": 1,
-   "reqd": 1,
    "set_only_once": 1
   },
   {
-   "depends_on": "collect_progress",
-   "fieldname": "subject",
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "reference_no",
    "fieldtype": "Data",
-   "label": "Subject",
-   "mandatory_depends_on": "collect_progress"
+   "label": "Reference No"
   },
   {
-   "fieldname": "costing_tab",
-   "fieldtype": "Tab Break",
-   "label": "Costing"
+   "fieldname": "reference_date",
+   "fieldtype": "Date",
+   "label": "Reference Date"
   },
   {
-   "fieldname": "monitor_progress_tab",
-   "fieldtype": "Tab Break",
-   "label": "Progress"
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "label": "Party Type",
+   "options": "DocType"
   },
   {
-   "fieldname": "more_info_tab",
-   "fieldtype": "Tab Break",
-   "label": "More Info"
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "label": "Party",
+   "options": "party_type"
   },
   {
-   "fieldname": "connections_tab",
-   "fieldtype": "Tab Break",
-   "label": "Connections",
-   "show_dashboard": 1
+   "fieldname": "project_value",
+   "fieldtype": "Currency",
+   "label": "Project Value"
+  },
+  {
+   "fieldname": "activity_and_tasks",
+   "fieldtype": "Section Break",
+   "label": "WORK PLAN"
+  },
+  {
+   "fieldname": "tot_wq_percent",
+   "fieldtype": "Percent",
+   "label": "% Work Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_at",
+   "fieldtype": "Column Break"
+  },
+  {
+   "bold": 1,
+   "fieldname": "tot_wq_percent_complete",
+   "fieldtype": "Percent",
+   "label": "% Work Quantity Completed",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_at_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sb_activity_task",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "fieldname": "activity_tasks",
+   "fieldtype": "Table",
+   "label": "Activity Tasks",
+   "options": "Activity Tasks"
+  },
+  {
+   "fieldname": "project_category",
+   "fieldtype": "Link",
+   "label": "Project Category",
+   "options": "Project Category"
+  },
+  {
+   "fieldname": "project_sub_category",
+   "fieldtype": "Link",
+   "label": "Project Sub Category",
+   "options": "Project Sub Category"
+  },
+  {
+   "fieldname": "sb_additional_tasks",
+   "fieldtype": "Section Break",
+   "label": "ADDITIONAL TASKS"
+  },
+  {
+   "fieldname": "tot_add_wq_percent",
+   "fieldtype": "Percent",
+   "label": "% Work Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_adt_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tot_add_wq_percent_complete",
+   "fieldtype": "Percent",
+   "label": "% Work Quantity Completed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_adt_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "add_percent_complete",
+   "fieldtype": "Percent",
+   "hidden": 1,
+   "label": "add percent complete",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_tab_additional_tasks",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "fieldname": "additional_tasks",
+   "fieldtype": "Table",
+   "label": "Additional Tasks",
+   "options": "Additional Tasks"
+  },
+  {
+   "fieldname": "sb_advances",
+   "fieldtype": "Section Break",
+   "label": "ADVANCES"
+  },
+  {
+   "fieldname": "project_advance_item",
+   "fieldtype": "Table",
+   "label": "Project Advance",
+   "options": "Project Advance Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq_section",
+   "fieldtype": "Section Break",
+   "label": "BOQ"
+  },
+  {
+   "fieldname": "sb_invoices",
+   "fieldtype": "Section Break",
+   "label": "INVOICES"
+  },
+  {
+   "fieldname": "project_invoice_item",
+   "fieldtype": "Table",
+   "label": "Project Invoice Item",
+   "options": "Project Invoice Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "project_boq_item",
+   "fieldtype": "Table",
+   "label": "Project BOQ Item",
+   "options": "Project BOQ Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "revised_completion_date",
+   "fieldtype": "Date",
+   "label": "Revised Completion Date",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "defect_liability_section_section",
+   "fieldtype": "Section Break",
+   "label": "Defect Liability Section"
+  },
+  {
+   "fieldname": "dlp_start_date",
+   "fieldtype": "Date",
+   "label": "DLP Start Date"
+  },
+  {
+   "fieldname": "dlp_end_date",
+   "fieldtype": "Date",
+   "label": "DLP End Date"
+  },
+  {
+   "fieldname": "total_no_days",
+   "fieldtype": "Int",
+   "label": "Total no of Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remaining_days",
+   "fieldtype": "Int",
+   "label": "Remaining Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_sb_dl1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "*Sent email notification before 6 days of DLP expiry",
+   "fieldname": "sent_email_notification",
+   "fieldtype": "Check",
+   "label": "Sent Email Notification"
+  },
+  {
+   "depends_on": "sent_email_notification",
+   "fieldname": "email_list_items",
+   "fieldtype": "Table",
+   "label": "Email List",
+   "mandatory_depends_on": "sent_email_notification",
+   "options": "DLP Email List"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "retention_money_section",
+   "fieldtype": "Section Break",
+   "label": "Retention Money"
+  },
+  {
+   "description": "*On project payment the retention details get auto pulled here.",
+   "fieldname": "retention_money_receivable",
+   "fieldtype": "Table",
+   "label": "Retention Money Receivable",
+   "options": "Retention Money Receivable"
   }
  ],
  "icon": "fa fa-puzzle-piece",
@@ -482,11 +737,11 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 4,
- "modified": "2026-05-22 16:45:50.762759",
+ "modified": "2026-07-28 12:13:14.756874",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Project",
- "naming_rule": "By \"Naming Series\" field",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -526,22 +781,11 @@
    "role": "Employee",
    "select": 1,
    "share": 1
-  },
-  {
-   "role": "HR User",
-   "select": 1
-  },
-  {
-   "role": "HR Manager",
-   "select": 1
   }
  ],
- "quick_entry": 1,
- "row_format": "Dynamic",
  "search_fields": "project_name,customer, status, priority, is_active",
  "show_name_in_global_search": 1,
- "show_title_field_in_link": 1,
- "sort_field": "creation",
+ "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
  "timeline_field": "customer",

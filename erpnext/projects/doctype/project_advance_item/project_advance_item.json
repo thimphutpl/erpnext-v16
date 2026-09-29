@@ -1,0 +1,103 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-27 14:48:03.730156",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_5avb",
+  "advance_name",
+  "view_advance",
+  "column_break_uiob",
+  "advance_date",
+  "section_break_lvhl",
+  "received_amount",
+  "paid_amount",
+  "column_break_hrke",
+  "adjustment_amount",
+  "column_break_vwif",
+  "balance_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_5avb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "advance_name",
+   "fieldtype": "Link",
+   "label": "ID",
+   "options": "Project Advance",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "view_advance",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "View Advance Entry"
+  },
+  {
+   "fieldname": "column_break_uiob",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "advance_date",
+   "fieldtype": "Data",
+   "label": "Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_lvhl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "received_amount",
+   "fieldtype": "Currency",
+   "label": "Advance (A)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Advance (A)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_hrke",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "adjustment_amount",
+   "fieldtype": "Currency",
+   "label": "Adjusted (B)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_vwif",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "label": "Balance (C=A-B)",
+   "precision": "2",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-27 15:19:05.404795",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Project Advance Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,25 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Project Dashboard",
+   "width": "Full"
+  },
+  {
+   "chart": "Project Manpower",
+   "width": "Full"
+  }
+ ],
+ "creation": "2025-01-07 17:51:22.721622",
+ "dashboard_name": "Project Dashboard",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2025-11-25 20:39:19.354548",
+ "modified_by": "kinzang.namgyal@cdcl.bt",
+ "module": "Projects",
+ "name": "Project Dashboard",
+ "owner": "kinzang.namgyal@cdcl.bt"
+}

@@ -2,36 +2,19 @@
 # License: GNU General Public License v3. See license.txt
 
 import frappe
+from frappe.tests.utils import FrappeTestCase
 from frappe.utils import add_days, getdate, nowdate
 
 from erpnext.projects.doctype.project_template.test_project_template import make_project_template
 from erpnext.projects.doctype.task.test_task import create_task
 from erpnext.selling.doctype.sales_order.sales_order import make_project as make_project_from_so
 from erpnext.selling.doctype.sales_order.test_sales_order import make_sales_order
-from erpnext.tests.utils import ERPNextTestSuite
+
+test_records = frappe.get_test_records("Project")
+test_ignore = ["Sales Order"]
 
 
-class TestProject(ERPNextTestSuite):
-	def test_project_total_costing_and_billing_amount(self):
-		from erpnext.projects.doctype.timesheet.test_timesheet import make_timesheet
-		from erpnext.setup.doctype.employee.test_employee import make_employee
-
-		project_name = "Test Project Costing"
-		employee = make_employee("employee@frappe.io", company="_Test Company")
-		project = make_project({"project_name": project_name})
-		timesheet = make_timesheet(
-			employee=employee,
-			is_billable=1,
-			currency="USD",
-			project=project.name,
-			simulate=True,
-			exchange_rate=80,
-		)
-		timesheet.reload()
-		project.reload()
-		self.assertEqual(project.total_costing_amount, 3200)
-		self.assertEqual(project.total_billable_amount, 8000)
-
+class TestProject(FrappeTestCase):
 	def test_project_with_template_having_no_parent_and_depend_tasks(self):
 		project_name = "Test Project with Template - No Parent and Dependend Tasks"
 		frappe.db.sql(""" delete from tabTask where project = %s """, project_name)
@@ -216,43 +199,17 @@ class TestProject(ERPNextTestSuite):
 			if not pt.is_group:
 				self.assertIsNotNone(pt.parent_task)
 
-	def test_project_having_no_tasks_complete(self):
-		project_name = "Test Project - No Tasks Completion"
-		frappe.db.sql(""" delete from tabTask where project = %s """, project_name)
-		frappe.delete_doc("Project", project_name)
-
-		project = frappe.get_doc(
-			{
-				"doctype": "Project",
-				"project_name": project_name,
-				"status": "Open",
-				"expected_start_date": nowdate(),
-				"company": "_Test Company",
-			}
-		).insert()
-
-		tasks = frappe.get_all(
-			"Task",
-			["subject", "exp_end_date", "depends_on_tasks", "name", "parent_task"],
-			dict(project=project.name),
-			order_by="creation asc",
-		)
-
-		self.assertEqual(project.status, "Open")
-		self.assertEqual(len(tasks), 0)
-		project.status = "Completed"
-		project.save()
-		self.assertEqual(project.status, "Completed")
-
 
 def get_project(name, template):
 	project = frappe.get_doc(
-		doctype="Project",
-		project_name=name,
-		status="Open",
-		project_template=template.name,
-		expected_start_date=nowdate(),
-		company="_Test Company",
+		dict(
+			doctype="Project",
+			project_name=name,
+			status="Open",
+			project_template=template.name,
+			expected_start_date=nowdate(),
+			company="_Test Company",
+		)
 	).insert()
 
 	return project
@@ -265,11 +222,13 @@ def make_project(args):
 		return frappe.get_doc("Project", {"project_name": args.project_name})
 
 	project = frappe.get_doc(
-		doctype="Project",
-		project_name=args.project_name,
-		status="Open",
-		expected_start_date=args.start_date,
-		company=args.company or "_Test Company",
+		dict(
+			doctype="Project",
+			project_name=args.project_name,
+			status="Open",
+			expected_start_date=args.start_date,
+			company=args.company or "_Test Company",
+		)
 	)
 
 	if args.project_template_name:

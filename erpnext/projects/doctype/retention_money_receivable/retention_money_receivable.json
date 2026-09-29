@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2024-12-01 21:43:18.514572",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ra_bill",
+  "project_payment",
+  "retention_money",
+  "client_name",
+  "email"
+ ],
+ "fields": [
+  {
+   "fieldname": "ra_bill",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "RA Bill"
+  },
+  {
+   "fieldname": "project_payment",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Project Payment",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "retention_money",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Retention Money",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Name"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-01 21:49:29.670335",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "Retention Money Receivable",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

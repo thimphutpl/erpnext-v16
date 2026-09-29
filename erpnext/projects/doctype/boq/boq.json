@@ -1,0 +1,261 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "BOQ.YYYY.MM.####",
+ "creation": "2024-09-16 14:26:43.867315",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_d4pc",
+  "amended_from",
+  "boq_date",
+  "party_type",
+  "party",
+  "column_break_kgqj",
+  "project",
+  "boq_type",
+  "company",
+  "branch",
+  "cost_center",
+  "remarks",
+  "section_break_jato",
+  "total_amount",
+  "column_break_oidh",
+  "price_adjustment",
+  "column_break_rgrv",
+  "received_amount",
+  "paid_amount",
+  "claimed_amount",
+  "column_break_ksyr",
+  "balance_amount",
+  "sb_bom_item",
+  "boq_item",
+  "boq_history",
+  "boq_history_item",
+  "sb_notes",
+  "notes",
+  "latest_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_d4pc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "BOQ",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "boq_date",
+   "fieldtype": "Date",
+   "label": "Entry Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "label": "Party Type",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "label": "Party",
+   "options": "party_type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_kgqj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "default": "Item Based",
+   "fieldname": "boq_type",
+   "fieldtype": "Select",
+   "label": "Type of BOQ",
+   "options": "Item Based\nMilestone Based\nPiece Rate Work Based(PRW)"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "section_break_jato",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "bold": 1,
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Amount (A)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_oidh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "price_adjustment",
+   "fieldtype": "Currency",
+   "label": "Price Adjustment (B)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_rgrv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:(doc.party_type !== \"Supplier\")\r\n",
+   "fieldname": "received_amount",
+   "fieldtype": "Currency",
+   "label": "Amount Received (C)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Amount Paid (C)",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "bold": 1,
+   "fieldname": "claimed_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount Claimed ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ksyr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "bold": 1,
+   "fieldname": "balance_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Balance Amount (D=A+B-C)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_bom_item",
+   "fieldtype": "Section Break",
+   "label": "BOQ Items"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "boq_item",
+   "fieldtype": "Table",
+   "label": "BOQ Item",
+   "options": "BOQ Item"
+  },
+  {
+   "fieldname": "boq_history",
+   "fieldtype": "Section Break",
+   "label": "Adjustment History"
+  },
+  {
+   "fieldname": "boq_history_item",
+   "fieldtype": "Table",
+   "label": "BOQ History Item",
+   "options": "BOQ History Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "NOTES"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "latest_amount",
+   "fieldtype": "Currency",
+   "label": "Latest Amount",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-16 15:30:19.167829",
+ "modified_by": "Administrator",
+ "module": "Projects",
+ "name": "BOQ",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

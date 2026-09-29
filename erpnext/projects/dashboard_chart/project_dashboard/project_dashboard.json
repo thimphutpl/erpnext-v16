@@ -1,0 +1,37 @@
+{
+ "chart_name": "Project Dashboard",
+ "chart_type": "Report",
+ "creation": "2025-01-07 17:50:38.328003",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{\"status\":\"Ongoing\",\"additional_info\":0}",
+ "group_by_type": "Count",
+ "idx": 1,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2025-11-25 19:52:16.448756",
+ "modified_by": "kinzang.namgyal@cdcl.bt",
+ "module": "Projects",
+ "name": "Project Dashboard",
+ "number_of_groups": 0,
+ "owner": "kinzang.namgyal@cdcl.bt",
+ "report_name": "Project Register",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "branch",
+ "y_axis": [
+  {
+   "color": "#29CD42",
+   "y_field": "physical_progress"
+  },
+  {
+   "color": "#761ACB",
+   "y_field": "project_value_(a)"
+  }
+ ]
+}
