@@ -128,6 +128,10 @@ frappe.ui.form.on("Item", {
 	refresh: function (frm) {
 		frm.trigger("toggle_has_serial_batch_fields");
 
+		// Hidden per client request (2026-09-29) — "Allow Negative Stock" checkbox
+		// not used. Field and its logic are untouched; comment out to re-enable.
+		frm.toggle_display("allow_negative_stock", false);
+
 		if (frappe.defaults.get_default("item_naming_by") != "Naming Series" || frm.doc.variant_of) {
 			frm.toggle_display("naming_series", false);
 		} else {
