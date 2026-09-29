@@ -420,71 +420,75 @@ frappe.ui.form.on("Stock Entry", {
 		}
 
 		if (frm.doc.docstatus === 0 && !frm.doc.subcontracting_inward_order) {
-			frm.add_custom_button(
-				__("Purchase Invoice"),
-				function () {
-					erpnext.utils.map_current_doc({
-						method: "erpnext.accounts.doctype.purchase_invoice.purchase_invoice.make_stock_entry",
-						source_doctype: "Purchase Invoice",
-						target: frm,
-						date_field: "posting_date",
-						setters: {
-							supplier: frm.doc.supplier || undefined,
-						},
-						get_query_filters: {
-							docstatus: 1,
-						},
-					});
-				},
-				__("Get Items From")
-			);
+			// Hidden per client request (2026-09-29) — "Get Items From" dropdown not used.
+			// Uncomment to re-enable.
+			// frm.add_custom_button(
+			// 	__("Purchase Invoice"),
+			// 	function () {
+			// 		erpnext.utils.map_current_doc({
+			// 			method: "erpnext.accounts.doctype.purchase_invoice.purchase_invoice.make_stock_entry",
+			// 			source_doctype: "Purchase Invoice",
+			// 			target: frm,
+			// 			date_field: "posting_date",
+			// 			setters: {
+			// 				supplier: frm.doc.supplier || undefined,
+			// 			},
+			// 			get_query_filters: {
+			// 				docstatus: 1,
+			// 			},
+			// 		});
+			// 	},
+			// 	__("Get Items From")
+			// );
 
-			frm.add_custom_button(
-				__("Material Request"),
-				function () {
-					const allowed_request_types = [
-						"Material Transfer",
-						"Material Issue",
-						"Customer Provided",
-					];
-					const depends_on_condition = "eval:doc.material_request_type==='Customer Provided'";
-					const d = erpnext.utils.map_current_doc({
-						method: "erpnext.stock.doctype.material_request.material_request.make_stock_entry",
-						source_doctype: "Material Request",
-						target: frm,
-						date_field: "schedule_date",
-						setters: [
-							{
-								fieldtype: "Select",
-								label: __("Purpose"),
-								options: allowed_request_types.join("\n"),
-								fieldname: "material_request_type",
-								default: "Material Transfer",
-								mandatory: 1,
-								change() {
-									if (this.value === "Customer Provided") {
-										d.dialog.get_field("customer").set_focus();
-									}
-								},
-							},
-							{
-								fieldtype: "Link",
-								label: __("Customer"),
-								options: "Customer",
-								fieldname: "customer",
-								depends_on: depends_on_condition,
-								mandatory_depends_on: depends_on_condition,
-							},
-						],
-						get_query_filters: {
-							docstatus: 1,
-							material_request_type: ["in", allowed_request_types],
-							status: ["not in", ["Transferred", "Issued", "Cancelled", "Stopped"]],
-						},
-					});
-				},
-				__("Get Items From")
-			);
+			// Hidden per client request (2026-09-29) — "Get Items From" dropdown not used.
+			// Uncomment to re-enable.
+			// frm.add_custom_button(
+			// 	__("Material Request"),
+			// 	function () {
+			// 		const allowed_request_types = [
+			// 			"Material Transfer",
+			// 			"Material Issue",
+			// 			"Customer Provided",
+			// 		];
+			// 		const depends_on_condition = "eval:doc.material_request_type==='Customer Provided'";
+			// 		const d = erpnext.utils.map_current_doc({
+			// 			method: "erpnext.stock.doctype.material_request.material_request.make_stock_entry",
+			// 			source_doctype: "Material Request",
+			// 			target: frm,
+			// 			date_field: "schedule_date",
+			// 			setters: [
+			// 				{
+			// 					fieldtype: "Select",
+			// 					label: __("Purpose"),
+			// 					options: allowed_request_types.join("\n"),
+			// 					fieldname: "material_request_type",
+			// 					default: "Material Transfer",
+			// 					mandatory: 1,
+			// 					change() {
+			// 						if (this.value === "Customer Provided") {
+			// 							d.dialog.get_field("customer").set_focus();
+			// 						}
+			// 					},
+			// 				},
+			// 				{
+			// 					fieldtype: "Link",
+			// 					label: __("Customer"),
+			// 					options: "Customer",
+			// 					fieldname: "customer",
+			// 					depends_on: depends_on_condition,
+			// 					mandatory_depends_on: depends_on_condition,
+			// 				},
+			// 			],
+			// 			get_query_filters: {
+			// 				docstatus: 1,
+			// 				material_request_type: ["in", allowed_request_types],
+			// 				status: ["not in", ["Transferred", "Issued", "Cancelled", "Stopped"]],
+			// 			},
+			// 		});
+			// 	},
+			// 	__("Get Items From")
+			// );
 		}
 
 		if (
@@ -492,32 +496,34 @@ frappe.ui.form.on("Stock Entry", {
 			frm.doc.purpose == "Material Issue" &&
 			!frm.doc.subcontracting_inward_order
 		) {
-			frm.add_custom_button(
-				__("Expired Batches"),
-				function () {
-					frappe.call({
-						method: "erpnext.stock.doctype.stock_entry.stock_entry.get_expired_batch_items",
-						freeze: true,
-						callback: function (r) {
-							if (!r.exc && r.message) {
-								frm.set_value("items", []);
-								r.message.forEach(function (element) {
-									let d = frm.add_child("items");
-									d.item_code = element.item;
-									d.s_warehouse = element.warehouse;
-									d.qty = element.qty;
-									d.uom = element.stock_uom;
-									d.conversion_factor = 1;
-									d.batch_no = element.batch_no;
-									d.transfer_qty = element.qty;
-									frm.refresh_fields();
-								});
-							}
-						},
-					});
-				},
-				__("Get Items From")
-			);
+			// Hidden per client request (2026-09-29) — "Get Items From" dropdown not used.
+			// Uncomment to re-enable.
+			// frm.add_custom_button(
+			// 	__("Expired Batches"),
+			// 	function () {
+			// 		frappe.call({
+			// 			method: "erpnext.stock.doctype.stock_entry.stock_entry.get_expired_batch_items",
+			// 			freeze: true,
+			// 			callback: function (r) {
+			// 				if (!r.exc && r.message) {
+			// 					frm.set_value("items", []);
+			// 					r.message.forEach(function (element) {
+			// 						let d = frm.add_child("items");
+			// 						d.item_code = element.item;
+			// 						d.s_warehouse = element.warehouse;
+			// 						d.qty = element.qty;
+			// 						d.uom = element.stock_uom;
+			// 						d.conversion_factor = 1;
+			// 						d.batch_no = element.batch_no;
+			// 						d.transfer_qty = element.qty;
+			// 						frm.refresh_fields();
+			// 					});
+			// 				}
+			// 			},
+			// 		});
+			// 	},
+			// 	__("Get Items From")
+			// );
 		}
 
 		frm.events.show_bom_custom_button(frm);
@@ -585,30 +591,32 @@ frappe.ui.form.on("Stock Entry", {
 
 	get_items_from_transit_entry: function (frm) {
 		if (frm.doc.docstatus === 0 && !frm.doc.subcontracting_inward_order) {
-			frm.add_custom_button(
-				__("Transit Entry"),
-				function () {
-					erpnext.utils.map_current_doc({
-						method: "erpnext.stock.doctype.stock_entry.stock_entry.make_stock_in_entry",
-						source_doctype: "Stock Entry",
-						target: frm,
-						date_field: "posting_date",
-						read_only_setters: ["stock_entry_type", "purpose", "add_to_transit"],
-						setters: {
-							stock_entry_type: "Material Transfer",
-							purpose: "Material Transfer",
-							add_to_transit: 1,
-						},
-						get_query_filters: {
-							docstatus: 1,
-							purpose: "Material Transfer",
-							add_to_transit: 1,
-							per_transferred: ["<", 100],
-						},
-					});
-				},
-				__("Get Items From")
-			);
+			// Hidden per client request (2026-09-29) — "Get Items From" dropdown not used.
+			// Uncomment to re-enable.
+			// frm.add_custom_button(
+			// 	__("Transit Entry"),
+			// 	function () {
+			// 		erpnext.utils.map_current_doc({
+			// 			method: "erpnext.stock.doctype.stock_entry.stock_entry.make_stock_in_entry",
+			// 			source_doctype: "Stock Entry",
+			// 			target: frm,
+			// 			date_field: "posting_date",
+			// 			read_only_setters: ["stock_entry_type", "purpose", "add_to_transit"],
+			// 			setters: {
+			// 				stock_entry_type: "Material Transfer",
+			// 				purpose: "Material Transfer",
+			// 				add_to_transit: 1,
+			// 			},
+			// 			get_query_filters: {
+			// 				docstatus: 1,
+			// 				purpose: "Material Transfer",
+			// 				add_to_transit: 1,
+			// 				per_transferred: ["<", 100],
+			// 			},
+			// 		});
+			// 	},
+			// 	__("Get Items From")
+			// );
 		}
 	},
 
@@ -770,13 +778,15 @@ frappe.ui.form.on("Stock Entry", {
 			) &&
 			!frm.doc.subcontracting_inward_order
 		) {
-			frm.add_custom_button(
-				__("Bill of Materials"),
-				function () {
-					frm.events.get_items_from_bom(frm);
-				},
-				__("Get Items From")
-			);
+			// Hidden per client request (2026-09-29) — "Get Items From" dropdown not used.
+			// Uncomment to re-enable.
+			// frm.add_custom_button(
+			// 	__("Bill of Materials"),
+			// 	function () {
+			// 		frm.events.get_items_from_bom(frm);
+			// 	},
+			// 	__("Get Items From")
+			// );
 		}
 	},
 
