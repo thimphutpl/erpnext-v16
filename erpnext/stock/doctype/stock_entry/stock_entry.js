@@ -565,6 +565,22 @@ frappe.ui.form.on("Stock Entry", {
 					"Subcontracting Delivery",
 				].includes(frm.doc.purpose)
 		);
+
+		// Frappe hides the "Connections" dashboard header by default
+		// (hide_label: true in frappe/public/js/frappe/form/dashboard.js).
+		// Turn it into a proper collapsible dropdown title.
+		let links_area = frm.dashboard.links_area;
+		if (links_area && !links_area.head) {
+			links_area.df.hide_label = false;
+			links_area.df.collapsible = 1;
+			links_area.make_head();
+			// make_head() appends to the end of the wrapper, but "body" (the
+			// actual connection boxes) was already appended when the section
+			// was first built — so move the title back above the content.
+			links_area.head.insertBefore(links_area.body);
+			// Collapsed by default every time the form loads.
+			links_area.collapse(true);
+		}
 	},
 
 	set_route_options_for_new_doc(frm) {
