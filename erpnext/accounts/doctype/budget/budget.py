@@ -180,6 +180,7 @@ class Budget(Document):
 						where 
 							(a.freeze_account is null or a.freeze_account != 'Yes')
 							and a.company='{company}'
+							and a.is_group = 0
 							and NOT EXISTS( select 1
 								from `tabBudget` b 
 								inner join `tabBudget Account` i
