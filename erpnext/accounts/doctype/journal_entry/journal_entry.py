@@ -1662,13 +1662,16 @@ def get_account_details_and_party_type(account, date, company, debit=None, credi
 	elif account_details.account_type == "Payable":
 		party_type = "Supplier"
 		party=""
+	elif account_details.account_type == "Expense Account":
+		party_type = ""
+		party=""
 	else:
 		party_type = ""
 		party=""
 
 	grid_values = {
 		"party_type": party_type,
-        "party": party,
+		"party": party,
 		"branch":branch,
 		"cost_center":cost_center,
 		"account_type": account_details.account_type,
