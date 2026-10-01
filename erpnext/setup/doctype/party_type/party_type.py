@@ -34,10 +34,13 @@ def get_party_type(doctype: str, txt: str, searchfield: str, start: int, page_le
 	if filters and filters.get("account"):
 		account_type = frappe.db.get_value("Account", filters.get("account"), "account_type")
 		if account_type:
-			if account_type in ["Receivable", "Payable","Expense Account"]:
+			if account_type in ["Receivable", "Payable","Expense Account","Tax"]:
 				# Include Employee regardless of its configured account_type, but still respect the text filter
 				condition_list.append(
-					(PartyType.account_type == account_type) | (PartyType.name == "Employee")
+					(PartyType.account_type == account_type) 
+					    | (PartyType.name == "Supplier")
+                        | (PartyType.name == "Customer")
+                        | (PartyType.name == "Employee")
 				)
 			else:
 				condition_list.append(PartyType.account_type == account_type)
