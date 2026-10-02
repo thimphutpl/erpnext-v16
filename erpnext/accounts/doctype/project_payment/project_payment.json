@@ -1,0 +1,450 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "PJP.YYYY.MM.####",
+ "creation": "2024-10-14 11:06:46.835085",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ravw",
+  "amended_from",
+  "posting_date",
+  "reference_name",
+  "column_break_10",
+  "project",
+  "party_type",
+  "party",
+  "column_break_15",
+  "company",
+  "branch",
+  "cost_center",
+  "section_break_10",
+  "payment_type",
+  "naming_series",
+  "expense_bank_account",
+  "revenue_bank_account",
+  "column_break_20",
+  "pay_to_recd_from",
+  "use_cheque_lot",
+  "select_cheque_lot",
+  "cheque_no",
+  "cheque_date",
+  "clearance_date",
+  "column_break_17",
+  "paid_amount",
+  "total_amount",
+  "section_break_oobq",
+  "get_invoices",
+  "column_break_hhdc",
+  "get_invoices_without_gst",
+  "section_break_20",
+  "references",
+  "section_break_30",
+  "get_advances",
+  "advances",
+  "section_break_40",
+  "deductions",
+  "section_break_50",
+  "tax_withholding_category",
+  "tds_rate",
+  "tds_amount",
+  "column_break_30",
+  "tds_taxable_amount",
+  "tds_account",
+  "status",
+  "section_break_60",
+  "remarks",
+  "money_receipt_information",
+  "get_series",
+  "money_receipt_prefix",
+  "col_break_mo",
+  "money_receipt_no",
+  "sb_boq_allocation",
+  "details"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ravw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Payment",
+   "print_hide": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Entry Date",
+   "options": "Today",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Reference Name"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project",
+   "options": "Project",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Link",
+   "label": "Party Type",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Party",
+   "options": "party_type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.branch",
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payment_type",
+   "fieldtype": "Select",
+   "label": "Payment Type",
+   "options": "Receive\nPay",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "Bank Receipt Voucher",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "Journal Voucher\nBank Payment Voucher\nBank Receipt Voucher",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:(doc.party_type === \"Supplier\")",
+   "fetch_from": "branch.expense_bank_account",
+   "fieldname": "expense_bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Account"
+  },
+  {
+   "depends_on": "eval:(doc.party_type !== \"Supplier\")",
+   "fetch_from": "branch.revenue_bank_account",
+   "fieldname": "revenue_bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pay_to_recd_from",
+   "fieldtype": "Data",
+   "label": "Pay To/Recevied From"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.payment_type===\"Pay\"",
+   "fieldname": "use_cheque_lot",
+   "fieldtype": "Check",
+   "label": "Assign using cheque lot?"
+  },
+  {
+   "depends_on": "eval:doc.use_cheque_lot==1",
+   "fieldname": "select_cheque_lot",
+   "fieldtype": "Link",
+   "label": "Select Cheque Lot",
+   "options": "Cheque Lot"
+  },
+  {
+   "fieldname": "cheque_no",
+   "fieldtype": "Data",
+   "label": "Cheque Number"
+  },
+  {
+   "fieldname": "cheque_date",
+   "fieldtype": "Date",
+   "label": "Cheque Date"
+  },
+  {
+   "fieldname": "clearance_date",
+   "fieldtype": "Date",
+   "label": "Clearance Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "default": "0.0",
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_20",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_invoices",
+   "fieldtype": "Button",
+   "label": "Get Invoices With GST"
+  },
+  {
+   "fieldname": "references",
+   "fieldtype": "Table",
+   "options": "Project Payment Reference"
+  },
+  {
+   "fieldname": "section_break_30",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_advances",
+   "fieldtype": "Button",
+   "label": "Get Advances"
+  },
+  {
+   "fieldname": "advances",
+   "fieldtype": "Table",
+   "options": "Project Payment Advance"
+  },
+  {
+   "fieldname": "section_break_40",
+   "fieldtype": "Section Break",
+   "label": "OTHER DEDUCTIONS"
+  },
+  {
+   "fieldname": "deductions",
+   "fieldtype": "Table",
+   "options": "Project Payment Deduction"
+  },
+  {
+   "fieldname": "section_break_50",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "TDS DEDUCTIONS"
+  },
+  {
+   "fieldname": "tds_amount",
+   "fieldtype": "Currency",
+   "label": "TDS Amount"
+  },
+  {
+   "fieldname": "column_break_30",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tds_account",
+   "fieldtype": "Link",
+   "label": "TDS Account",
+   "options": "Account"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nPaid\nReceived\nCancelled"
+  },
+  {
+   "fieldname": "section_break_60",
+   "fieldtype": "Section Break",
+   "label": "MORE INFORMATION"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "collapsible_depends_on": "eval:doc.docstatus==1",
+   "fieldname": "money_receipt_information",
+   "fieldtype": "Section Break",
+   "label": "Money Receipt Information"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.money_receipt_no==0",
+   "fieldname": "get_series",
+   "fieldtype": "Button",
+   "label": "Get Series"
+  },
+  {
+   "fieldname": "money_receipt_prefix",
+   "fieldtype": "Data",
+   "label": "Money Receipt Prefix",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_mo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "money_receipt_no",
+   "fieldtype": "Data",
+   "label": "Money Receipt No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_boq_allocation",
+   "fieldtype": "Section Break",
+   "label": "BOQ ALLOCATION"
+  },
+  {
+   "fieldname": "details",
+   "fieldtype": "Table",
+   "label": "BOQ Allocation",
+   "options": "Project Payment Detail",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_withholding_category",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Tax Withholding Category",
+   "options": "Tax Withholding Category"
+  },
+  {
+   "fieldname": "tds_rate",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "TDS Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tds_taxable_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "TDS Taxable Amount"
+  },
+  {
+   "fieldname": "section_break_oobq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_hhdc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "get_invoices_without_gst",
+   "fieldtype": "Button",
+   "label": "Get Invoices Without GST"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-04-29 15:54:21.581174",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Project Payment",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
