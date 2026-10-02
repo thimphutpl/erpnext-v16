@@ -17,6 +17,7 @@ class VehicleLogbook(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+		from hrms.hr.doctype.vehicle_log.vehicle_log import VehicleLog
 
 		amended_from: DF.Link | None
 		branch: DF.Link
@@ -65,7 +66,7 @@ class VehicleLogbook(Document):
 		total_idle_time: DF.Float
 		total_work_time: DF.Float
 		vehicle_logbook: DF.Literal["", "Equipment Hiring Form"]
-		vlogs: DF.Data | None
+		vlogs: DF.Table[VehicleLog]
 		work_rate: DF.Currency
 		working_hours: DF.Int
 		ys_hours: DF.Float

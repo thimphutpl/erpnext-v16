@@ -35,7 +35,7 @@ class EquipmentHiringForm(Document):
 		hiring_status: DF.Check
 		location: DF.Link | None
 		payment_completed: DF.Check
-		private: DF.Literal["Own"]
+		private: DF.Literal["Own", "Other"]
 		private_customer_address: DF.SmallText | None
 		private_customer_name: DF.Data | None
 		rate: DF.Currency
@@ -44,11 +44,13 @@ class EquipmentHiringForm(Document):
 		request_date: DF.Date
 		request_items: DF.Table[HiringRequestDetails]
 		start_date: DF.Date | None
+		supplier: DF.Link | None
 		tc_name: DF.Link | None
 		terms: DF.TextEditor | None
 		total_hiring_amount: DF.Currency
 		workflow_state: DF.Link | None
 	# end: auto-generated types
+
 	def validate(self):
 		# check_future_date(self.request_date)
 		self.check_date_approval()
@@ -254,29 +256,59 @@ class EquipmentHiringForm(Document):
 #                 frappe.throw(_("No Hire Rates has been assigned for equipment type {0} and model {1}").format(e.equipment_type, e.equipment_model), title="No Data Found!")
 #         return data	
 
+
 @frappe.whitelist()
-def get_hire_rates(customer, equipment, from_date):
-        if not customer or not equipment:
-                frappe.throw("Customer and Equipment Details are mandatory")
+def get_hire_rates(customer=None, supplier=None, equipment=None, from_date=None):
+    if (not customer and not supplier) or not equipment:
+        frappe.throw("Customer/Supplier and Equipment Details are mandatory")
 
+    wf = "a.rate_fuel"
+    wof = "a.rate_wofuel"
+    ir = "a.idle_rate"
+
+    # --- Customer branch ---
+    if customer:
         c = frappe.get_doc("Customer", customer)
-        wf = "a.rate_fuel"
-        wof = "a.rate_wofuel"
-        ir = "a.idle_rate"
-
         if c.customer_group == "Internal":
-                wf = "a.rate_fuel_internal"
-                wof = "a.rate_wofuel_internal"
-                ir = "a.idle_rate_internal"
+            wf = "a.rate_fuel_internal"
+            wof = "a.rate_wofuel_internal"
+            ir = "a.idle_rate_internal"
 
-        e = frappe.get_doc("Equipment", equipment)
-        #query = "select with_fuel, without_fuel, idle from `tabHire Charge Parameter` where equipment_type = \"" + str(e.equipment_type) + "\" and equipment_model =\"" + str(e.equipment_model) + "\""
-        db_query = "select {0} as with_fuel, {1} as without_fuel, {2} as idle from `tabHire Charge Item` a, `tabHire Charge Parameter` b where a.parent = b.name and b.equipment = '{3}' and '{4}' between a.from_date and ifnull(a.to_date, now()) LIMIT 1"
-        data = frappe.db.sql(db_query.format(wf, wof, ir, e.name, from_date), as_dict=True)
-        #data = frappe.db.sql(query, as_dict=True)
-        if not data:
-                frappe.throw(_("No Hire Rates has been assigned for and equipment {0}").format(e.name), title="No Data Found!")
-        return data
+    # --- Supplier branch ---
+    elif supplier:
+        s = frappe.get_doc("Supplier", supplier)
+        # Example: use supplier_group or a custom flag on Supplier
+        if s.supplier_group == "Internal":
+            wf = "a.rate_fuel_internal"
+            wof = "a.rate_wofuel_internal"
+            ir = "a.idle_rate_internal"
+        # If you have separate supplier rate columns, override here:
+        # wf = "a.rate_fuel_supplier"
+        # wof = "a.rate_wofuel_supplier"
+        # ir = "a.idle_rate_supplier"
+
+    e = frappe.get_doc("Equipment", equipment)
+
+    db_query = """
+        select {0} as with_fuel, {1} as without_fuel, {2} as idle
+        from `tabHire Charge Item` a, `tabHire Charge Parameter` b
+        where a.parent = b.name
+          and b.equipment = %(equipment)s
+          and %(from_date)s between a.from_date and ifnull(a.to_date, now())
+        LIMIT 1
+    """
+    data = frappe.db.sql(
+        db_query.format(wf, wof, ir),
+        {"equipment": e.name, "from_date": from_date},
+        as_dict=True,
+    )
+
+    if not data:
+        frappe.throw(
+            _("No Hire Rates has been assigned for equipment {0}").format(e.name),
+            title="No Data Found!",
+        )
+    return data
 
 
 @frappe.whitelist()

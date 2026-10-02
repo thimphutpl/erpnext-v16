@@ -34,7 +34,7 @@ class HireChargeInvoice(AccountsController):
 		company: DF.Link
 		cost_center: DF.Link
 		currency: DF.Link
-		customer: DF.Link
+		customer: DF.Link | None
 		discount_amount: DF.Currency
 		discount_reason: DF.Text | None
 		ehf_name: DF.Link
@@ -42,12 +42,15 @@ class HireChargeInvoice(AccountsController):
 		items: DF.Table[HireInvoiceDetails]
 		outstanding_amount: DF.Currency
 		owned_by: DF.Data | None
+		party_type: DF.Literal["", "Customer", "Supplier"]
 		payment_jv: DF.Data | None
 		posting_date: DF.Date
 		status: DF.Literal["", "Payment Received", "Pending Payment"]
+		supplier: DF.Link | None
 		total_invoice_amount: DF.Currency
 		workflow_state: DF.Link | None
 	# end: auto-generated types
+
 	def validate(self):
 		check_future_date(self.posting_date)
 		self.check_advances(self.ehf_name)
@@ -309,66 +312,99 @@ class HireChargeInvoice(AccountsController):
 		if self.total_invoice_amount > 0:
 			gl_entries = []
 			self.posting_date = self.posting_date
-		receivable_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited","default_receivable_account")
+		receivable_account = frappe.db.get_value("Company", self.company,"default_receivable_account")
 		if not receivable_account:
 			frappe.throw("Setup Receivable Account in Company")
-		hirecharge_income_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited","hirecharge_income_account")
+		payable_account = frappe.db.get_value("Company", self.company,"default_payable_account")
+		if not payable_account:
+			frappe.throw("Setup Receivable Account in Company")	
+		hirecharge_income_account = frappe.db.get_value("Company", self.company,"hirecharge_income_account")
 		if not hirecharge_income_account:
 			frappe.throw("Setup hirecharge_income_account in Company")
+		directindirect_expense_account = frappe.db.get_value("Company", self.company,"directindirect_expense_account")
+		if not directindirect_expense_account:
+			frappe.throw("Setup hirecharge_income_account in Company") 	
 		# hire_account = frappe.db.get_single_value("Maintenance Accounts Settings", "hire_revenue_account")
 		# if not hire_account:
 		# 	frappe.throw("Setup Hire Account in Maintenance Accounts Settings")
 		# discount_account = frappe.db.get_single_value("Maintenance Accounts Settings", "discount_account")
 		# if not discount_account:
-		# 	frappe.throw("Setup Discount Account in Maintenance Accounts Settings")  
-		gl_entries.append(
+		# 	frappe.throw("Setup Discount Account in Maintenance Accounts Settings") 
+		if self.customer: 
+			gl_entries.append(
+				self.get_gl_dict({
+									"account": hirecharge_income_account,
+					"               against_voucher_type": "Equipment Hiring Form",
+									"against": self.ehf_name,
+									"credit": self.total_invoice_amount,
+									"credit_in_account_currency": self.total_invoice_amount,
+									"cost_center": self.cost_center,
+							}, self.currency)
+			)
+
+			# if self.advance_amount:
+			# 	gl_entries.append(
+			# 		self.get_gl_dict({
+			# 				"account": advance_account,
+			# 				"against": self.customer,
+			# 				"party_type": "Customer",
+			# 				"party": self.customer,
+			# 				"debit": self.advance_amount,
+			# 				"debit_in_account_currency": self.advance_amount,
+			# 				"cost_center": self.cost_center
+			# 		}, self.currency)
+			# 	)
+
+			# if self.discount_amount:
+			# 	gl_entries.append(
+			# 		self.get_gl_dict({
+			# 				"account": discount_account,
+			# 				"against": self.customer,
+			# 				"debit": self.discount_amount,
+			# 				"debit_in_account_currency": self.discount_amount,
+			# 				"cost_center": self.cost_center
+			# 		}, self.currency)
+			# 	)
+			# if self.balance_amount:
+			gl_entries.append(
+				self.get_gl_dict({
+					"account": receivable_account,
+					"against": self.customer,
+					"party_type": "Customer",
+					"party": self.customer,
+					"against_voucher": self.name,
+					"against_voucher_type": self.doctype,
+					"debit": self.balance_amount,
+					"debit_in_account_currency": self.balance_amount,
+					"cost_center": self.cost_center
+				}, self.currency)
+				)
+		else:
+			gl_entries.append(
 			self.get_gl_dict({
-								"account": hirecharge_income_account,
+								"account": payable_account,
 				"               against_voucher_type": "Equipment Hiring Form",
 								"against": self.ehf_name,
 								"credit": self.total_invoice_amount,
 								"credit_in_account_currency": self.total_invoice_amount,
-								"cost_center": self.cost_center
+								"cost_center": self.cost_center,
+								"party_type": self.party_type,
+								"party": self.supplier
 						}, self.currency)
-		)
-
-		# if self.advance_amount:
-		# 	gl_entries.append(
-		# 		self.get_gl_dict({
-		# 				"account": advance_account,
-		# 				"against": self.customer,
-		# 				"party_type": "Customer",
-		# 				"party": self.customer,
-		# 				"debit": self.advance_amount,
-		# 				"debit_in_account_currency": self.advance_amount,
-		# 				"cost_center": self.cost_center
-		# 		}, self.currency)
-		# 	)
-
-		# if self.discount_amount:
-		# 	gl_entries.append(
-		# 		self.get_gl_dict({
-		# 				"account": discount_account,
-		# 				"against": self.customer,
-		# 				"debit": self.discount_amount,
-		# 				"debit_in_account_currency": self.discount_amount,
-		# 				"cost_center": self.cost_center
-		# 		}, self.currency)
-		# 	)
-		# if self.balance_amount:
-		gl_entries.append(
-			self.get_gl_dict({
-				"account": receivable_account,
-				"against": self.customer,
-				"party_type": "Customer",
-				"party": self.customer,
-				"against_voucher": self.name,
-				"against_voucher_type": self.doctype,
-				"debit": self.balance_amount,
-				"debit_in_account_currency": self.balance_amount,
-				"cost_center": self.cost_center
-			}, self.currency)
 			)
+
+			# if self.balance_amount:
+			gl_entries.append(
+				self.get_gl_dict({
+					"account": directindirect_expense_account,
+					"against": self.customer,
+					"against_voucher": self.name,
+					"against_voucher_type": self.doctype,
+					"debit": self.balance_amount,
+					"debit_in_account_currency": self.balance_amount,
+					"cost_center": self.cost_center
+				}, self.currency)
+				)		
 		# frappe.msgprint(format(gl_entries))
 		make_gl_entries(gl_entries, cancel=(self.docstatus == 2),update_outstanding="No", merge_entries=False)
 

@@ -238,32 +238,80 @@ function calculate_time(frm, cdt, cdn) {
 	}
 }
 
+// function get_rates(frm, cdt, cdn) {
+// 	doc = locals[cdt][cdn]
+// 	if (doc.equipment && doc.rate_type && doc.from_date) {
+// 		return frappe.call({
+// 			method: "erpnext.fleet_management.doctype.equipment_hiring_form.equipment_hiring_form.get_hire_rates",
+// 			args: { customer:frm.doc.customer, hire_charge_parameter:frm.doc.hire_charge_parameter, equipment: doc.equipment, from_date: doc.from_date },
+// 			callback: function (r) {
+// 				if (r.message) {
+// 					if (doc.rate_type == "Without Fuel") {
+// 						frappe.model.set_value(cdt, cdn, "rate", r.message[0].without_fuel)
+// 					}
+// 					else if (doc.rate_type == "With Fuel") {
+// 						frappe.model.set_value(cdt, cdn, "rate", r.message[0].with_fuel)
+// 					}
+// 					else if (doc.rate_type == "Cft - Broadleaf") {
+// 						frappe.model.set_value(cdt, cdn, "rate", r.message[0].cft_rate_bf)
+// 					}
+// 					else if (doc.rate_type == "Cft - Conifer") {
+// 						frappe.model.set_value(cdt, cdn, "rate", r.message[0].cft_rate_co)
+// 					}
+// 					frappe.model.set_value(cdt, cdn, "idle_rate", r.message[0].idle)
+// 				}
+// 				cur_frm.refresh_fields()
+// 			}
+// 		})
+// 	}
+// }
+
 function get_rates(frm, cdt, cdn) {
-	doc = locals[cdt][cdn]
-	if (doc.equipment && doc.rate_type && doc.from_date) {
-		return frappe.call({
-			method: "erpnext.fleet_management.doctype.equipment_hiring_form.equipment_hiring_form.get_hire_rates",
-			args: { customer:frm.doc.customer, hire_charge_parameter:frm.doc.hire_charge_parameter, equipment: doc.equipment, from_date: doc.from_date },
-			callback: function (r) {
-				if (r.message) {
-					if (doc.rate_type == "Without Fuel") {
-						frappe.model.set_value(cdt, cdn, "rate", r.message[0].without_fuel)
-					}
-					else if (doc.rate_type == "With Fuel") {
-						frappe.model.set_value(cdt, cdn, "rate", r.message[0].with_fuel)
-					}
-					else if (doc.rate_type == "Cft - Broadleaf") {
-						frappe.model.set_value(cdt, cdn, "rate", r.message[0].cft_rate_bf)
-					}
-					else if (doc.rate_type == "Cft - Conifer") {
-						frappe.model.set_value(cdt, cdn, "rate", r.message[0].cft_rate_co)
-					}
-					frappe.model.set_value(cdt, cdn, "idle_rate", r.message[0].idle)
-				}
-				cur_frm.refresh_fields()
-			}
-		})
-	}
+    let doc = locals[cdt][cdn];
+
+    if (!doc.equipment || !doc.rate_type || !doc.from_date) return;
+
+    // Decide whether we're on customer or supplier path
+    let args = {
+        equipment: doc.equipment,
+        from_date: doc.from_date,
+    };
+
+    if (frm.doc.customer) {
+        args.customer = frm.doc.customer;
+    } else if (frm.doc.supplier) {
+        args.supplier = frm.doc.supplier;
+    } else {
+        frappe.msgprint(__("Please select a Customer or Supplier first."));
+        return;
+    }
+
+    return frappe.call({
+        method: "erpnext.fleet_management.doctype.equipment_hiring_form.equipment_hiring_form.get_hire_rates",
+        args: args,
+        callback: function (r) {
+            if (r.message && r.message.length) {
+                const row = r.message[0];
+
+                switch (doc.rate_type) {
+                    case "Without Fuel":
+                        frappe.model.set_value(cdt, cdn, "rate", row.without_fuel);
+                        break;
+                    case "With Fuel":
+                        frappe.model.set_value(cdt, cdn, "rate", row.with_fuel);
+                        break;
+                    case "Cft - Broadleaf":
+                        frappe.model.set_value(cdt, cdn, "rate", row.cft_rate_bf);
+                        break;
+                    case "Cft - Conifer":
+                        frappe.model.set_value(cdt, cdn, "rate", row.cft_rate_co);
+                        break;
+                }
+                frappe.model.set_value(cdt, cdn, "idle_rate", row.idle);
+            }
+            cur_frm.refresh_fields();
+        }
+    });
 }
 
 

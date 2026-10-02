@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-10-01 16:10:05.573450",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+    "default_account_settings_section",
+    "default_services_account",
+    "column_break_mush",
+    "default_goods_account",
+    "section_break_vsgo",
+    "maintenance_expense_account",
+    "column_break_njjs",
+    "default_receivable_account",
+    "section_break_wmdr",
+    "hire_revenue_account",
+    "hire_revenue_internal_account",
+    "discount_account",
+    "column_break_gyqu",
+    "default_advance_account",
+    "hire_expense_account",
+    "default_advance_amount",
+    "section_break_grvo",
+    "default_pol_expense_account",
+    "column_break_agau",
+    "pool_vehicle_pol_expenses"
+   ],
+   "fields": [
+    {
+     "fieldname": "default_account_settings_section",
+     "fieldtype": "Section Break",
+     "label": "Default Account Settings"
+    },
+    {
+     "fieldname": "default_services_account",
+     "fieldtype": "Link",
+     "in_list_view": 1,
+     "label": "Default Services Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_mush",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "default_goods_account",
+     "fieldtype": "Link",
+     "label": "Default Goods Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "section_break_vsgo",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "maintenance_expense_account",
+     "fieldtype": "Link",
+     "label": "Maintenance Expense Account",
+     "options": "Account"
+    },
+    {
+     "fieldname": "column_break_njjs",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "default_receivable_account",
+     "fieldtype": "Link",
+     "label": "Default Receivable Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "section_break_wmdr",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "hire_revenue_account",
+     "fieldtype": "Link",
+     "label": "Default Hire Revenue Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "hire_revenue_internal_account",
+     "fieldtype": "Link",
+     "label": "Hire Revenue Account (Internal)",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "discount_account",
+     "fieldtype": "Link",
+     "label": "Default Discount Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_gyqu",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "default_advance_account",
+     "fieldtype": "Link",
+     "label": "Default Customer Advance Account",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "hire_expense_account",
+     "fieldtype": "Link",
+     "label": "Hire Expense Account (Internal)",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "section_break_grvo",
+     "fieldtype": "Section Break"
+    },
+    {
+     "fieldname": "default_pol_expense_account",
+     "fieldtype": "Link",
+     "label": "Default POL Expense Account (Machinaries)",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "column_break_agau",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "pool_vehicle_pol_expenses",
+     "fieldtype": "Link",
+     "label": "Pool Vehicle POL Expenses",
+     "options": "Account",
+     "reqd": 1
+    },
+    {
+     "fieldname": "default_advance_amount",
+     "fieldtype": "Link",
+     "label": "Default Advance Amount",
+     "options": "Account",
+     "reqd": 1
+    }
+   ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-01 16:10:05.573450",
+ "modified_by": "Administrator",
+ "module": "Fleet Management",
+ "name": "Maintenance Accounts Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

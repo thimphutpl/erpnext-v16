@@ -23,6 +23,8 @@
   "column_break_dalm",
   "request_date",
   "contact_number",
+  "section_break_rfpr",
+  "supplier",
   "section_break_3",
   "request_items",
   "equipment_approved_details_section",
@@ -185,7 +187,7 @@
    "fieldname": "private",
    "fieldtype": "Select",
    "label": "Machinery Type",
-   "options": "Own",
+   "options": "Own\nOther",
    "reqd": 1
   },
   {
@@ -193,6 +195,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:doc.private == 'Own'",
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -293,16 +296,27 @@
    "hidden": 1,
    "label": "Location",
    "options": "Location"
+  },
+  {
+   "fieldname": "section_break_rfpr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.private == 'Other'",
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-05 15:40:09.151571",
+ "modified": "2026-10-01 15:11:29.543338",
  "modified_by": "Administrator",
  "module": "Fleet Management",
  "name": "Equipment Hiring Form",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -319,6 +333,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "search_fields": "customer, request_date",
  "sort_field": "modified",
  "sort_order": "DESC",

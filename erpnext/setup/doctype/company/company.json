@@ -95,6 +95,10 @@
   "depreciation_cost_center",
   "capital_work_in_progress_account",
   "asset_received_but_not_billed",
+  "section_break_ruoe",
+  "hirecharge_income_account",
+  "column_break_tmiz",
+  "directindirect_expense_account",
   "accounts_closing_tab",
   "accounts_closing_section",
   "accounts_frozen_till_date",
@@ -969,6 +973,26 @@
    "fieldtype": "Link",
    "label": "Default Salary Tax Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "section_break_ruoe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hirecharge_income_account",
+   "fieldtype": "Link",
+   "label": "Hirecharge Income Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_tmiz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "directindirect_expense_account",
+   "fieldtype": "Link",
+   "label": "Direct/Indirect Expense Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
@@ -977,7 +1001,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-09-05 14:35:40.172870",
+ "modified": "2026-10-02 08:13:28.542642",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
