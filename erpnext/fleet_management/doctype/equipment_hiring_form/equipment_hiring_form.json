@@ -14,6 +14,7 @@
   "col_break_3",
   "private",
   "section_break_fxma",
+  "party_type",
   "customer",
   "address",
   "location",
@@ -23,8 +24,6 @@
   "column_break_dalm",
   "request_date",
   "contact_number",
-  "section_break_rfpr",
-  "supplier",
   "section_break_3",
   "request_items",
   "equipment_approved_details_section",
@@ -195,12 +194,11 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.private == 'Own'",
    "fieldname": "customer",
-   "fieldtype": "Link",
+   "fieldtype": "Dynamic Link",
    "in_list_view": 1,
-   "label": "Customer",
-   "options": "Customer",
+   "label": "Customer/Supplier",
+   "options": "party_type",
    "reqd": 1
   },
   {
@@ -298,21 +296,16 @@
    "options": "Location"
   },
   {
-   "fieldname": "section_break_rfpr",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval:doc.private == 'Other'",
-   "fieldname": "supplier",
+   "fieldname": "party_type",
    "fieldtype": "Link",
-   "label": "Supplier",
-   "options": "Supplier"
+   "label": "Party Type",
+   "options": "DocType"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-01 15:11:29.543338",
+ "modified": "2026-10-02 15:41:58.543071",
  "modified_by": "Administrator",
  "module": "Fleet Management",
  "name": "Equipment Hiring Form",

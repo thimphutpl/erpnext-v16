@@ -30,10 +30,11 @@ class EquipmentHiringForm(Document):
 		branch: DF.Link
 		contact_number: DF.Data | None
 		cost_center: DF.Link
-		customer: DF.Link
+		customer: DF.DynamicLink
 		end_date: DF.Date | None
 		hiring_status: DF.Check
 		location: DF.Link | None
+		party_type: DF.Link | None
 		payment_completed: DF.Check
 		private: DF.Literal["Own", "Other"]
 		private_customer_address: DF.SmallText | None
@@ -44,7 +45,6 @@ class EquipmentHiringForm(Document):
 		request_date: DF.Date
 		request_items: DF.Table[HiringRequestDetails]
 		start_date: DF.Date | None
-		supplier: DF.Link | None
 		tc_name: DF.Link | None
 		terms: DF.TextEditor | None
 		total_hiring_amount: DF.Currency
