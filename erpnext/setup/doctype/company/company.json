@@ -140,7 +140,9 @@
   "default_fg_warehouse",
   "default_scrap_warehouse",
   "dashboard_tab",
-  "default_salary_tax_account"
+  "default_salary_tax_account",
+  "fleet_management_tab",
+  "pol_advance_account"
  ],
  "fields": [
   {
@@ -993,6 +995,19 @@
    "fieldtype": "Link",
    "label": "Direct/Indirect Expense Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "fleet_management_tab",
+   "fieldtype": "Tab Break",
+   "label": "Fleet Management"
+  },
+  {
+   "fieldname": "pol_advance_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "POL Advance Account",
+   "options": "Account",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
@@ -1001,7 +1016,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-02 08:13:28.542642",
+ "modified": "2026-10-05 10:27:05.957777",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
