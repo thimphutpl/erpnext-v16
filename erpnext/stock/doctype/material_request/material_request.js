@@ -98,6 +98,15 @@ frappe.ui.form.on("Material Request", {
 			};
 		});
 
+		frm.set_query("cost_center", "items", function (doc) {
+			return {
+				filters: {
+					company: doc.company,
+					is_group: 0,
+				},
+			};
+		});
+
 		erpnext.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
 		if (!frm.doc.buying_price_list) {
 			frm.doc.buying_price_list = frappe.defaults.get_default("buying_price_list");
