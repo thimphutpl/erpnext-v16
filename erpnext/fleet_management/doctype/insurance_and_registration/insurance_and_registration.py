@@ -31,7 +31,7 @@ class InsuranceandRegistration(AccountsController):
 		branch: DF.Link | None
 		claim: DF.Check
 		claim_item: DF.Table[ClaimDetails]
-		company: DF.Link | None
+		company: DF.Link
 		cost_center: DF.Link
 		designation: DF.Data | None
 		employee: DF.Link | None
@@ -50,6 +50,7 @@ class InsuranceandRegistration(AccountsController):
 		vehicle_model: DF.Data | None
 		vehicle_type: DF.Link | None
 	# end: auto-generated types
+
 	def validate(self):
 		self.check_transaction()
 		self.prevent_row_remove()
@@ -83,7 +84,7 @@ class InsuranceandRegistration(AccountsController):
 	def make_gl_entry(self):
 		from erpnext.accounts.general_ledger import make_gl_entries
 
-		bank_account = frappe.db.get_value("Company", "Thimphu Techpark Limited", "default_bank_account")
+		bank_account = frappe.db.get_value("Company", self.company, "default_bank_account")
 		if not bank_account:
 			frappe.throw("Setup Bank Account in Company")
 
@@ -93,7 +94,7 @@ class InsuranceandRegistration(AccountsController):
 
 		# Process insurance items
 		if self.insurance:
-			insurance_expense_account = frappe.db.get_value("Company", "Thimphu Techpark Limited", "insurance_expense_account")
+			insurance_expense_account = frappe.db.get_value("Company", self.company, "insurance_expense_account")
 			if not insurance_expense_account:
 				frappe.throw("Setup Insurance Expense Account in Company")
 			if self.insurance_item:
@@ -122,7 +123,7 @@ class InsuranceandRegistration(AccountsController):
 						})
 					)
 		if self.registration:
-			registration_expense_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "registration_expense_account")
+			registration_expense_account = frappe.db.get_value("Company", self.company, "registration_expense_account")
 			if not registration_expense_account:
 				frappe.throw("Setup Insurance Expense Account in Company")
 			if self.registration_item:
@@ -150,7 +151,7 @@ class InsuranceandRegistration(AccountsController):
 							})
 						)
 		if self.claim:
-			motor_claim_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "insurance_claim_expense_account")
+			motor_claim_account = frappe.db.get_value("Company", self.company, "insurance_claim_expense_account")
 			if not motor_claim_account:
 				frappe.throw("Setup Insurance Claim Expense Account in Company")
 			if self.claim_item:
@@ -182,13 +183,13 @@ class InsuranceandRegistration(AccountsController):
 			if self.items:
 				for i in self.items:
 					if i.type == "Registration Certificate":
-						expense_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "registration_certificate_expense_account")
+						expense_account = frappe.db.get_value("Company", self.company, "registration_certificate_expense_account")
 					if i.type == "Fitness":
-						expense_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "fitness_expense_account")
+						expense_account = frappe.db.get_value("Company", self.company, "fitness_expense_account")
 					if i.type == "Emission":
-						expense_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "emission_expense_account")
+						expense_account = frappe.db.get_value("Company", self.company, "emission_expense_account")
 					if i.type == "Offense":
-						expense_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "offence_expense_account")
+						expense_account = frappe.db.get_value("Company", self.company, "offence_expense_account")
 					gl_entries.append(
 							self.get_gl_dict({
 								"account": expense_account,
@@ -259,11 +260,11 @@ class InsuranceandRegistration(AccountsController):
 		je = frappe.new_doc("Journal Entry")
 		je.flags.ignore_permissions = 1
 		
-		bank_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "default_bank_account")
+		bank_account = frappe.db.get_value("Company", self.company, "default_bank_account")
 		if not bank_account:
 			frappe.throw("Setup Bank Account in Company")
 		
-		insurance_expense_account = frappe.db.get_value("Company", "Green Bhutan Corporation Limited", "insurance_expense_account")
+		insurance_expense_account = frappe.db.get_value("Company", self.company, "insurance_expense_account")
 		if not insurance_expense_account:
 			frappe.throw("Setup Insurance Expense Account in Company")
 
