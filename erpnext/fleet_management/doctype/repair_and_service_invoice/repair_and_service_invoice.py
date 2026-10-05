@@ -11,6 +11,44 @@ from frappe.utils import flt, cint, money_in_words
 from erpnext.accounts.party import get_party_account
 
 class RepairAndServiceInvoice(AccountsController):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from erpnext.fleet_management.doctype.repair_and_services_invoice_item.repair_and_services_invoice_item import RepairAndServicesInvoiceItem
+		from frappe.types import DF
+
+		amended_from: DF.Link | None
+		bill_date: DF.Date
+		bill_no: DF.Data
+		branch: DF.Link
+		checked_by: DF.Link | None
+		company: DF.Link
+		cost_center: DF.Link | None
+		credit_account: DF.Link | None
+		currency: DF.Link
+		equipment: DF.Link
+		equipment_category: DF.Link | None
+		equipment_model: DF.Link | None
+		equipment_type: DF.Link | None
+		grand_total: DF.Currency
+		items: DF.Table[RepairAndServicesInvoiceItem]
+		journal_entry: DF.Data | None
+		out_source: DF.Check
+		outstanding_amount: DF.Currency
+		party: DF.DynamicLink
+		party_type: DF.Literal["", "Employee", "Supplier"]
+		posting_date: DF.Date | None
+		remarks: DF.SmallText | None
+		repair_and_services: DF.Link | None
+		repair_and_services_date: DF.Date | None
+		repair_and_services_type: DF.Literal["", "Preventive Maintenance", "Proactive Maintenance", "Breakdown Maintenance"]
+		status: DF.Literal["", "Paid", "Unpaid", "Submitted", "Partly Paid", "Draft", "Cancelled"]
+		total_amount: DF.Currency
+	# end: auto-generated types
+
 	def validate(self):
 		check_future_date(self.posting_date)
 		self.calculate_total()

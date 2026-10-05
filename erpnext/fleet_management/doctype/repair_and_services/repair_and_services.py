@@ -26,7 +26,7 @@ class RepairAndServices(StockController):
 		approver_designation: DF.Link | None
 		approver_name: DF.Data | None
 		branch: DF.Link
-		company: DF.Link | None
+		company: DF.Link
 		completion_status: DF.Literal["In Process", "Completed"]
 		cost_center: DF.Link
 		current_km: DF.Float
@@ -58,6 +58,7 @@ class RepairAndServices(StockController):
 		total_out_source_amt: DF.Currency
 		total_stock_amt: DF.Currency
 	# end: auto-generated types
+
 	def __init__(self, *args, **kwargs):
 		super(RepairAndServices, self).__init__(*args, **kwargs)
 
