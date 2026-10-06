@@ -29,7 +29,7 @@ frappe.ui.form.on('Equipment Hiring Form', {
 			frappe.set_route("List", "Hire Charge Invoice");
 		}, __("View"));
 		if (cint(frm.doc.docstatus) == 1) {
-			frm.add_custom_button("Vehicle Log", function () {
+			frm.add_custom_button("Vehicle Logbook", function () {
 				frappe.model.open_mapped_doc({
 					method: "erpnext.fleet_management.doctype.equipment_hiring_form.equipment_hiring_form.make_vehicle_logbook",
 					frm: cur_frm
