@@ -30,10 +30,10 @@ class EquipmentHiringForm(Document):
 		branch: DF.Link
 		contact_number: DF.Data | None
 		cost_center: DF.Link
-		customer: DF.DynamicLink
 		end_date: DF.Date | None
 		hiring_status: DF.Check
 		location: DF.Link | None
+		party: DF.DynamicLink
 		party_type: DF.Link | None
 		payment_completed: DF.Check
 		private: DF.Literal["Own", "Other"]

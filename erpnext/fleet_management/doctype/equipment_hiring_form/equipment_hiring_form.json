@@ -15,7 +15,7 @@
   "private",
   "section_break_fxma",
   "party_type",
-  "customer",
+  "party",
   "address",
   "location",
   "column_break_cmcm",
@@ -194,14 +194,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "customer",
-   "fieldtype": "Dynamic Link",
-   "in_list_view": 1,
-   "label": "Customer/Supplier",
-   "options": "party_type",
-   "reqd": 1
-  },
-  {
    "fieldname": "address",
    "fieldtype": "Data",
    "label": "Customer Address",
@@ -300,12 +292,20 @@
    "fieldtype": "Link",
    "label": "Party Type",
    "options": "DocType"
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Party",
+   "options": "party_type",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-02 15:41:58.543071",
+ "modified": "2026-10-06 11:49:53.975820",
  "modified_by": "Administrator",
  "module": "Fleet Management",
  "name": "Equipment Hiring Form",
@@ -327,7 +327,7 @@
   }
  ],
  "row_format": "Dynamic",
- "search_fields": "customer, request_date",
+ "search_fields": "party, request_date",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

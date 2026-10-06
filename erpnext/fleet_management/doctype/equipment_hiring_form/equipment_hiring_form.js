@@ -280,14 +280,14 @@ function get_rates(frm, cdt, cdn) {
     if (!doc.equipment || !doc.rate_type || !doc.from_date) return;
 
     // Guard: need a party_type and a party
-    if (!frm.doc.party_type || !frm.doc.customer) {
+    if (!frm.doc.party_type || !frm.doc.party) {
         frappe.msgprint(__("Please select a Party Type and a Party first."));
         return;
     }
 
     let args = {
-        party_type: frm.doc.party_type,   // "Customer" or "Supplier"
-        party:      frm.doc.customer,     // the value in the dynamic link
+        party_type: frm.doc.party_type,
+        party:      frm.doc.party,
         equipment:  doc.equipment,
         from_date:  doc.from_date,
     };

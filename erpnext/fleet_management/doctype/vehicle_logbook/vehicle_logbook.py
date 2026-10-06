@@ -25,7 +25,7 @@ class VehicleLogbook(Document):
 		consumption: DF.Float
 		consumption_hours: DF.Float
 		consumption_km: DF.Float
-		customer: DF.Link | None
+		customer: DF.Data | None
 		customer_type: DF.Data | None
 		distance_km: DF.Int
 		ehf_name: DF.Link | None
@@ -78,11 +78,11 @@ class VehicleLogbook(Document):
 	def validate(self):
 		# check_future_date(self.to_date)
 		self.validate_date()
-		self.set_data()
+		# self.set_data()
 		self.check_dates()
 		self.check_double_vl()
 		self.check_hire_form()
-		self.check_hire_rate()
+		# self.check_hire_rate()
 		# self.check_duplicate()
 		self.update_consumed()
 		# self.calculate_totals()
@@ -121,7 +121,7 @@ class VehicleLogbook(Document):
 		if self.lph or self.kph:
 			self.equipment_run_by_electric = 0	
 
-        # # Ensure consumption does not exceed tank balance
+        # Ensure consumption does not exceed tank balance
 		# if flt(self.tank_balance) < flt(self.consumption):
 		# 	frappe.throw(
         #         ("Tank balance ({}) should be greater than or equal to consumption ({}).").format(
@@ -148,7 +148,7 @@ class VehicleLogbook(Document):
 		if not self.ehf_name:
 			frappe.throw("Equipment Hire Form is mandatory")
 		self.customer_type = frappe.db.get_value("Equipment Hiring Form", self.ehf_name, "private")
-		self.customer = frappe.db.get_value("Equipment Hiring Form", self.ehf_name, "customer")
+		self.customer = frappe.db.get_value("Equipment Hiring Form", self.ehf_name, "party")
 
 	def check_consumed(self):
 		if self.include_hour or self.include_km:
@@ -212,7 +212,7 @@ class VehicleLogbook(Document):
 
 	def on_submit(self):
 		self.check_double_vl()
-		self.check_hire_rate()
+		# self.check_hire_rate()
 		self.update_consumed()
 		# self.calculate_totals()
 		# self.check_consumption()
