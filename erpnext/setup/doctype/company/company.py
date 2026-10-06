@@ -102,6 +102,8 @@ class Company(NestedSet):
 		fax: DF.Data | None
 		hirecharge_income_account: DF.Link | None
 		is_group: DF.Check
+		leave_encashment_expense_account: DF.Link | None
+		leave_encashment_payable_account: DF.Link | None
 		lft: DF.Int
 		monthly_sales_target: DF.Currency
 		old_parent: DF.Data | None
@@ -129,6 +131,7 @@ class Company(NestedSet):
 		tax_id: DF.Data | None
 		total_monthly_sales: DF.Currency
 		transactions_annual_history: DF.Code | None
+		travel_advance_account: DF.Link | None
 		unrealized_exchange_gain_loss_account: DF.Link | None
 		unrealized_profit_loss_account: DF.Link | None
 		valuation_method: DF.Literal["FIFO", "Moving Average", "LIFO"]

@@ -9,7 +9,10 @@
   "department",
   "designation",
   "from_date",
-  "to_date"
+  "to_date",
+  "promotion_due_date",
+  "reference_doctype",
+  "reference_docname"
  ],
  "fields": [
   {
@@ -54,17 +57,35 @@
    "label": "To Date",
    "oldfieldname": "to_date",
    "oldfieldtype": "Date"
+  },
+  {
+   "fieldname": "promotion_due_date",
+   "fieldtype": "Data",
+   "label": "Next Promotion Date"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Reference Doctype",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "reference_docname",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Docname",
+   "options": "reference_doctype"
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-03-27 13:09:39.822645",
+ "modified": "2026-09-27 22:52:20.620759",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Employee Internal Work History",
  "owner": "Administrator",
  "permissions": [],
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": []

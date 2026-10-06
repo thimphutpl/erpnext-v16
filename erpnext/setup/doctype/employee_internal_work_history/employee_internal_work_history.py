@@ -21,6 +21,9 @@ class EmployeeInternalWorkHistory(Document):
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
+		promotion_due_date: DF.Data | None
+		reference_docname: DF.DynamicLink | None
+		reference_doctype: DF.Link | None
 		to_date: DF.Date | None
 	# end: auto-generated types
 

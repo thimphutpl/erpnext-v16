@@ -45,6 +45,7 @@
   "existing_company",
   "column_break_26",
   "chart_of_accounts",
+  "travel_advance_account",
   "default_settings",
   "default_bank_account",
   "default_cash_account",
@@ -52,6 +53,8 @@
   "default_payable_account",
   "write_off_account",
   "unrealized_profit_loss_account",
+  "leave_encashment_expense_account",
+  "leave_encashment_payable_account",
   "column_break0",
   "allow_account_creation_against_child_company",
   "default_expense_account",
@@ -977,37 +980,22 @@
    "options": "Account"
   },
   {
-   "fieldname": "section_break_ruoe",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "hirecharge_income_account",
+   "fieldname": "travel_advance_account",
    "fieldtype": "Link",
-   "label": "Hirecharge Income Account",
+   "label": "Travel Advance Account",
    "options": "Account"
   },
   {
-   "fieldname": "column_break_tmiz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "directindirect_expense_account",
+   "fieldname": "leave_encashment_expense_account",
    "fieldtype": "Link",
-   "label": "Direct/Indirect Expense Account",
+   "label": "Leave Encashment Expense Account",
    "options": "Account"
   },
   {
-   "fieldname": "fleet_management_tab",
-   "fieldtype": "Tab Break",
-   "label": "Fleet Management"
-  },
-  {
-   "fieldname": "pol_advance_account",
+   "fieldname": "leave_encashment_payable_account",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "POL Advance Account",
-   "options": "Account",
-   "reqd": 1
+   "label": "Leave Encashment Payable Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
@@ -1016,7 +1004,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-05 10:27:05.957777",
+ "modified": "2026-10-06 00:21:26.290588",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
