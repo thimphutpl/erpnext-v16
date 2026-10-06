@@ -40,6 +40,15 @@
   "get_vehicle_logbooks",
   "section_break_18",
   "items",
+  "section_break_lcff",
+  "included_gst",
+  "gst_details_section",
+  "taxes_and_charges",
+  "account_head",
+  "tax_rate",
+  "column_break_ghkt",
+  "gst_amount",
+  "total_gst_amount",
   "section_break_20",
   "get_advances",
   "advances",
@@ -344,12 +353,63 @@
    "fieldtype": "Link",
    "label": "Supplier",
    "options": "Supplier"
+  },
+  {
+   "fieldname": "section_break_lcff",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "included_gst",
+   "fieldtype": "Check",
+   "label": "Included GST"
+  },
+  {
+   "fieldname": "gst_details_section",
+   "fieldtype": "Section Break",
+   "label": "GST Details"
+  },
+  {
+   "fieldname": "taxes_and_charges",
+   "fieldtype": "Link",
+   "label": "Purchase Taxes and Charges Template",
+   "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "column_break_ghkt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gst_amount",
+   "fieldtype": "Float",
+   "label": "GST Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "account_head",
+   "fieldtype": "Data",
+   "label": "Account Head",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_gst_amount",
+   "fieldtype": "Float",
+   "label": "Total GST Amount",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_rate",
+   "fieldtype": "Float",
+   "label": "Tax Rate",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-06 15:31:15.490780",
+ "modified": "2026-10-06 16:33:35.469952",
  "modified_by": "Administrator",
  "module": "Fleet Management",
  "name": "Hire Charge Invoice",

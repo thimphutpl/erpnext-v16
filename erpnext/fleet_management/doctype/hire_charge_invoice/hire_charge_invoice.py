@@ -24,6 +24,7 @@ class HireChargeInvoice(AccountsController):
 		from erpnext.fleet_management.doctype.hire_invoice_details.hire_invoice_details import HireInvoiceDetails
 		from frappe.types import DF
 
+		account_head: DF.Data | None
 		advance_amount: DF.Currency
 		advances: DF.Table[HireInvoiceAdvance]
 		amended_from: DF.Link | None
@@ -38,6 +39,8 @@ class HireChargeInvoice(AccountsController):
 		discount_amount: DF.Currency
 		discount_reason: DF.Text | None
 		ehf_name: DF.Link
+		gst_amount: DF.Float
+		included_gst: DF.Check
 		invoice_jv: DF.Data | None
 		items: DF.Table[HireInvoiceDetails]
 		outstanding_amount: DF.Currency
@@ -47,6 +50,9 @@ class HireChargeInvoice(AccountsController):
 		posting_date: DF.Date
 		status: DF.Literal["", "Payment Received", "Pending Payment"]
 		supplier: DF.Link | None
+		tax_rate: DF.Float
+		taxes_and_charges: DF.Link | None
+		total_gst_amount: DF.Float
 		total_invoice_amount: DF.Currency
 		workflow_state: DF.Link | None
 	# end: auto-generated types
