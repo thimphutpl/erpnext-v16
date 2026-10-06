@@ -42,6 +42,32 @@ frappe.ui.form.on('Hire Charge Invoice', {
 			cur_frm.toggle_display("receive_payment", 0)
 		}
 	},
+
+	ehf_name: function(frm) {
+        // If the EHF is cleared, clear the fetched fields
+        if (!frm.doc.ehf_name) {
+            frm.set_value("customer", null);
+            frm.set_value("owned_by", null);
+            frm.set_value("branch", null);
+            return;
+        }
+
+        // Use frappe.db.get_value to bypass the query restrictions
+        frappe.db.get_value("Equipment Hiring Form", frm.doc.ehf_name, 
+            ["customer", "private", "branch"]
+        ).then(r => {
+            if (r && r.message) {
+                const m = r.message;
+                frm.set_value("customer", m.customer);
+                frm.set_value("owned_by", m.private); // 'private' maps to 'owned_by'
+                if (m.branch) {
+                    frm.set_value("branch", m.branch);
+                }
+                frm.refresh_fields();
+            }
+        });
+    },
+	
 	onload: function(frm) {
 		if (!frm.doc.posting_date) {
 			frm.set_value("posting_date", get_today());
@@ -91,9 +117,9 @@ function calculate_balance(frm) {
 	}	
 }
 
-cur_frm.add_fetch("ehf_name","customer","customer")
-cur_frm.add_fetch("ehf_name","private","owned_by")
-cur_frm.add_fetch("branch","branch","cost_center")
+// cur_frm.add_fetch("ehf_name","customer","customer")
+// cur_frm.add_fetch("ehf_name","private","owned_by")
+// cur_frm.add_fetch("branch","branch","cost_center")
 //cur_frm.add_fetch("ehf_name","advance_amount","advance_amount")
 
 

@@ -116,7 +116,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.branch",
    "fieldname": "ehf_name",
    "fieldtype": "Link",
    "label": "Equipment Hiring Form",
@@ -132,8 +131,7 @@
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "Customer",
-   "options": "Customer",
-   "read_only": 1
+   "options": "Customer"
   },
   {
    "fieldname": "column_break_6",
@@ -351,7 +349,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-02 08:41:08.350861",
+ "modified": "2026-10-06 15:31:15.490780",
  "modified_by": "Administrator",
  "module": "Fleet Management",
  "name": "Hire Charge Invoice",
