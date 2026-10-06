@@ -258,34 +258,30 @@ class EquipmentHiringForm(Document):
 
 
 @frappe.whitelist()
-def get_hire_rates(customer=None, supplier=None, equipment=None, from_date=None):
-    if (not customer and not supplier) or not equipment:
-        frappe.throw("Customer/Supplier and Equipment Details are mandatory")
+def get_hire_rates(party_type=None, party=None, equipment=None, from_date=None):
+    if not party_type or not party or not equipment:
+        frappe.throw("Party Type, Party and Equipment are mandatory")
 
-    wf = "a.rate_fuel"
+    wf  = "a.rate_fuel"
     wof = "a.rate_wofuel"
-    ir = "a.idle_rate"
+    ir  = "a.idle_rate"
 
-    # --- Customer branch ---
-    if customer:
-        c = frappe.get_doc("Customer", customer)
+    if party_type == "Customer":
+        c = frappe.get_doc("Customer", party)
         if c.customer_group == "Internal":
-            wf = "a.rate_fuel_internal"
+            wf  = "a.rate_fuel_internal"
             wof = "a.rate_wofuel_internal"
-            ir = "a.idle_rate_internal"
+            ir  = "a.idle_rate_internal"
 
-    # --- Supplier branch ---
-    elif supplier:
-        s = frappe.get_doc("Supplier", supplier)
-        # Example: use supplier_group or a custom flag on Supplier
+    elif party_type == "Supplier":
+        s = frappe.get_doc("Supplier", party)
         if s.supplier_group == "Internal":
-            wf = "a.rate_fuel_internal"
+            wf  = "a.rate_fuel_internal"
             wof = "a.rate_wofuel_internal"
-            ir = "a.idle_rate_internal"
-        # If you have separate supplier rate columns, override here:
-        # wf = "a.rate_fuel_supplier"
-        # wof = "a.rate_wofuel_supplier"
-        # ir = "a.idle_rate_supplier"
+            ir  = "a.idle_rate_internal"
+
+    else:
+        frappe.throw(_("Invalid Party Type: {0}").format(party_type))
 
     e = frappe.get_doc("Equipment", equipment)
 
@@ -309,7 +305,6 @@ def get_hire_rates(customer=None, supplier=None, equipment=None, from_date=None)
             title="No Data Found!",
         )
     return data
-
 
 @frappe.whitelist()
 def get_diff_hire_rates(tr):
@@ -503,7 +498,45 @@ def get_advance_balance(branch, customer):
 	else:
 		frappe.throw("Select Equipment Hiring Form first!")	
 
+@frappe.whitelist()
+def make_vehicle_logbook(source_name, target_doc=None): 
+	def update_date(obj, target, source_parent):
+		target.posting_date = nowdate()
+	def set_missing_values(source, target):
+		for a in source.items:
+			# if (a.qty_in_warehouse <= 0 and a.qty_required > 0) or (a.qty_in_warehouse > 0 and a.qty_required > a.qty_in_warehouse and a.qty_required > 0):
+			if a.maintain_stock == 0 and a.qty > 0:
+				row = target.append("items",{})
+				row.type = a.type
+				row.charge_amount = a.charge_amount
+				row.item_code = a.item_code
+				row.item_name = a.item_name
+				row.uom = a.uom
+				row.qty = flt(a.qty)
+				row.rate = flt(a.rate)
+				row.maintain_stock = a.maintain_stock
+				row.description = a.description
+				row.issue_to_equipment = source.equipment
+	doc = get_mapped_doc("Equipment Hiring Form", source_name, {
+			"Equipment Hiring Form": {
+				"doctype": "Vehicle Logbook",
+				"field_map": {
+					"vehicle_logbook": "Equipment Hiring Form",
+					"branch": "branch",
+					"ehf_name":"name"
+				},
+				"postprocess": update_date,
+				"validation": {"docstatus": ["=", 1]},
 
+			},
+			# "Repair And Services Item": {
+			# 	"doctype": "Repair And Services Invoice Item",
+			# 	"field_map":{
+			# 		"item_name":"item_name",
+			# 	},
+			# }
+		}, target_doc)
+	return doc
 
 # @frappe.whitelist()
 # def make_vehicle_logbook(source_name, target_doc=None): 

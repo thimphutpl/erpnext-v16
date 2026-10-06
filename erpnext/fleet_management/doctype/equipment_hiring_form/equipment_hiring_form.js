@@ -28,6 +28,14 @@ frappe.ui.form.on('Equipment Hiring Form', {
 			};
 			frappe.set_route("List", "Hire Charge Invoice");
 		}, __("View"));
+		if (cint(frm.doc.docstatus) == 1) {
+			frm.add_custom_button("Vehicle Log", function () {
+				frappe.model.open_mapped_doc({
+					method: "erpnext.fleet_management.doctype.equipment_hiring_form.equipment_hiring_form.make_vehicle_logbook",
+					frm: cur_frm
+				})
+			},__("Create"));
+		}
 		// frm.set_query("equipment", function(frm) {
 			
 		// 	return {
@@ -271,20 +279,18 @@ function get_rates(frm, cdt, cdn) {
 
     if (!doc.equipment || !doc.rate_type || !doc.from_date) return;
 
-    // Decide whether we're on customer or supplier path
-    let args = {
-        equipment: doc.equipment,
-        from_date: doc.from_date,
-    };
-
-    if (frm.doc.customer) {
-        args.customer = frm.doc.customer;
-    } else if (frm.doc.supplier) {
-        args.supplier = frm.doc.supplier;
-    } else {
-        frappe.msgprint(__("Please select a Customer or Supplier first."));
+    // Guard: need a party_type and a party
+    if (!frm.doc.party_type || !frm.doc.customer) {
+        frappe.msgprint(__("Please select a Party Type and a Party first."));
         return;
     }
+
+    let args = {
+        party_type: frm.doc.party_type,   // "Customer" or "Supplier"
+        party:      frm.doc.customer,     // the value in the dynamic link
+        equipment:  doc.equipment,
+        from_date:  doc.from_date,
+    };
 
     return frappe.call({
         method: "erpnext.fleet_management.doctype.equipment_hiring_form.equipment_hiring_form.get_hire_rates",
@@ -292,20 +298,11 @@ function get_rates(frm, cdt, cdn) {
         callback: function (r) {
             if (r.message && r.message.length) {
                 const row = r.message[0];
-
                 switch (doc.rate_type) {
-                    case "Without Fuel":
-                        frappe.model.set_value(cdt, cdn, "rate", row.without_fuel);
-                        break;
-                    case "With Fuel":
-                        frappe.model.set_value(cdt, cdn, "rate", row.with_fuel);
-                        break;
-                    case "Cft - Broadleaf":
-                        frappe.model.set_value(cdt, cdn, "rate", row.cft_rate_bf);
-                        break;
-                    case "Cft - Conifer":
-                        frappe.model.set_value(cdt, cdn, "rate", row.cft_rate_co);
-                        break;
+                    case "Without Fuel":   frappe.model.set_value(cdt, cdn, "rate", row.without_fuel); break;
+                    case "With Fuel":      frappe.model.set_value(cdt, cdn, "rate", row.with_fuel);    break;
+                    case "Cft - Broadleaf":frappe.model.set_value(cdt, cdn, "rate", row.cft_rate_bf);  break;
+                    case "Cft - Conifer":  frappe.model.set_value(cdt, cdn, "rate", row.cft_rate_co);  break;
                 }
                 frappe.model.set_value(cdt, cdn, "idle_rate", row.idle);
             }
