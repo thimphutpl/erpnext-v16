@@ -99,10 +99,6 @@
   "depreciation_cost_center",
   "capital_work_in_progress_account",
   "asset_received_but_not_billed",
-  "section_break_ruoe",
-  "hirecharge_income_account",
-  "column_break_tmiz",
-  "directindirect_expense_account",
   "accounts_closing_tab",
   "accounts_closing_section",
   "accounts_frozen_till_date",
@@ -146,7 +142,10 @@
   "dashboard_tab",
   "default_salary_tax_account",
   "fleet_management_tab",
-  "pol_advance_account"
+  "pol_advance_account",
+  "directindirect_expense_account",
+  "column_break_lvzo",
+  "hirecharge_income_account"
  ],
  "fields": [
   {
@@ -997,6 +996,33 @@
    "fieldtype": "Link",
    "label": "Leave Encashment Payable Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "fleet_management_tab",
+   "fieldtype": "Tab Break",
+   "label": "Fleet Management"
+  },
+  {
+   "fieldname": "pol_advance_account",
+   "fieldtype": "Link",
+   "label": "POL Advance Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "directindirect_expense_account",
+   "fieldtype": "Link",
+   "label": "Direct/Indirect Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_lvzo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hirecharge_income_account",
+   "fieldtype": "Link",
+   "label": "Hirecharge Income Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
@@ -1005,7 +1031,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-06 00:21:26.290588",
+ "modified": "2026-10-06 23:30:09.730347",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
