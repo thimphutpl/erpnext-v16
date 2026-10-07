@@ -34,6 +34,8 @@ def get_data(filters):
 
 	if filters.get("branch"):
 		query += " and inr.branch = \'" + str(filters.branch) + "\'"
+	if filters.get("company"):
+		query += " and inr.company = \'" + str(filters.company) + "\'"	
 		
 	if filters.get("customer"):
 		query += " and hci.customer = \'" + str(filters.customer) + "\'"

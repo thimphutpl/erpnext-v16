@@ -30,6 +30,8 @@ def get_data(filters):
 
 	if filters.get("branch"):
 		query += " and ras.branch = \'" + str(filters.branch) + "\'"
+	if filters.get("company"):
+		query += " and ras.company = \'" + str(filters.company) + "\'"	
 
 
 	if filters.get("customer"):

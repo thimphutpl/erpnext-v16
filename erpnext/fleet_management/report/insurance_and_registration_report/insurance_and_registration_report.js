@@ -4,6 +4,13 @@
 frappe.query_reports["Insurance and Registration Report"] = {
 	"filters": [
 		{
+			"fieldname": "company",
+			"label": ("Company"),
+			"fieldtype": "Link",
+			"width": "80",
+			"options": "Company",
+		},
+		{
 			"fieldname": "branch",
 			"label": ("Branch"),
 			"fieldtype": "Link",

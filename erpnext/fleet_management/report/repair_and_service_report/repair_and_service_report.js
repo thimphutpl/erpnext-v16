@@ -4,6 +4,13 @@
 frappe.query_reports["Repair and Service Report"] = {
 	"filters": [
 		{
+			"fieldname": "company",
+			"label": ("Company"),
+			"fieldtype": "Link",
+			"width": "80",
+			"options": "Company",
+		},
+		{
 			"fieldname": "branch",
 			"label": ("Branch"),
 			"fieldtype": "Link",
@@ -31,17 +38,5 @@ frappe.query_reports["Repair and Service Report"] = {
 			"width": "80",
 			"options": "Customer"
 		},
-		// {
-		// 	"fieldname": "not_cdcl",
-		// 	"label": ("Include Only GBCL Equipments"),
-		// 	"fieldtype": "Check",
-		// 	"default": 1
-		// },
-		// {
-		// 	"fieldname": "include_disabled",
-		// 	"label": ("Include Disbaled Equipments"),
-		// 	"fieldtype": "Check",
-		// 	"default": 0
-		// },
 	]
 };
