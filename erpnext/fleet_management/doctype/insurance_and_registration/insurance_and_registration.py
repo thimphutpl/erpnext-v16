@@ -42,7 +42,7 @@ class InsuranceandRegistration(AccountsController):
 		insurance_for: DF.Literal["Vehicle"]
 		insurance_item: DF.Table[InsuranceDetails]
 		items: DF.Table[BluebookandEmission]
-		posting_date: DF.Date | None
+		posting_date: DF.Date
 		reference: DF.Data | None
 		registration: DF.Check
 		registration_item: DF.Table[RegistrationDetails]

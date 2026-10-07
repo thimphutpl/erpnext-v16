@@ -55,7 +55,6 @@
   "unrealized_profit_loss_account",
   "leave_encashment_expense_account",
   "leave_encashment_payable_account",
-  "employer_contribution_pf_account",
   "column_break0",
   "allow_account_creation_against_child_company",
   "default_expense_account",
@@ -144,8 +143,12 @@
   "fleet_management_tab",
   "pol_advance_account",
   "directindirect_expense_account",
+  "insurance_expense_account",
+  "registration_expense_account",
   "column_break_lvzo",
-  "hirecharge_income_account"
+  "hirecharge_income_account",
+  "registration_certificate_expense_account",
+  "insurance_claim_expense_account"
  ],
  "fields": [
   {
@@ -1023,6 +1026,30 @@
    "fieldtype": "Link",
    "label": "Hirecharge Income Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "registration_certificate_expense_account",
+   "fieldtype": "Link",
+   "label": "Registration Certificate Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "insurance_expense_account",
+   "fieldtype": "Link",
+   "label": "Insurance Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "insurance_claim_expense_account",
+   "fieldtype": "Link",
+   "label": "Insurance Claim Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "registration_expense_account",
+   "fieldtype": "Link",
+   "label": "Registration Expense Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
@@ -1031,7 +1058,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-06 23:30:09.730347",
+ "modified": "2026-10-07 07:45:45.182112",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",

@@ -100,6 +100,8 @@ class Company(NestedSet):
 		existing_company: DF.Link | None
 		fax: DF.Data | None
 		hirecharge_income_account: DF.Link | None
+		insurance_claim_expense_account: DF.Link | None
+		insurance_expense_account: DF.Link | None
 		is_group: DF.Check
 		leave_encashment_expense_account: DF.Link | None
 		leave_encashment_payable_account: DF.Link | None
@@ -114,7 +116,9 @@ class Company(NestedSet):
 		purchase_expense_contra_account: DF.Link | None
 		reconcile_on_advance_payment_date: DF.Check
 		reconciliation_takes_effect_on: DF.Literal["Advance Payment Date", "Oldest Of Invoice Or Advance", "Reconciliation Date"]
+		registration_certificate_expense_account: DF.Link | None
 		registration_details: DF.Code | None
+		registration_expense_account: DF.Link | None
 		reporting_currency: DF.Link | None
 		rgt: DF.Int
 		role_allowed_for_frozen_entries: DF.Link | None
