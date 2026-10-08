@@ -20,6 +20,7 @@
   "column_break1",
   "posting_date",
   "posting_time",
+  "actual_receipt_date",
   "set_posting_time",
   "actual_receipt_date",
   "column_break_12",
@@ -1304,7 +1305,8 @@
   {
    "fieldname": "actual_receipt_date",
    "fieldtype": "Date",
-   "label": "Actual Receipt Date"
+   "label": "Actual Receipt Date",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,

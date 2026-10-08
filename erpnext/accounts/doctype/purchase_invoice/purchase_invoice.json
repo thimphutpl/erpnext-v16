@@ -135,8 +135,10 @@
   "get_advances",
   "advances",
   "write_off",
+  "ld_days",
   "write_off_amount",
   "base_write_off_amount",
+  "ld_description",
   "column_break_61",
   "write_off_account",
   "write_off_cost_center",
@@ -1056,12 +1058,12 @@
    "collapsible": 1,
    "fieldname": "write_off",
    "fieldtype": "Section Break",
-   "label": "Write Off"
+   "label": "Write Off / Liquidity Damages "
   },
   {
    "fieldname": "write_off_amount",
    "fieldtype": "Currency",
-   "label": "Write Off Amount",
+   "label": "Write Off / LD Amount (BTN)",
    "no_copy": 1,
    "options": "currency",
    "print_hide": 1
@@ -1697,6 +1699,16 @@
    "label": "Branch",
    "options": "Branch",
    "reqd": 1
+  },
+  {
+   "fieldname": "ld_days",
+   "fieldtype": "Int",
+   "label": "LD Days"
+  },
+  {
+   "fieldname": "ld_description",
+   "fieldtype": "Small Text",
+   "label": "LD Description"
   }
  ],
  "grid_page_length": 50,
@@ -1704,7 +1716,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-08 18:45:05.183970",
+ "modified": "2026-10-08 15:23:05.125207",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",

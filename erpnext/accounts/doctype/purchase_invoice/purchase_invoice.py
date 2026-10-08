@@ -130,6 +130,8 @@ class PurchaseInvoice(BuyingController):
 		item_wise_tax_details: DF.Table[ItemWiseTaxDetail]
 		items: DF.Table[PurchaseInvoiceItem]
 		language: DF.Data | None
+		ld_days: DF.Int
+		ld_description: DF.SmallText | None
 		letter_head: DF.Link | None
 		mode_of_payment: DF.Link | None
 		named_place: DF.Data | None
