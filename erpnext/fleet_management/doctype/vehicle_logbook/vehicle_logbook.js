@@ -35,6 +35,22 @@ frappe.ui.form.on('Vehicle Logbook', {
         }
 	},
 
+	onload: function (frm) {
+		// Set today's date if empty
+		if (!frm.doc.to_date) {
+			frm.set_value('to_date', frappe.datetime.get_today());
+		}
+
+		if (!frm.doc.posting_date) {
+			frm.set_value('posting_date', frappe.datetime.get_today());
+			// frm.set_value("posting_date", get_today());
+		}
+
+		// Make sure field is editable
+		frm.set_df_property('to_date', 'read_only', 0);
+
+	},
+
 	"vlogs_on_form_rendered": function(frm, grid_row, cdt, cdn) {
 		var row = cur_frm.open_grid_row();
 		if(!row.grid_form.fields_dict.operator.value) {
