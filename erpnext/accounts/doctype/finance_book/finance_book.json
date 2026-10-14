@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "field:finance_book_name",
  "creation": "2018-04-13 17:42:43.252224",
  "doctype": "DocType",
@@ -8,7 +9,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "finance_book_name"
+  "finance_book_name",
+  "amended_from"
  ],
  "fields": [
   {
@@ -16,11 +18,21 @@
    "fieldtype": "Data",
    "label": "Name",
    "unique": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Finance Book",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "icon": "fa fa-book",
  "links": [],
- "modified": "2024-03-27 13:09:44.514241",
+ "modified": "2026-10-08 17:08:02.317056",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Finance Book",
@@ -58,6 +70,7 @@
   }
  ],
  "quick_entry": 1,
+ "row_format": "Dynamic",
  "search_fields": "finance_book_name",
  "sort_field": "creation",
  "sort_order": "DESC",

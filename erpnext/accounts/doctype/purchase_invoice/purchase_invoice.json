@@ -735,6 +735,7 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule",
    "print_hide": 1
@@ -1530,6 +1531,7 @@
   {
    "fieldname": "incoterm",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Incoterm",
    "options": "Incoterm"
   },
@@ -1702,7 +1704,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-25 15:19:57.306083",
+ "modified": "2026-10-08 18:45:05.183970",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",
