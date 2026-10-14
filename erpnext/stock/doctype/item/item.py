@@ -74,6 +74,7 @@ class Item(Document):
 		allow_negative_stock: DF.Check
 		asset_category: DF.Link | None
 		asset_naming_series: DF.Literal[None]
+		asset_sub_category: DF.Link | None
 		attributes: DF.Table[ItemVariantAttribute]
 		auto_create_assets: DF.Check
 		barcodes: DF.Table[ItemBarcode]

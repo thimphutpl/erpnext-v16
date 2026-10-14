@@ -366,7 +366,6 @@ def scrap_asset(asset_name: str, scrap_date: DateTimeLikeObject | None = None):
 	scrap_date = getdate(scrap_date) or getdate(today())
 	asset.db_set("disposal_date", scrap_date)
 	validate_asset_for_scrap(asset, scrap_date)
-
 	depreciate_asset(asset, scrap_date, get_note_for_scrap(asset))
 	asset.reload()
 

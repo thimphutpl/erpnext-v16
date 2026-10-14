@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "finance_book",
+  "asset_sub_category",
   "depreciation_method",
   "frequency_of_depreciation",
   "total_number_of_depreciations",
@@ -17,6 +18,7 @@
   "rate_of_depreciation",
   "daily_prorata_based",
   "shift_based",
+  "income_depreciation_percent",
   "section_break_jkdf",
   "value_after_depreciation",
   "column_break_sigk",
@@ -32,11 +34,12 @@
    "options": "Finance Book"
   },
   {
+   "default": "Straight Line",
    "fieldname": "depreciation_method",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Depreciation Method",
-   "options": "\nStraight Line\nDouble Declining Balance\nWritten Down Value\nManual",
+   "options": "\nStraight Line",
    "reqd": 1
   },
   {
@@ -68,7 +71,7 @@
   },
   {
    "columns": 1,
-   "default": "0",
+   "default": "1",
    "depends_on": "eval:parent.doctype == 'Asset'",
    "description": "Expected Value After Useful Life",
    "fieldname": "expected_value_after_useful_life",
@@ -99,16 +102,18 @@
    "label": "Salvage Value Percentage"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "daily_prorata_based",
    "fieldtype": "Check",
-   "label": "Depreciate based on daily pro-rata"
+   "label": "Depreciate based on daily pro-rata",
+   "read_only": 1
   },
   {
    "default": "0",
    "depends_on": "eval:doc.depreciation_method == \"Straight Line\"",
    "fieldname": "shift_based",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Depreciate based on shifts"
   },
   {
@@ -135,18 +140,31 @@
    "label": "Increase In Asset Life (Months)",
    "no_copy": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "asset_sub_category",
+   "fieldtype": "Link",
+   "label": "Asset Sub Category",
+   "options": "Asset Sub Category"
+  },
+  {
+   "fieldname": "income_depreciation_percent",
+   "fieldtype": "Percent",
+   "label": "Income Depreciation Percent",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-01-06 17:14:51.836803",
+ "modified": "2026-10-14 16:50:50.771960",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset Finance Book",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],

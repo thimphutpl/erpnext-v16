@@ -43,7 +43,7 @@ def get_group_by_asset_category_data(filters):
 			+ flt(row.value_of_new_purchase)
 			- flt(row.value_of_sold_asset)
 			- flt(row.value_of_scrapped_asset)
-			- flt(row.value_of_capitalized_asset)
+			# - flt(row.value_of_capitalized_asset)
 			+ flt(row.adjustment_during_period)
 		)
 
@@ -127,14 +127,14 @@ def get_asset_categories_for_grouped_by_category(filters):
 		0,
 	).as_("value_of_scrapped_asset")
 
-	value_of_capitalized_asset = IfNull(
-		Sum(
-			frappe.qb.terms.Case()
-			.when(disposal_in_period & (asset.status == "Capitalized"), asset.net_purchase_amount)
-			.else_(0)
-		),
-		0,
-	).as_("value_of_capitalized_asset")
+	# value_of_capitalized_asset = IfNull(
+	# 	Sum(
+	# 		frappe.qb.terms.Case()
+	# 		.when(disposal_in_period & (asset.status == "Capitalized"), asset.net_purchase_amount)
+	# 		.else_(0)
+	# 	),
+	# 	0,
+	# ).as_("value_of_capitalized_asset")
 
 	capitalized_before_from_date = (
 		frappe.qb.from_(asset_capitalization_asset_item)
@@ -153,7 +153,7 @@ def get_asset_categories_for_grouped_by_category(filters):
 			value_of_new_purchase,
 			value_of_sold_asset,
 			value_of_scrapped_asset,
-			value_of_capitalized_asset,
+			# value_of_capitalized_asset,
 		)
 		.where(asset.docstatus == 1)
 		.where(asset.company == filters.company)
@@ -445,7 +445,7 @@ def get_group_by_asset_data(filters):
 			+ flt(row.value_of_new_purchase)
 			- flt(row.value_of_sold_asset)
 			- flt(row.value_of_scrapped_asset)
-			- flt(row.value_of_capitalized_asset)
+			# - flt(row.value_of_capitalized_asset)
 			+ flt(row.adjustment_during_period)
 		)
 
@@ -533,17 +533,17 @@ def get_asset_details_for_grouped_by_category(filters):
 				),
 				0,
 			).as_("value_of_scrapped_asset"),
-			IfNull(
-				Sum(
-					frappe.qb.terms.Case()
-					.when(
-						disposal_in_period & (asset.status == "Capitalized"),
-						asset.net_purchase_amount,
-					)
-					.else_(0)
-				),
-				0,
-			).as_("value_of_capitalized_asset"),
+			# IfNull(
+			# 	Sum(
+			# 		frappe.qb.terms.Case()
+			# 		.when(
+			# 			disposal_in_period & (asset.status == "Capitalized"),
+			# 			asset.net_purchase_amount,
+			# 		)
+			# 		.else_(0)
+			# 	),
+			# 	0,
+			# ).as_("value_of_capitalized_asset"),
 		)
 		.where(asset.docstatus == 1)
 		.where(asset.company == filters.company)
@@ -860,12 +860,12 @@ def get_columns(filters):
 			"fieldtype": "Currency",
 			"width": 140,
 		},
-		{
-			"label": _("Value of New Capitalized Asset"),
-			"fieldname": "value_of_capitalized_asset",
-			"fieldtype": "Currency",
-			"width": 140,
-		},
+		# {
+		# 	"label": _("Value of New Capitalized Asset"),
+		# 	"fieldname": "value_of_capitalized_asset",
+		# 	"fieldtype": "Currency",
+		# 	"width": 140,
+		# },
 		{
 			"label": _("Value as on") + " " + formatdate(filters.to_date),
 			"fieldname": "value_as_on_to_date",

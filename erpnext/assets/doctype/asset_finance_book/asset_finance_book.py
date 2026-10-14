@@ -14,14 +14,14 @@ class AssetFinanceBook(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		asset_sub_category: DF.Link | None
 		daily_prorata_based: DF.Check
-		depreciation_method: DF.Literal[
-			"", "Straight Line", "Double Declining Balance", "Written Down Value", "Manual"
-		]
+		depreciation_method: DF.Literal["", "Straight Line"]
 		depreciation_start_date: DF.Date | None
 		expected_value_after_useful_life: DF.Currency
 		finance_book: DF.Link | None
 		frequency_of_depreciation: DF.Int
+		income_depreciation_percent: DF.Percent
 		increase_in_asset_life: DF.Int
 		parent: DF.Data
 		parentfield: DF.Data

@@ -51,5 +51,16 @@ frappe.ui.form.on("Asset Category", {
 				},
 			};
 		});
+
+		frm.set_query("credit_account", "accounts", function (doc, cdt, cdn) {
+			var d = locals[cdt][cdn];
+			return {
+				filters: {
+					account_type: "Temporary",
+					is_group: 0,
+					company: d.company_name,
+				},
+			};
+		});
 	},
 });

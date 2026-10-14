@@ -3,6 +3,7 @@ from frappe.model.document import Document
 from frappe.utils import (
 	cint,
 	flt,
+	date_diff,
 )
 
 import erpnext
@@ -31,6 +32,22 @@ class StraightLineMethod(Document):
 		pending_periods = flt(self.pending_months) / flt(self.fb_row.frequency_of_depreciation)
 		return self.depreciable_value / pending_periods
 
+	def get_income_tax_depr_amount(self, row_idx):
+		if self.fb_row.daily_prorata_based:
+			yearly_depr_amount = (self.depreciable_value * flt(self.fb_row.income_depreciation_percent)/100)
+			total_days_in_current_depr_year = self.get_total_days_in_current_depr_year()
+			daily_depr_amount = yearly_depr_amount / total_days_in_current_depr_year
+
+			from_date, total_depreciable_days = self._get_total_days(self.fb_row.depreciation_start_date, row_idx)
+
+			return daily_depr_amount * total_depreciable_days
+
+		dep_per_year = self.depreciable_value * (flt(self.fb_row.income_depreciation_percent)/100)
+		pending_periods = flt(self.pending_months) / flt(self.fb_row.frequency_of_depreciation)
+
+		income_depreciation_amount = (flt(dep_per_year) / pending_periods)
+		return income_depreciation_amount
+			
 	def get_daily_prorata_based_depr_amount(self, row_idx):
 		daily_depr_amount = self.get_daily_depr_amount()
 

@@ -17,14 +17,13 @@ class AssetMovement(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
 		from erpnext.assets.doctype.asset_movement_item.asset_movement_item import AssetMovementItem
+		from frappe.types import DF
 
 		amended_from: DF.Link | None
 		assets: DF.Table[AssetMovementItem]
 		company: DF.Link
-		purpose: DF.Literal["", "Issue", "Receipt", "Transfer", "Transfer and Issue"]
+		purpose: DF.Literal["", "Receipt", "Transfer"]
 		reference_doctype: DF.Link | None
 		reference_name: DF.DynamicLink | None
 		transaction_date: DF.Datetime
@@ -81,8 +80,8 @@ class AssetMovement(Document):
 
 			if not d.target_location:
 				frappe.throw(_("Target Location is required for transferring Asset {0}").format(d.asset))
-			if d.source_location == d.target_location:
-				frappe.throw(_("Source and Target Location cannot be same"))
+			# if d.source_location == d.target_location:
+			# 	frappe.throw(_("Source and Target Location cannot be same"))
 
 		if self.purpose == "Receipt":
 			if not d.target_location:

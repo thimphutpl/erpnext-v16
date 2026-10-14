@@ -27,14 +27,9 @@ class AssetRepair(AccountsController):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
+		from erpnext.assets.doctype.asset_repair_consumed_item.asset_repair_consumed_item import AssetRepairConsumedItem
+		from erpnext.assets.doctype.asset_repair_purchase_invoice.asset_repair_purchase_invoice import AssetRepairPurchaseInvoice
 		from frappe.types import DF
-
-		from erpnext.assets.doctype.asset_repair_consumed_item.asset_repair_consumed_item import (
-			AssetRepairConsumedItem,
-		)
-		from erpnext.assets.doctype.asset_repair_purchase_invoice.asset_repair_purchase_invoice import (
-			AssetRepairPurchaseInvoice,
-		)
 
 		actions_performed: DF.LongText | None
 		amended_from: DF.Link | None

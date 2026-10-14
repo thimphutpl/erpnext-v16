@@ -21,6 +21,7 @@
   "posting_date",
   "posting_time",
   "set_posting_time",
+  "actual_receipt_date",
   "column_break_12",
   "company",
   "apply_putaway_rule",
@@ -1134,6 +1135,7 @@
    "label": "Accounting Dimensions"
   },
   {
+   "fetch_from": "branch.cost_center",
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
@@ -1298,6 +1300,11 @@
    "label": "Branch",
    "options": "Branch",
    "reqd": 1
+  },
+  {
+   "fieldname": "actual_receipt_date",
+   "fieldtype": "Date",
+   "label": "Actual Receipt Date"
   }
  ],
  "grid_page_length": 50,
@@ -1305,7 +1312,7 @@
  "idx": 261,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-25 15:10:17.241639",
+ "modified": "2026-10-09 09:21:04.257485",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",

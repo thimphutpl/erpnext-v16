@@ -67,8 +67,7 @@ class DepreciationScheduleController(StraightLineMethod, WDVMethod):
 
 			self.schedule_date = self.get_next_schedule_date(row_idx)
 
-			self.depreciation_amount = self.get_depreciation_amount(row_idx)
-
+			self.depreciation_amount, self.income_depreciation_amount = self.get_depreciation_amount(row_idx)
 			# if asset is being sold or scrapped
 			if self.disposal_date and getdate(self.schedule_date) >= getdate(self.disposal_date):
 				self.set_depreciation_amount_for_disposal(row_idx)
@@ -83,6 +82,9 @@ class DepreciationScheduleController(StraightLineMethod, WDVMethod):
 
 			self.depreciation_amount = flt(
 				self.depreciation_amount, self.asset_doc.precision("net_purchase_amount")
+			)
+			self.income_depreciation_amount = flt(
+				self.income_depreciation_amount, self.asset_doc.precision("net_purchase_amount")
 			)
 			if not self.depreciation_amount:
 				break
@@ -102,6 +104,7 @@ class DepreciationScheduleController(StraightLineMethod, WDVMethod):
 		self.should_get_last_day = is_last_day_of_the_month(self.fb_row.depreciation_start_date)
 		self.skip_row = False
 		self.depreciation_amount = 0
+		self.income_depreciation_amount = 0
 		self.prev_per_day_depr = True
 		self.prev_depreciation_amount = 0
 		self.current_fiscal_year_end_date = None
@@ -405,27 +408,38 @@ class DepreciationScheduleController(StraightLineMethod, WDVMethod):
 			{
 				"schedule_date": self.schedule_date,
 				"depreciation_amount": self.depreciation_amount,
+				"income_depreciation_amount": self.income_depreciation_amount,
 				"shift": shift,
 			},
 		)
 
 	def set_accumulated_depreciation(self):
 		accumulated_depreciation = flt(self.opening_accumulated_depreciation)
+		income_tax_accumulated_depreciation = flt(self.income_tax_opening_depreciation_amount)
 		for d in self.get("depreciation_schedule"):
 			if d.journal_entry:
 				accumulated_depreciation = d.accumulated_depreciation_amount
+				income_tax_accumulated_depreciation = d.income_accumulated_depreciation
 				continue
 
 			accumulated_depreciation += d.depreciation_amount
+			income_tax_accumulated_depreciation += d.income_depreciation_amount
+
 			d.accumulated_depreciation_amount = flt(
 				accumulated_depreciation, d.precision("accumulated_depreciation_amount")
 			)
+			if self.net_purchase_amount >= income_tax_accumulated_depreciation:
+				d.income_accumulated_depreciation = flt(
+					income_tax_accumulated_depreciation, d.precision("income_accumulated_depreciation")
+				)
+			else:
+				d.income_depreciation_amount = 0
 
 	def get_depreciation_amount(self, row_idx):
 		if self.fb_row.depreciation_method in ("Straight Line", "Manual"):
-			return self.get_straight_line_depr_amount(row_idx)
+			return self.get_straight_line_depr_amount(row_idx), self.get_income_tax_depr_amount(row_idx)
 		else:
-			return self.get_wdv_or_dd_depr_amount(row_idx)
+			return self.get_wdv_or_dd_depr_amount(row_idx), self.get_income_tax_depr_amount(row_idx)
 
 	def _get_total_days(self, depreciation_start_date, row_idx):
 		from_date = add_months(depreciation_start_date, (row_idx - 1) * self.frequency_of_depreciation)

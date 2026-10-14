@@ -23,22 +23,20 @@ class AssetDepreciationSchedule(DepreciationScheduleController):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
 		from erpnext.assets.doctype.depreciation_schedule.depreciation_schedule import DepreciationSchedule
+		from frappe.types import DF
 
 		amended_from: DF.Link | None
 		asset: DF.Link
 		company: DF.Link | None
 		daily_prorata_based: DF.Check
-		depreciation_method: DF.Literal[
-			"", "Straight Line", "Double Declining Balance", "Written Down Value", "Manual"
-		]
+		depreciation_method: DF.Literal["", "Straight Line", "Double Declining Balance", "Written Down Value", "Manual"]
 		depreciation_schedule: DF.Table[DepreciationSchedule]
 		expected_value_after_useful_life: DF.Currency
 		finance_book: DF.Link | None
 		finance_book_id: DF.Int
 		frequency_of_depreciation: DF.Int
+		income_tax_opening_depreciation_amount: DF.Currency
 		naming_series: DF.Literal["ACC-ADS-.YYYY.-"]
 		net_purchase_amount: DF.Currency
 		notes: DF.SmallText | None
@@ -146,6 +144,7 @@ class AssetDepreciationSchedule(DepreciationScheduleController):
 		self.finance_book = self.fb_row.get("finance_book")
 		self.finance_book_id = self.fb_row.idx
 		self.opening_accumulated_depreciation = self.asset_doc.opening_accumulated_depreciation or 0
+		self.income_tax_opening_depreciation_amount = self.asset_doc.income_tax_opening_depreciation_amount or 0
 		self.opening_number_of_booked_depreciations = (
 			self.asset_doc.opening_number_of_booked_depreciations or 0
 		)
@@ -155,7 +154,7 @@ class AssetDepreciationSchedule(DepreciationScheduleController):
 		self.frequency_of_depreciation = self.fb_row.frequency_of_depreciation
 		self.rate_of_depreciation = self.fb_row.get("rate_of_depreciation")
 		self.value_after_depreciation = self.fb_row.value_after_depreciation
-		self.expected_value_after_useful_life = self.fb_row.get("expected_value_after_useful_life")
+		self.expected_value_after_useful_life = self.fb_row.expected_value_after_useful_life
 		self.daily_prorata_based = self.fb_row.get("daily_prorata_based")
 		self.shift_based = self.fb_row.get("shift_based")
 		self.status = "Draft"

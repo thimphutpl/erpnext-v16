@@ -93,6 +93,11 @@ frappe.ui.form.on("Asset", {
 		frappe.ui.form.trigger("Asset", "asset_type");
 		frm.toggle_display("next_depreciation_date", frm.doc.docstatus < 1);
 
+		if (frm.doc.docstatus < 1 && frm.doc.calculate_depreciation && frm.doc.is_fully_depreciated) {
+			// Is Fully Depreciated is read-only while depreciation is calculated, so keep it unchecked
+			frm.set_value("is_fully_depreciated", 0);
+		}
+
 		let has_create_buttons = false;
 		if (frm.doc.docstatus == 1) {
 			if (["Submitted", "Partially Depreciated"].includes(frm.doc.status)) {
@@ -142,14 +147,22 @@ frappe.ui.form.on("Asset", {
 						__("Actions")
 					);
 				}
-
-				frm.add_custom_button(
-					__("Split Asset"),
-					function () {
-						frm.trigger("split_asset");
-					},
-					__("Actions")
-				);
+				if (frm.doc.status === "Fully Depreciated") {
+					frm.add_custom_button(
+						__("Asset Repair"),
+						function () {
+							frm.trigger("create_asset_repair");
+						},
+						__("Actions")
+					);
+				}
+				// frm.add_custom_button(
+				// 	__("Split Asset"),
+				// 	function () {
+				// 		frm.trigger("split_asset");
+				// 	},
+				// 	__("Actions")
+				// );
 
 				frm.add_custom_button(
 					__("Transfer Asset"),
@@ -242,7 +255,7 @@ frappe.ui.form.on("Asset", {
 		if (
 			!frm.doc.purchase_receipt &&
 			!frm.doc.purchase_invoice &&
-			["Existing Asset", "Composite Component"].includes(frm.doc.asset_type)
+			["Existing Asset", "Donated Asset"].includes(frm.doc.asset_type)
 		) {
 			return false;
 		}
@@ -272,7 +285,7 @@ frappe.ui.form.on("Asset", {
 	toggle_reference_doc: function (frm) {
 		const is_submitted = frm.doc.docstatus === 1;
 		const is_special_asset =
-			frm.doc.asset_type == "Existing Asset" || frm.doc.asset_type == "Composite Asset";
+			frm.doc.asset_type == "Existing Asset" || frm.doc.asset_type == "Donated Asset";
 
 		const clear_field = (field) => {
 			if (frm.doc[field]) {
@@ -326,9 +339,13 @@ frappe.ui.form.on("Asset", {
 			});
 			return;
 		}
-
-		frm.toggle_reqd("purchase_receipt", 1);
-		frm.toggle_reqd("purchase_invoice", 1);
+		if (frm.doc.asset_type == "Existing Asset" || frm.doc.asset_type == "Donated Asset"){
+			frm.toggle_reqd("purchase_receipt", 0);
+			frm.toggle_reqd("purchase_invoice", 0);
+		}else{
+			frm.toggle_reqd("purchase_receipt", 1);
+			frm.toggle_reqd("purchase_invoice", 1);
+		}
 	},
 
 	make_journal_entry: function (frm) {
@@ -539,6 +556,7 @@ frappe.ui.form.on("Asset", {
 				item_code: frm.doc.item_code,
 				asset_category: frm.doc.asset_category,
 				net_purchase_amount: frm.doc.net_purchase_amount,
+				asset_sub_category: frm.doc.asset_sub_category,
 			},
 			callback: function (r, rt) {
 				if (r.message) {
@@ -558,6 +576,7 @@ frappe.ui.form.on("Asset", {
 				frm.set_df_property("net_purchase_amount", "read_only", 0);
 			}
 		}
+		frm.trigger("toggle_reference_doc");
 	},
 
 	create_asset_maintenance: function (frm) {
@@ -726,6 +745,10 @@ frappe.ui.form.on("Asset", {
 
 	calculate_depreciation: function (frm) {
 		frm.toggle_reqd("finance_books", frm.doc.calculate_depreciation);
+		if (frm.doc.calculate_depreciation && frm.doc.is_fully_depreciated) {
+			// Is Fully Depreciated is read-only while depreciation is calculated, so keep it unchecked
+			frm.set_value("is_fully_depreciated", 0);
+		}
 		if (frm.doc.item_code && frm.doc.calculate_depreciation && frm.doc.net_purchase_amount) {
 			frm.trigger("set_finance_book");
 		} else {
@@ -734,6 +757,11 @@ frappe.ui.form.on("Asset", {
 	},
 
 	net_purchase_amount: function (frm) {
+		if (frm.doc.item_code && frm.doc.calculate_depreciation && frm.doc.net_purchase_amount) {
+			frm.trigger("set_finance_book");
+		} else {
+			frm.set_value("finance_books", []);
+		}
 		if (frm.doc.finance_books) {
 			frm.doc.finance_books.forEach((d) => {
 				frm.events.set_depreciation_rate(frm, d);

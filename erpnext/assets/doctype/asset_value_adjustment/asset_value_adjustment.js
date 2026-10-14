@@ -29,6 +29,7 @@ frappe.ui.form.on("Asset Value Adjustment", {
 				},
 			};
 		});
+		frm.set_value("journal_entry", "");
 	},
 
 	onload: function (frm) {

@@ -150,6 +150,7 @@
   {
    "fieldname": "accounting_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "hide_border": 1
   },
   {
@@ -206,6 +207,7 @@
   {
    "fieldname": "invoices",
    "fieldtype": "Table",
+   "hidden": 1,
    "label": "Repair Purchase Invoices",
    "mandatory_depends_on": "eval: doc.repair_status == 'Completed' && doc.repair_cost > 0;",
    "no_copy": 1,
@@ -275,7 +277,7 @@
    "link_fieldname": "asset_repair"
   }
  ],
- "modified": "2026-02-06 14:57:54.257572",
+ "modified": "2026-10-14 16:52:23.850451",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset Repair",
