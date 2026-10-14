@@ -56,6 +56,7 @@ class VehicleLogbook(Document):
 		pol_type: DF.Data | None
 		pool_equipment: DF.Link | None
 		pool_equipment_number: DF.Data | None
+		posting_date: DF.Date
 		rate_type: DF.Data | None
 		reason: DF.Data | None
 		registration_number: DF.Data | None
@@ -65,7 +66,7 @@ class VehicleLogbook(Document):
 		to_time: DF.Time
 		total_idle_time: DF.Float
 		total_work_time: DF.Float
-		vehicle_logbook: DF.Literal["", "Equipment Hiring Form"]
+		vehicle_logbook: DF.Literal["", "Equipment Hiring Form", "Pool Vehicle", "Support Equipment"]
 		vlogs: DF.Table[VehicleLog]
 		work_rate: DF.Currency
 		working_hours: DF.Int
