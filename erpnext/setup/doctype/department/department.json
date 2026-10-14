@@ -16,6 +16,7 @@
   "is_department",
   "is_division",
   "is_section",
+  "is_unit",
   "disabled",
   "lft",
   "rgt",
@@ -132,7 +133,7 @@
    "default": "0",
    "fieldname": "is_department",
    "fieldtype": "Check",
-   "label": "Is Services"
+   "label": "Is Department"
   },
   {
    "default": "0",
@@ -151,13 +152,19 @@
    "fieldtype": "Link",
    "label": "Leave Block List",
    "options": "Leave Block List"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_unit",
+   "fieldtype": "Check",
+   "label": "Is Unit"
   }
  ],
  "icon": "fa fa-sitemap",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-10-07 15:12:41.179058",
+ "modified": "2026-10-09 11:57:48.662125",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Department",
