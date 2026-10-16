@@ -33,8 +33,22 @@ frappe.ui.form.on("Project", {
 				query: "erpnext.projects.doctype.project.project.get_users_for_project",
 			};
 		});
-
+		frm.set_query("cost_center", function (doc) {
+			return {
+				filters: {
+					company: doc.company,
+					is_group:0,
+				},
+			};
+		});
 		frm.set_query("department", function (doc) {
+			return {
+				filters: {
+					company: doc.company,
+				},
+			};
+		});
+		frm.set_query("company", function (doc) {
 			return {
 				filters: {
 					company: doc.company,
@@ -57,13 +71,6 @@ frappe.ui.form.on("Project", {
 			};
 		});
 
-		frm.set_query("cost_center", () => {
-			return {
-				filters: {
-					company: frm.doc.company,
-				},
-			};
-		});
 	},
 
 	refresh: function (frm) {

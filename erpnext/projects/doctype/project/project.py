@@ -27,13 +27,23 @@ class Project(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
+		from erpnext.projects.doctype.activity_tasks.activity_tasks import ActivityTasks
+		from erpnext.projects.doctype.additional_tasks.additional_tasks import AdditionalTasks
+		from erpnext.projects.doctype.dlp_email_list.dlp_email_list import DLPEmailList
+		from erpnext.projects.doctype.project_advance_item.project_advance_item import ProjectAdvanceItem
+		from erpnext.projects.doctype.project_boq_item.project_boq_item import ProjectBOQItem
+		from erpnext.projects.doctype.project_invoice_item.project_invoice_item import ProjectInvoiceItem
+		from erpnext.projects.doctype.project_user.project_user import ProjectUser
+		from erpnext.projects.doctype.retention_money_receivable.retention_money_receivable import RetentionMoneyReceivable
 		from frappe.types import DF
 
-		from erpnext.projects.doctype.project_user.project_user import ProjectUser
-
+		activity_tasks: DF.Table[ActivityTasks]
 		actual_end_date: DF.Date | None
 		actual_start_date: DF.Date | None
 		actual_time: DF.Float
+		add_percent_complete: DF.Percent
+		additional_tasks: DF.Table[AdditionalTasks]
+		branch: DF.Link
 		collect_progress: DF.Check
 		company: DF.Link
 		copied_from: DF.Data | None
@@ -42,9 +52,12 @@ class Project(Document):
 		daily_time_to_send: DF.Time | None
 		day_to_send: DF.Literal["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 		department: DF.Link | None
+		dlp_end_date: DF.Date | None
+		dlp_start_date: DF.Date | None
+		email_list_items: DF.Table[DLPEmailList]
 		estimated_costing: DF.Currency
 		expected_end_date: DF.Date | None
-		expected_start_date: DF.Date | None
+		expected_start_date: DF.Date
 		first_email: DF.Time | None
 		frequency: DF.Literal["Hourly", "Twice Daily", "Daily", "Weekly"]
 		from_time: DF.Time | None
@@ -54,21 +67,40 @@ class Project(Document):
 		message: DF.Text | None
 		naming_series: DF.Literal["PROJ-.####"]
 		notes: DF.TextEditor | None
+		party: DF.DynamicLink | None
+		party_type: DF.Link
 		per_gross_margin: DF.Percent
 		percent_complete: DF.Percent
 		percent_complete_method: DF.Literal["Manual", "Task Completion", "Task Progress", "Task Weight"]
 		priority: DF.Literal["Medium", "Low", "High"]
+		project_advance_item: DF.Table[ProjectAdvanceItem]
+		project_boq_item: DF.Table[ProjectBOQItem]
+		project_category: DF.Link
+		project_invoice_item: DF.Table[ProjectInvoiceItem]
 		project_name: DF.Data
+		project_sub_category: DF.Link | None
 		project_template: DF.Link | None
-		project_type: DF.Link | None
+		project_type: DF.Link
+		project_value: DF.Currency
+		reference_date: DF.Date | None
+		reference_no: DF.Data | None
+		remaining_days: DF.Int
+		retention_money_receivable: DF.Table[RetentionMoneyReceivable]
+		revised_completion_date: DF.Date | None
 		sales_order: DF.Link | None
 		second_email: DF.Time | None
-		status: DF.Literal["Open", "Completed", "Cancelled"]
+		sent_email_notification: DF.Check
+		status: DF.Literal["Planning", "Ongoing", "Completed", "Cancelled"]
 		to_time: DF.Time | None
+		tot_add_wq_percent: DF.Percent
+		tot_add_wq_percent_complete: DF.Percent
+		tot_wq_percent: DF.Percent
+		tot_wq_percent_complete: DF.Percent
 		total_billable_amount: DF.Currency
 		total_billed_amount: DF.Currency
 		total_consumed_material_cost: DF.Currency
 		total_costing_amount: DF.Currency
+		total_no_days: DF.Int
 		total_purchase_cost: DF.Currency
 		total_sales_amount: DF.Currency
 		users: DF.Table[ProjectUser]
