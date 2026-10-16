@@ -48,6 +48,7 @@ class ProjectAdvance(Document):
 		supplier: DF.Link | None
 		supplier_details: DF.Text | None
 	# end: auto-generated types
+
 	
 	def validate(self):
 		self.set_status()
@@ -116,7 +117,7 @@ class ProjectAdvance(Document):
 			self.paid_amount = 0
 			self.received_amount = 0
 			self.adjustment_amount = 0
-			self.balance_amount = 0
+			self.balance_amount = self.advance_amount_requested
 			self.payment_type  = "Receive" if self.party_type == "Customer" else "Pay" 
 		
 		if self.project:

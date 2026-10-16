@@ -1,23 +1,71 @@
 {
- "charts": [],
- "content": "[{\"id\":\"YdUh9pdtEy\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Project Management</span>\",\"col\":12}},{\"id\":\"LlKsddWyTc\",\"type\":\"card\",\"data\":{\"card_name\":\"Projects\",\"col\":4}},{\"id\":\"EFo50i-STw\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}},{\"id\":\"JQO8YbAqkt\",\"type\":\"card\",\"data\":{\"card_name\":\"Manpower\",\"col\":4}},{\"id\":\"i3uo5_mSkn\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Tools\",\"col\":4}},{\"id\":\"4wwxaCmgr8\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}}]",
- "creation": "2024-09-25 10:22:20.551275",
+ "app": "erpnext",
+ "charts": [
+  {
+   "chart_name": "Project Dashboard",
+   "label": "Project Management"
+  }
+ ],
+ "content": "[{\"id\":\"7Mbx6I5JUf\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"67w8up7H_0\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Projects\",\"col\":4}},{\"id\":\"IFEYSadaYc\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Non Completed Tasks\",\"col\":4}},{\"id\":\"VqbqxA0YL1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Working Hours\",\"col\":4}},{\"id\":\"-3Oyx8Pg_l\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Project Management\",\"col\":12}},{\"id\":\"TdsgJyG3EI\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Master\",\"col\":4}},{\"id\":\"o7qTNRXZI8\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":4}},{\"id\":\"SONefp3HeP\",\"type\":\"card\",\"data\":{\"card_name\":\"Track Record & Reports\",\"col\":4}},{\"id\":\"-W_sHAITdb\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Settings\",\"col\":4}},{\"id\":\"M-gZTd_Y0v\",\"type\":\"card\",\"data\":{\"card_name\":\"Man Power\",\"col\":4}}]",
+ "creation": "2020-03-02 15:46:04.874669",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "organization",
- "idx": 0,
- "indicator_color": "",
+ "icon": "project",
+ "idx": 1,
  "is_hidden": 0,
  "label": "Projects",
  "links": [
   {
+   "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Projects",
-   "link_count": 6,
+   "label": "Timesheet",
+   "link_count": 0,
+   "link_to": "Timesheet",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity Type",
+   "link_count": 0,
+   "link_to": "Activity Type",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "Activity Type",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity Cost",
+   "link_count": 0,
+   "link_to": "Activity Cost",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Projects Accounts Settings",
+   "link_count": 0,
+   "link_to": "Projects Accounts Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Man Power",
+   "link_count": 1,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -25,9 +73,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Projects",
+   "label": "Muster Roll Employee",
    "link_count": 0,
-   "link_to": "Project",
+   "link_to": "Muster Roll Employee",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -35,9 +83,18 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Tasks",
+   "label": "Project Settings",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Projects Settings",
    "link_count": 0,
-   "link_to": "Task",
+   "link_to": "Projects Settings",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -45,12 +102,100 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Timesheets",
+   "label": "Projects Accounts Settings",
+   "link_count": 0,
+   "link_to": "Projects Accounts Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Track Record & Reports",
+   "link_count": 7,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Delayed Tasks Summary",
+   "link_count": 0,
+   "link_to": "Delayed Tasks Summary",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Project Work Plan",
+   "link_count": 0,
+   "link_to": "Project Work Plan",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Measurement Book Register",
+   "link_count": 0,
+   "link_to": "Measurement Book Register",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Project Register",
+   "link_count": 0,
+   "link_to": "Project Register",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Project wise Stock Tracking",
+   "link_count": 0,
+   "link_to": "Project wise Stock Tracking",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Timesheet",
    "link_count": 0,
    "link_to": "Timesheet",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity Cost",
+   "link_count": 0,
+   "link_to": "Activity Cost",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transaction",
+   "link_count": 6,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
   },
   {
    "hidden": 0,
@@ -85,15 +230,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Transactions",
-   "link_count": 4,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Project Advance",
    "link_count": 0,
    "link_to": "Project Advance",
@@ -124,212 +260,91 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Project Master",
+   "link_count": 5,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project Category",
+   "link_count": 0,
+   "link_to": "Project Category",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity Type",
+   "link_count": 0,
+   "link_to": "Activity Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project",
+   "link_count": 0,
+   "link_to": "Project",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task",
+   "link_count": 0,
+   "link_to": "Task",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Daily Activity Journal",
    "link_count": 0,
    "link_to": "Daily Activity Journal",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Manpower",
-   "link_count": 4,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Muster Roll Application",
-   "link_count": 0,
-   "link_to": "Muster Roll Application",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Muster Roll Employee",
-   "link_count": 0,
-   "link_to": "Muster Roll Employee",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Bulk Upload Tool",
-   "link_count": 0,
-   "link_to": "Bulk Upload Tool",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Process Payment for GEP & MR",
-   "link_count": 0,
-   "link_to": "Process MR Payment",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Tools",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Sales",
-   "link_count": 0,
-   "link_to": "Project Sales",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Reports",
-   "link_count": 11,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Project Register",
-   "link_count": 0,
-   "link_to": "Project Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Project Work Plan",
-   "link_count": 0,
-   "link_to": "Project Work Plan",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Project Manpower",
-   "link_count": 0,
-   "link_to": "Project Manpower",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Project Equipment",
-   "link_count": 0,
-   "link_to": "Project Equipment",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "BOQ Register",
-   "link_count": 0,
-   "link_to": "BOQ Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Measure Book Register",
-   "link_count": 0,
-   "link_to": "Measurement Book Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Advanced Payment Register",
-   "link_count": 0,
-   "link_to": "Advance Payment Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Invoice Register",
-   "link_count": 0,
-   "link_to": "Invoice Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Payment Register",
-   "link_count": 0,
-   "link_to": "Payment Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Project Wise Stock Tracking",
-   "link_count": 0,
-   "link_to": "Project wise Stock Tracking",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Items Register",
-   "link_count": 0,
-   "link_to": "Items Register",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
   }
  ],
- "modified": "2024-12-18 14:02:11.465852",
- "modified_by": "kinzang.namgyal@cdcl.bt",
+ "modified": "2026-10-15 19:23:13.152557",
+ "modified_by": "Administrator",
  "module": "Projects",
  "name": "Projects",
- "number_cards": [],
+ "number_cards": [
+  {
+   "label": "Working Hours",
+   "number_card_name": "Timesheet Working Hours"
+  },
+  {
+   "label": "Open Projects",
+   "number_card_name": "Open Projects"
+  },
+  {
+   "label": "Non Completed Tasks",
+   "number_card_name": "Non Completed Tasks"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
+ "restrict_to_domain": "",
  "roles": [],
- "sequence_id": 23.0,
+ "sequence_id": 11.0,
  "shortcuts": [],
- "title": "Projects"
+ "title": "Projects",
+ "type": "Workspace"
 }

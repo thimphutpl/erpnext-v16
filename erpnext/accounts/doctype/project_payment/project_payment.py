@@ -1004,7 +1004,7 @@ class ProjectPayment(AccountsController):
 		# for a in self.references:
 		# 	total_gst_amount+=a.total_gst_amount
 
-		if flt(self.total_amount,2) <= 0:
+		if self.total_amount <= 0:
 			frappe.throw(_("Total amount should be greater than zero"),title="Invalid Data")
 				
 		for adv in self.advances:
