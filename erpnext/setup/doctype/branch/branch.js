@@ -11,6 +11,15 @@ frappe.ui.form.on("Branch", {
 				}
 			}
 		});
+
+		frm.set_query("cost_center", () => {
+			return {
+				filters: {
+					company: frm.doc.company,
+					is_group: 0,
+				},
+			};
+		});
 	},
 
 	refresh: function (frm) {
