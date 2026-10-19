@@ -1512,6 +1512,12 @@ def make_purchase_invoice(source_name, target_doc=None, args=None):
 		if args and args.get("merge_taxes"):
 			merge_taxes(source, doc)
 
+		from erpnext.accounts.doctype.purchase_invoice.purchase_invoice import (
+			set_ld_from_purchase_receipt,
+		)
+
+		set_ld_from_purchase_receipt(source, doc)
+
 		doc.run_method("calculate_taxes_and_totals")
 		doc.set_payment_schedule()
 

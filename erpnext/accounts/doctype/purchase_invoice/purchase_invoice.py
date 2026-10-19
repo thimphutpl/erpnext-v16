@@ -1579,6 +1579,11 @@ class PurchaseInvoice(BuyingController):
 		if self.write_off_account and flt(self.write_off_amount):
 			write_off_account_currency = get_account_currency(self.write_off_account)
 
+			# Liquidated Damages: post the supplier entry net of LD instead of a separate supplier debit
+			if cint(self.get("ld_days")) > 0 and self.reduce_supplier_gl_entry_by_write_off(gl_entries):
+				gl_entries.append(self.get_write_off_account_gl_entry(write_off_account_currency))
+				return
+
 			gl_entries.append(
 				self.get_gl_dict(
 					{
@@ -1602,21 +1607,48 @@ class PurchaseInvoice(BuyingController):
 					item=self,
 				)
 			)
-			gl_entries.append(
-				self.get_gl_dict(
-					{
-						"account": self.write_off_account,
-						"against": self.supplier,
-						"credit": flt(self.base_write_off_amount),
-						"credit_in_account_currency": self.base_write_off_amount
-						if write_off_account_currency == self.company_currency
-						else self.write_off_amount,
-						"credit_in_transaction_currency": self.write_off_amount,
-						"cost_center": self.cost_center or self.write_off_cost_center,
-					},
-					item=self,
+			gl_entries.append(self.get_write_off_account_gl_entry(write_off_account_currency))
+
+	def get_write_off_account_gl_entry(self, write_off_account_currency):
+		return self.get_gl_dict(
+			{
+				"account": self.write_off_account,
+				"against": self.supplier,
+				"credit": flt(self.base_write_off_amount),
+				"credit_in_account_currency": self.base_write_off_amount
+				if write_off_account_currency == self.company_currency
+				else self.write_off_amount,
+				"credit_in_transaction_currency": self.write_off_amount,
+				"cost_center": self.cost_center or self.write_off_cost_center,
+			},
+			item=self,
+		)
+
+	def reduce_supplier_gl_entry_by_write_off(self, gl_entries):
+		"""Reduce the main supplier credit entry by the write off amount. Returns True if reduced."""
+		against_voucher = (
+			self.return_against if cint(self.is_return) and self.return_against else self.name
+		)
+		for gle in gl_entries:
+			if (
+				gle.account == self.credit_to
+				and gle.party == self.supplier
+				and gle.against_voucher == against_voucher
+				and not gle.get("_skip_merge")
+				and flt(gle.credit) >= flt(self.base_write_off_amount)
+			):
+				gle.credit = flt(gle.credit) - flt(self.base_write_off_amount)
+				gle.credit_in_account_currency = flt(gle.credit_in_account_currency) - (
+					flt(self.base_write_off_amount)
+					if self.party_account_currency == self.company_currency
+					else flt(self.write_off_amount)
 				)
-			)
+				gle.credit_in_transaction_currency = flt(gle.credit_in_transaction_currency) - flt(
+					self.write_off_amount
+				)
+				return True
+
+		return False
 
 	def make_gle_for_rounding_adjustment(self, gl_entries):
 		# if rounding adjustment in small and conversion rate is also small then
@@ -2066,3 +2098,59 @@ def make_purchase_receipt(source_name, target_doc=None, args=None):
 	)
 
 	return doc
+
+
+# Liquidated Damages (LD): 0.1% of the Purchase Receipt grand total per day of delay, capped at 100 days (10%)
+LD_RATE_PER_DAY = 0.1
+LD_MAX_DAYS = 100
+
+
+def get_ld_required_dates(purchase_receipt):
+	"""Required (schedule) dates of all PR items, taken from the linked PO when available."""
+	dates = set()
+	for d in purchase_receipt.items:
+		if d.get("purchase_order_item"):
+			dates.add(frappe.db.get_value("Purchase Order Item", d.purchase_order_item, "schedule_date"))
+		elif d.get("purchase_order"):
+			dates.add(frappe.db.get_value("Purchase Order", d.purchase_order, "schedule_date"))
+		elif d.get("schedule_date"):
+			dates.add(d.schedule_date)
+	dates.discard(None)
+	return dates
+
+
+def calculate_ld_amount(ld_days, grand_total):
+	return flt(min(ld_days, LD_MAX_DAYS) * LD_RATE_PER_DAY / 100 * flt(grand_total), 2)
+
+
+def set_ld_from_purchase_receipt(purchase_receipt, invoice):
+	"""Set LD Days and LD (write off) amount on a Purchase Invoice created from a late Purchase Receipt."""
+	from frappe.utils import date_diff
+
+	required_dates = get_ld_required_dates(purchase_receipt)
+	if len(required_dates) > 1:
+		frappe.throw(
+			_("Multiple delivery dates in Items Table. Same delivery date required to calculate LD days")
+		)
+
+	if not (required_dates and purchase_receipt.get("actual_receipt_date")):
+		return
+
+	ld_days = date_diff(purchase_receipt.actual_receipt_date, required_dates.pop())
+	if ld_days <= 0:
+		return
+
+	write_off_account, cost_center = frappe.get_cached_value(
+		"Company", invoice.company, ["write_off_account", "cost_center"]
+	)
+	if not write_off_account:
+		frappe.throw(
+			_("Please set Write Off Account in Company {0} to apply Liquidated Damages").format(
+				frappe.bold(invoice.company)
+			)
+		)
+
+	invoice.ld_days = ld_days
+	invoice.write_off_amount = calculate_ld_amount(ld_days, purchase_receipt.grand_total)
+	invoice.write_off_account = write_off_account
+	invoice.write_off_cost_center = invoice.get("write_off_cost_center") or cost_center
