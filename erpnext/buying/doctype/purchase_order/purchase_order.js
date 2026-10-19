@@ -12,6 +12,7 @@ erpnext.buying.setup_buying_controller();
 
 frappe.ui.form.on("Purchase Order", {
 	setup: function (frm) {
+		erpnext.utils.set_branch_query(frm);
 		if (frm.doc.is_old_subcontracting_flow) {
 			frm.set_query("reserve_warehouse", "supplied_items", function () {
 				return {
@@ -56,6 +57,7 @@ frappe.ui.form.on("Purchase Order", {
 
 	company: function (frm) {
 		erpnext.accounts.dimensions.update_dimension(frm, frm.doctype);
+		erpnext.utils.validate_branch_company(frm);
 	},
 
 	schedule_date(frm) {

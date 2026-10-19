@@ -572,6 +572,7 @@ cur_frm.fields_dict["items"].grid.get_field("cost_center").get_query = function 
 
 frappe.ui.form.on("Purchase Invoice", {
 	setup: function (frm) {
+		erpnext.utils.set_branch_query(frm);
 		frm.custom_make_buttons = {
 			"Purchase Invoice": "Return / Debit Note",
 			"Payment Entry": "Payment",
@@ -729,6 +730,7 @@ frappe.ui.form.on("Purchase Invoice", {
 
 	company: function (frm) {
 		erpnext.accounts.dimensions.update_dimension(frm, frm.doctype);
+		erpnext.utils.validate_branch_company(frm);
 		frm.clear_table("tax_withholding_entries");
 
 		if (frm.doc.company) {

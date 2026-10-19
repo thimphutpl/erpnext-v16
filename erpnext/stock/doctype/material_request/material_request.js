@@ -7,6 +7,7 @@ erpnext.buying.setup_buying_controller();
 
 frappe.ui.form.on("Material Request", {
 	setup: function (frm) {
+		erpnext.utils.set_branch_query(frm);
 		frm.custom_make_buttons = {
 			"Stock Entry": "Issue Material",
 			"Pick List": "Pick List",
@@ -116,6 +117,7 @@ frappe.ui.form.on("Material Request", {
 	company: function (frm) {
 		erpnext.accounts.dimensions.update_dimension(frm, frm.doctype);
 		erpnext.utils.set_letter_head(frm);
+		erpnext.utils.validate_branch_company(frm);
 	},
 
 	onload_post_render: function (frm) {

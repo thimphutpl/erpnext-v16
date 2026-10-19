@@ -11,6 +11,7 @@ erpnext.buying.setup_buying_controller();
 
 frappe.ui.form.on("Purchase Receipt", {
 	setup: (frm) => {
+		erpnext.utils.set_branch_query(frm);
 		frm.custom_make_buttons = {
 			"Stock Entry": "Return",
 			"Purchase Invoice": "Purchase Invoice",
@@ -167,6 +168,7 @@ frappe.ui.form.on("Purchase Receipt", {
 	company: function (frm) {
 		frm.trigger("toggle_display_account_head");
 		erpnext.accounts.dimensions.update_dimension(frm, frm.doctype);
+		erpnext.utils.validate_branch_company(frm);
 	},
 
 	toggle_display_account_head: function (frm) {

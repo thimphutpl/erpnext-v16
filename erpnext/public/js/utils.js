@@ -545,6 +545,35 @@ $.extend(erpnext.utils, {
 	},
 });
 
+// Restrict the Branch field to branches that belong to the selected Company
+erpnext.utils.set_branch_query = function (frm) {
+	frm.set_query("branch", (doc) => {
+		if (!doc.company) {
+			frappe.throw(__("Please select Company first"));
+		}
+		return {
+			filters: {
+				company: doc.company,
+				disabled: 0,
+			},
+		};
+	});
+};
+
+// Clear Branch if it doesn't belong to the newly selected Company
+erpnext.utils.validate_branch_company = function (frm) {
+	if (!frm.doc.branch) return;
+	if (!frm.doc.company) {
+		frm.set_value("branch", "");
+		return;
+	}
+	frappe.db.get_value("Branch", frm.doc.branch, "company").then((r) => {
+		if (r.message && r.message.company !== frm.doc.company) {
+			frm.set_value("branch", "");
+		}
+	});
+};
+
 erpnext.utils.select_alternate_items = function (opts) {
 	const frm = opts.frm;
 	const warehouse_field = opts.warehouse_field || "warehouse";
