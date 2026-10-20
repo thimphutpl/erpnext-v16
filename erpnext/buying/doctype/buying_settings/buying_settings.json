@@ -276,6 +276,7 @@
    "default": "0",
    "fieldname": "allow_negative_rates_for_items",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Allow negative rates for Items"
   },
   {
@@ -350,7 +351,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-05-27 23:04:00.842393",
+ "modified": "2026-10-20 14:39:22.083010",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying Settings",
