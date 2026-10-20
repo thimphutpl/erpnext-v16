@@ -903,6 +903,7 @@
    "description": "Allow stock to go below zero for this item, even if negative stock is disabled in Stock Settings.",
    "fieldname": "allow_negative_stock",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Allow Negative Stock"
   },
   {
@@ -1087,7 +1088,7 @@
  "image_field": "image",
  "links": [],
  "make_attachments_public": 1,
- "modified": "2026-10-08 17:00:01.011757",
+ "modified": "2026-10-20 15:01:24.954030",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
