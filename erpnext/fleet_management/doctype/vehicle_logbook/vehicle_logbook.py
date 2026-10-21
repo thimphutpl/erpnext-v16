@@ -16,8 +16,8 @@ class VehicleLogbook(Document):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
+		from erpnext.fleet_management.doctype.vehicle_logs.vehicle_logs import VehicleLogs
 		from frappe.types import DF
-		from hrms.hr.doctype.vehicle_log.vehicle_log import VehicleLog
 
 		amended_from: DF.Link | None
 		branch: DF.Link
@@ -67,7 +67,7 @@ class VehicleLogbook(Document):
 		total_idle_time: DF.Float
 		total_work_time: DF.Float
 		vehicle_logbook: DF.Literal["", "Equipment Hiring Form", "Pool Vehicle", "Support Equipment"]
-		vlogs: DF.Table[VehicleLog]
+		vlogs: DF.Table[VehicleLogs]
 		work_rate: DF.Currency
 		working_hours: DF.Int
 		ys_hours: DF.Float
