@@ -150,67 +150,98 @@ class ProjectAdvance(Document):
 
 		if self.advance_amount_requested and not self.advance_amount:
 			self.advance_amount = flt(self.advance_amount_requested)*flt(self.exchange_rate)
-
 	def post_journal_entry(self):
 		# Fetching Advance GL
-		adv_gl_field = "project_advance_account" if self.party_type == "Customer" else "advance_account_supplier" if self.party_type == "Supplier" else "advance_account_internal"
-		adv_gl = frappe.db.get_value("Projects Accounts Settings",fieldname=adv_gl_field)                       
+		adv_gl_field = (
+			"project_advance_account" if self.party_type == "Customer"
+			else "advance_account_supplier" if self.party_type == "Supplier"
+			else "advance_account_internal"
+		)
+		adv_gl = frappe.db.get_value("Projects Accounts Settings", fieldname=adv_gl_field)
 		if not adv_gl:
 			frappe.throw(_("Advance GL is not defined in Projects Accounts Settings."))
-		adv_gl_det = frappe.db.get_value(doctype="Account", filters=adv_gl, fieldname=["account_type","is_an_advance_account"], as_dict=True)
+		adv_gl_det = frappe.db.get_value(
+			doctype="Account", filters=adv_gl,
+			fieldname=["account_type"], as_dict=True
+		)
 
-		# Fetching Revenue & Expense GLs
-		rev_gl, exp_gl = frappe.db.get_value("Branch",self.branch,["revenue_bank_account", "expense_bank_account"])
+		# Fetching Revenue & Expense GLs from Projects Accounts Settings
+		if self.party_type == "Customer":
+			rev_gl_field = "project_invoice_account"
+			exp_gl_field = "project_accrued_income_account"
+		elif self.party_type == "Supplier":
+			rev_gl_field = "invoice_account_supplier"
+			exp_gl_field = "accrued_expense_account"
+		else:
+			rev_gl_field = None
+			exp_gl_field = None
+
+		rev_gl = frappe.db.get_value("Projects Accounts Settings", fieldname=rev_gl_field) if rev_gl_field else None
+		exp_gl = frappe.db.get_value("Projects Accounts Settings", fieldname=exp_gl_field) if exp_gl_field else None
+
 		if self.payment_type == "Receive":
 			if not rev_gl:
-				frappe.throw(_("Revenue GL is not defined for this Branch '{0}'.").format(self.branch), title="Data Missing")
-			rev_gl_det = frappe.db.get_value(doctype="Account", filters=rev_gl, fieldname=["account_type","is_an_advance_account"], as_dict=True)
+				frappe.throw(
+					_("Revenue GL is not defined in Projects Accounts Settings for field '{0}'.").format(rev_gl_field),
+					title="Data Missing"
+				)
+			rev_gl_det = frappe.db.get_value(
+				doctype="Account", filters=rev_gl,
+				fieldname=["account_type"], as_dict=True
+			)
 		else:
 			if not exp_gl:
-				frappe.throw(_("Expense GL is not defined for this Branch '{0}'.").format(self.branch), title="Data Missing")
-			exp_gl_det = frappe.db.get_value(doctype="Account", filters=exp_gl, fieldname=["account_type","is_an_advance_account"], as_dict=True)                                
-
+				frappe.throw(
+					_("Expense GL is not defined in Projects Accounts Settings for field '{0}'.").format(exp_gl_field),
+					title="Data Missing"
+				)
+			exp_gl_det = frappe.db.get_value(
+				doctype="Account", filters=exp_gl,
+				fieldname=["account_type"], as_dict=True
+			)
 
 		# Posting Journal Entry
 		accounts = []
-		accounts.append({"account": adv_gl,
-				"credit_in_account_currency" if self.party_type == "Customer" else "debit_in_account_currency": flt(self.advance_amount),
-				"cost_center": self.cost_center,
-				"party_check": 1,
-				"party_type": self.party_type,
-				"party": self.party,
-				"account_type": adv_gl_det.account_type,
-				"is_advance": "Yes" if adv_gl_det.is_an_advance_account == 1 else None,
-				"reference_type": "Project Advance",
-				"reference_name": self.name,
-				"project": self.project
+		accounts.append({
+			"account": adv_gl,
+			"credit_in_account_currency" if self.party_type == "Customer" else "debit_in_account_currency": flt(self.advance_amount),
+			"cost_center": self.cost_center,
+			"party_type": self.party_type,
+			"party": self.party,
+			"account_type": adv_gl_det.account_type,
+			"reference_type": "Project Advance",
+			"reference_name": self.name,
+			"project": self.project
 		})
 
 		if self.party_type == "Customer":
-			accounts.append({"account": rev_gl,
-					"debit_in_account_currency": flt(self.advance_amount),
-					"cost_center": self.cost_center,
-					"party_check": 0,
-					"account_type": rev_gl_det.account_type,
-					"is_advance": "Yes" if rev_gl_det.is_an_advance_account == 1 else "No"
-			})
+			rev_row = {
+				"account": rev_gl,
+				"debit_in_account_currency": flt(self.advance_amount),
+				"cost_center": self.cost_center,
+				"account_type": rev_gl_det.account_type,
+			}
+			if rev_gl_det.account_type in ("Receivable", "Payable"):
+				rev_row.update({"party_type": self.party_type, "party": self.party})
+			accounts.append(rev_row)
 		else:
-			accounts.append({"account": exp_gl,
-					"credit_in_account_currency": flt(self.advance_amount),
-					"cost_center": self.cost_center,
-					"party_check": 0,
-					"account_type": exp_gl_det.account_type,
-					"is_advance": "Yes" if exp_gl_det.is_an_advance_account == 1 else "No"
-			})
+			exp_row = {
+				"account": exp_gl,
+				"credit_in_account_currency": flt(self.advance_amount),
+				"cost_center": self.cost_center,
+				"account_type": exp_gl_det.account_type,
+			}
+			if exp_gl_det.account_type in ("Receivable", "Payable"):
+				exp_row.update({"party_type": self.party_type, "party": self.party})
+			accounts.append(exp_row)
 
 		je = frappe.new_doc("Journal Entry")
-		
 		je.update({
 			"doctype": "Journal Entry",
 			"voucher_type": "Bank Entry",
 			"naming_series": "Bank Receipt Voucher" if self.payment_type == "Receive" else "Bank Payment Voucher",
-			"title": "Project Advance - "+self.project,
-			"user_remark": "Project Advance - "+self.project,
+			"title": "Project Advance - " + self.project,
+			"user_remark": "Project Advance - " + self.project,
 			"posting_date": nowdate(),
 			"company": self.company,
 			"total_amount_in_words": money_in_words(self.advance_amount),
@@ -219,7 +250,86 @@ class ProjectAdvance(Document):
 		})
 
 		if self.advance_amount:
-			je.save(ignore_permissions = True)
+			je.save(ignore_permissions=True)
 			self.db_set("journal_entry", je.name)
-			self.db_set("journal_entry_status", "Forwarded to accounts for processing payment on {0}".format(now_datetime().strftime('%Y-%m-%d %H:%M:%S')))
-			frappe.msgprint(_('Journal Entry <a href="#Form/Journal Entry/{0}">{0}</a> posted to accounts').format(je.name))
+			self.db_set(
+				"journal_entry_status",
+				"Forwarded to accounts for processing payment on {0}".format(
+					now_datetime().strftime('%Y-%m-%d %H:%M:%S')
+				)
+			)
+			frappe.msgprint(
+				_('Journal Entry <a href="#Form/Journal Entry/{0}">{0}</a> posted to accounts').format(je.name)
+			)
+	# def post_journal_entry(self):
+	# 	# Fetching Advance GL
+	# 	adv_gl_field = "project_advance_account" if self.party_type == "Customer" else "advance_account_supplier" if self.party_type == "Supplier" else "advance_account_internal"
+	# 	adv_gl = frappe.db.get_value("Projects Accounts Settings",fieldname=adv_gl_field)                       
+	# 	if not adv_gl:
+	# 		frappe.throw(_("Advance GL is not defined in Projects Accounts Settings."))
+	# 	adv_gl_det = frappe.db.get_value(doctype="Account", filters=adv_gl, fieldname=["account_type","is_an_advance_account"], as_dict=True)
+
+	# 	# Fetching Revenue & Expense GLs
+	# 	rev_gl, exp_gl = frappe.db.get_value("Branch",self.branch,["revenue_bank_account", "expense_bank_account"])
+	# 	if self.payment_type == "Receive":
+	# 		if not rev_gl:
+	# 			frappe.throw(_("Revenue GL is not defined for this Branch '{0}'.").format(self.branch), title="Data Missing")
+	# 		rev_gl_det = frappe.db.get_value(doctype="Account", filters=rev_gl, fieldname=["account_type","is_an_advance_account"], as_dict=True)
+	# 	else:
+	# 		if not exp_gl:
+	# 			frappe.throw(_("Expense GL is not defined for this Branch '{0}'.").format(self.branch), title="Data Missing")
+	# 		exp_gl_det = frappe.db.get_value(doctype="Account", filters=exp_gl, fieldname=["account_type","is_an_advance_account"], as_dict=True)                                
+
+
+	# 	# Posting Journal Entry
+	# 	accounts = []
+	# 	accounts.append({"account": adv_gl,
+	# 			"credit_in_account_currency" if self.party_type == "Customer" else "debit_in_account_currency": flt(self.advance_amount),
+	# 			"cost_center": self.cost_center,
+	# 			"party_check": 1,
+	# 			"party_type": self.party_type,
+	# 			"party": self.party,
+	# 			"account_type": adv_gl_det.account_type,
+	# 			"is_advance": "Yes" if adv_gl_det.is_an_advance_account == 1 else None,
+	# 			"reference_type": "Project Advance",
+	# 			"reference_name": self.name,
+	# 			"project": self.project
+	# 	})
+
+	# 	if self.party_type == "Customer":
+	# 		accounts.append({"account": rev_gl,
+	# 				"debit_in_account_currency": flt(self.advance_amount),
+	# 				"cost_center": self.cost_center,
+	# 				"party_check": 0,
+	# 				"account_type": rev_gl_det.account_type,
+	# 				"is_advance": "Yes" if rev_gl_det.is_an_advance_account == 1 else "No"
+	# 		})
+	# 	else:
+	# 		accounts.append({"account": exp_gl,
+	# 				"credit_in_account_currency": flt(self.advance_amount),
+	# 				"cost_center": self.cost_center,
+	# 				"party_check": 0,
+	# 				"account_type": exp_gl_det.account_type,
+	# 				"is_advance": "Yes" if exp_gl_det.is_an_advance_account == 1 else "No"
+	# 		})
+
+	# 	je = frappe.new_doc("Journal Entry")
+		
+	# 	je.update({
+	# 		"doctype": "Journal Entry",
+	# 		"voucher_type": "Bank Entry",
+	# 		"naming_series": "Bank Receipt Voucher" if self.payment_type == "Receive" else "Bank Payment Voucher",
+	# 		"title": "Project Advance - "+self.project,
+	# 		"user_remark": "Project Advance - "+self.project,
+	# 		"posting_date": nowdate(),
+	# 		"company": self.company,
+	# 		"total_amount_in_words": money_in_words(self.advance_amount),
+	# 		"accounts": accounts,
+	# 		"branch": self.branch
+	# 	})
+
+	# 	if self.advance_amount:
+	# 		je.save(ignore_permissions = True)
+	# 		self.db_set("journal_entry", je.name)
+	# 		self.db_set("journal_entry_status", "Forwarded to accounts for processing payment on {0}".format(now_datetime().strftime('%Y-%m-%d %H:%M:%S')))
+	# 		frappe.msgprint(_('Journal Entry <a href="#Form/Journal Entry/{0}">{0}</a> posted to accounts').format(je.name))

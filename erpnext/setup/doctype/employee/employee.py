@@ -23,6 +23,130 @@ class InactiveEmployeeStatusError(frappe.ValidationError):
 	pass
 
 class Employee(NestedSet):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from erpnext.setup.doctype.employee_education.employee_education import EmployeeEducation
+		from erpnext.setup.doctype.employee_external_work_history.employee_external_work_history import EmployeeExternalWorkHistory
+		from erpnext.setup.doctype.employee_internal_work_history.employee_internal_work_history import EmployeeInternalWorkHistory
+		from frappe.types import DF
+		from integrasuite.integrasuite_hr.doctype.award.award import Award
+		from integrasuite.integrasuite_hr.doctype.disciplinary.disciplinary import Disciplinary
+		from integrasuite.integrasuite_hr.doctype.employee_bank_account.employee_bank_account import EmployeeBankAccount
+		from integrasuite.integrasuite_hr.doctype.employee_family_details.employee_family_details import EmployeeFamilyDetails
+		from integrasuite.integrasuite_hr.doctype.pms_rating.pms_rating import PMSRating
+		from integrasuite.integrasuite_hr.doctype.retirement_benefits_nominees.retirement_benefits_nominees import RetirementBenefitsNominees
+
+		approver: DF.Link | None
+		approver_name: DF.Data | None
+		attendance_branch: DF.Link | None
+		attendance_device_id: DF.Data | None
+		award: DF.Table[Award]
+		bank_ac_no: DF.Data | None
+		bank_account_type: DF.Link | None
+		bank_branch: DF.Link | None
+		bank_name: DF.Link | None
+		bio: DF.TextEditor | None
+		blood_group: DF.Literal["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
+		branch: DF.Link
+		cell_number: DF.Data | None
+		company: DF.Link
+		company_email: DF.Data | None
+		contract_end_date: DF.Date | None
+		cost_center: DF.Link | None
+		country: DF.Link | None
+		create_user_permission: DF.Check
+		ctc: DF.Currency
+		current_accommodation_type: DF.Literal["", "Rented", "Owned"]
+		current_address: DF.SmallText | None
+		date_of_birth: DF.Date
+		date_of_issue: DF.Date | None
+		date_of_joining: DF.Date | None
+		date_of_retirement: DF.Date | None
+		department: DF.Link
+		designation: DF.Link
+		division: DF.Link | None
+		dzongkhag: DF.Link | None
+		education: DF.Table[EmployeeEducation]
+		emergency_phone_number: DF.Data | None
+		employee: DF.Data | None
+		employee_bank_accounts: DF.Table[EmployeeBankAccount]
+		employee_family_details: DF.Table[EmployeeFamilyDetails]
+		employee_group: DF.Link
+		employee_name: DF.Data | None
+		employee_number: DF.Data | None
+		employment_status: DF.Literal["", "In Service", "Left", "Probation", "EOL", "Study Leave", "Terminated", "Suspended"]
+		employment_type: DF.Link | None
+		encashment_date: DF.Date | None
+		end_date: DF.Date | None
+		external_work_history: DF.Table[EmployeeExternalWorkHistory]
+		family_background: DF.SmallText | None
+		feedback: DF.SmallText | None
+		final_confirmation_date: DF.Date | None
+		first_name: DF.Data | None
+		gender: DF.Link
+		gewog: DF.Link | None
+		gis_number: DF.Data | None
+		gis_policy_number: DF.Data | None
+		grade: DF.Link
+		health_details: DF.SmallText | None
+		held_on: DF.Date | None
+		holiday_list: DF.Link | None
+		house_number: DF.Data | None
+		image: DF.AttachImage | None
+		increment_cycle: DF.Literal["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+		internal_work_history: DF.Table[EmployeeInternalWorkHistory]
+		job_applicant: DF.Link | None
+		joining_date: DF.Date | None
+		last_name: DF.Data | None
+		leave_encashed: DF.Literal["", "Yes", "No"]
+		lft: DF.Int
+		marital_status: DF.Literal["", "Single", "Married", "Divorced", "Widowed"]
+		middle_name: DF.Data | None
+		naming_series: DF.Literal["BA", "HR-EMP-"]
+		new_workplace: DF.Data | None
+		nominees: DF.Table[RetirementBenefitsNominees]
+		notice_number_of_days: DF.Int
+		old_employee_id: DF.Data | None
+		old_parent: DF.Data | None
+		passport_number: DF.Data | None
+		permanent_accommodation_type: DF.Literal["", "Rented", "Owned"]
+		permanent_address: DF.SmallText | None
+		person_to_be_contacted: DF.Data | None
+		personal_email: DF.Data | None
+		pf_number: DF.Data | None
+		pf_tiers: DF.Data | None
+		place_of_issue: DF.Data | None
+		prefered_contact_email: DF.Literal["", "Company Email", "Personal Email", "User ID"]
+		prefered_email: DF.Data | None
+		promotion_cycle: DF.Literal["", "January", "July"]
+		promotion_due_date: DF.Date | None
+		reason_for_leaving: DF.SmallText | None
+		relation: DF.Data | None
+		relieving_date: DF.Date | None
+		report_to_name: DF.Data | None
+		reports_to: DF.Link | None
+		resignation_letter_date: DF.Date | None
+		rgt: DF.Int
+		salary_currency: DF.Link | None
+		salary_mode: DF.Literal["", "Bank", "Cash", "Cheque"]
+		salutation: DF.Link | None
+		scheduled_confirmation_date: DF.Date | None
+		section: DF.Link | None
+		status: DF.Literal["Active", "Inactive", "Suspended", "Left"]
+		table_lxgr: DF.Table[Disciplinary]
+		table_xzfj: DF.Table[PMSRating]
+		thram_number: DF.Data | None
+		tpn_number: DF.Data | None
+		unsubscribed: DF.Check
+		user_id: DF.Link | None
+		valid_upto: DF.Date | None
+		village: DF.Link | None
+	# end: auto-generated types
+
 	nsm_parent_field = "reports_to"
 
 	def autoname(self):
@@ -323,7 +447,7 @@ def is_holiday(employee, date=None, raise_exception=True, only_non_weekly=False,
 	if not holiday_list:
 		return False
 
-	filters = {"parent": holiday_list, "holiday_date": date}
+	# filters = {"parent": holiday_list, "holiday_date": date}
 	if only_non_weekly:
 		filters["weekly_off"] = False
 
