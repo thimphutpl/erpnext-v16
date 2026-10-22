@@ -326,12 +326,14 @@
   {
    "fieldname": "total_costing_amount",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Costing Amount (via Timesheet)",
    "read_only": 1
   },
   {
    "fieldname": "total_purchase_cost",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Purchase Cost (via Purchase Invoice)",
    "read_only": 1
   },
@@ -350,24 +352,28 @@
   {
    "fieldname": "total_sales_amount",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Sales Amount (via Sales Order)",
    "read_only": 1
   },
   {
    "fieldname": "total_billable_amount",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Billable Amount (via Timesheet)",
    "read_only": 1
   },
   {
    "fieldname": "total_billed_amount",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Billed Amount (via Sales Invoice)",
    "read_only": 1
   },
   {
    "fieldname": "total_consumed_material_cost",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Total Consumed Material Cost (via Stock Entry)",
    "read_only": 1
   },
@@ -743,7 +749,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 4,
- "modified": "2026-10-15 19:26:49.871868",
+ "modified": "2026-10-21 08:49:24.107143",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Project",

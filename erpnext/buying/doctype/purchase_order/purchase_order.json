@@ -606,6 +606,7 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule",
    "print_hide": 1
@@ -1053,6 +1054,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Tax Category",
    "options": "Tax Category"
   },
@@ -1202,6 +1204,7 @@
   {
    "fieldname": "incoterm",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Incoterm",
    "options": "Incoterm"
   },
@@ -1329,7 +1332,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-20 10:43:52.293403",
+ "modified": "2026-10-21 17:23:12.532004",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",

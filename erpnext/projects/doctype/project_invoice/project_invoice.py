@@ -57,6 +57,7 @@ class ProjectInvoice(AccountsController):
         total_paid_amount: DF.Currency
         total_received_amount: DF.Currency
     # end: auto-generated types
+
     def validate(self):
         self.set_status()
         self.validate_mb_entries()

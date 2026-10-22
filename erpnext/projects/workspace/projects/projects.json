@@ -6,7 +6,7 @@
    "label": "Project Management"
   }
  ],
- "content": "[{\"id\":\"7Mbx6I5JUf\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"67w8up7H_0\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Projects\",\"col\":4}},{\"id\":\"IFEYSadaYc\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Non Completed Tasks\",\"col\":4}},{\"id\":\"VqbqxA0YL1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Working Hours\",\"col\":4}},{\"id\":\"-3Oyx8Pg_l\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Project Management\",\"col\":12}},{\"id\":\"TdsgJyG3EI\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Master\",\"col\":4}},{\"id\":\"o7qTNRXZI8\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":4}},{\"id\":\"SONefp3HeP\",\"type\":\"card\",\"data\":{\"card_name\":\"Track Record & Reports\",\"col\":4}},{\"id\":\"-W_sHAITdb\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Settings\",\"col\":4}},{\"id\":\"M-gZTd_Y0v\",\"type\":\"card\",\"data\":{\"card_name\":\"Man Power\",\"col\":4}}]",
+ "content": "[{\"id\":\"7Mbx6I5JUf\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"67w8up7H_0\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Projects\",\"col\":4}},{\"id\":\"IFEYSadaYc\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Non Completed Tasks\",\"col\":4}},{\"id\":\"VqbqxA0YL1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Working Hours\",\"col\":4}},{\"id\":\"-3Oyx8Pg_l\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Project Management\",\"col\":12}},{\"id\":\"TdsgJyG3EI\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Master\",\"col\":4}},{\"id\":\"o7qTNRXZI8\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":4}},{\"id\":\"SONefp3HeP\",\"type\":\"card\",\"data\":{\"card_name\":\"Track Record & Reports\",\"col\":4}},{\"id\":\"-W_sHAITdb\",\"type\":\"card\",\"data\":{\"card_name\":\"Project Settings\",\"col\":4}}]",
  "creation": "2020-03-02 15:46:04.874669",
  "custom_blocks": [],
  "docstatus": 0,
@@ -64,25 +64,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Man Power",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Muster Roll Employee",
-   "link_count": 0,
-   "link_to": "Muster Roll Employee",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Project Settings",
    "link_count": 2,
    "link_type": "DocType",
@@ -112,8 +93,138 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Project Master",
+   "link_count": 6,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project Type",
+   "link_count": 0,
+   "link_to": "Project Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project Category",
+   "link_count": 0,
+   "link_to": "Project Category",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity Type",
+   "link_count": 0,
+   "link_to": "Activity Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project",
+   "link_count": 0,
+   "link_to": "Project",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task",
+   "link_count": 0,
+   "link_to": "Task",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Daily Activity Journal",
+   "link_count": 0,
+   "link_to": "Daily Activity Journal",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transaction",
+   "link_count": 5,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOQ",
+   "link_count": 0,
+   "link_to": "BOQ",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOQ Adjustment",
+   "link_count": 0,
+   "link_to": "BOQ Adjustment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "MB Entry",
+   "link_count": 0,
+   "link_to": "MB Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project Invoice",
+   "link_count": 0,
+   "link_to": "Project Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Project Payment",
+   "link_count": 0,
+   "link_to": "Project Payment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Track Record & Reports",
-   "link_count": 7,
+   "link_count": 6,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -177,149 +288,9 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Activity Cost",
-   "link_count": 0,
-   "link_to": "Activity Cost",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Transaction",
-   "link_count": 6,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "BOQ",
-   "link_count": 0,
-   "link_to": "BOQ",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "BOQ Adjustment",
-   "link_count": 0,
-   "link_to": "BOQ Adjustment",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "MB Entry",
-   "link_count": 0,
-   "link_to": "MB Entry",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Advance",
-   "link_count": 0,
-   "link_to": "Project Advance",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Invoice",
-   "link_count": 0,
-   "link_to": "Project Invoice",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Payment",
-   "link_count": 0,
-   "link_to": "Project Payment",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Master",
-   "link_count": 5,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project Category",
-   "link_count": 0,
-   "link_to": "Project Category",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Activity Type",
-   "link_count": 0,
-   "link_to": "Activity Type",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "dependencies": "",
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Project",
-   "link_count": 0,
-   "link_to": "Project",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "dependencies": "",
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Task",
-   "link_count": 0,
-   "link_to": "Task",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Daily Activity Journal",
-   "link_count": 0,
-   "link_to": "Daily Activity Journal",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
   }
  ],
- "modified": "2026-10-15 19:23:13.152557",
+ "modified": "2026-10-21 16:49:32.082532",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Projects",

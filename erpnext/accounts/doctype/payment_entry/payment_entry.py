@@ -641,8 +641,8 @@ class PaymentEntry(AccountsController):
 				frappe.throw(_("{0} is mandatory").format(_(self.meta.get_label(field))))
 
 	def validate_reference_documents(self):
-		# valid_reference_doctypes = self.get_valid_reference_doctypes()
-		valid_reference_doctypes = "Repair And Service Invoice"
+		valid_reference_doctypes = self.get_valid_reference_doctypes()
+		# valid_reference_doctypes = "Repair And Service Invoice"
 
 		if not valid_reference_doctypes:
 			return
