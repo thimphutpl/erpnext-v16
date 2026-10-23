@@ -23,6 +23,57 @@ class OverWorkLoggedError(frappe.ValidationError):
 
 
 class Timesheet(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from erpnext.projects.doctype.timesheet_detail.timesheet_detail import TimesheetDetail
+		from frappe.types import DF
+
+		amended_from: DF.Link | None
+		base_total_billable_amount: DF.Currency
+		base_total_billed_amount: DF.Currency
+		base_total_costing_amount: DF.Currency
+		branch: DF.Link | None
+		company: DF.Link | None
+		cost_center: DF.Link | None
+		currency: DF.Link | None
+		customer: DF.Link | None
+		department: DF.Link | None
+		employee: DF.Link | None
+		employee_name: DF.Data | None
+		end_date: DF.Date | None
+		exchange_rate: DF.Float
+		exp_end_date: DF.ReadOnly | None
+		exp_start_date: DF.ReadOnly | None
+		naming_series: DF.Literal["TS-.YYYY.-"]
+		note: DF.TextEditor | None
+		parent_project: DF.Link
+		per_billed: DF.Percent
+		sales_invoice: DF.Link | None
+		start_date: DF.Date | None
+		status: DF.Literal["Draft", "Submitted", "Billed", "Payslip", "Completed", "Cancelled"]
+		target_quantity: DF.ReadOnly | None
+		target_quantity_complete: DF.ReadOnly | None
+		target_uom: DF.ReadOnly | None
+		task: DF.Link
+		task_name: DF.ReadOnly | None
+		time_logs: DF.Table[TimesheetDetail]
+		title: DF.Data | None
+		total_billable_amount: DF.Currency
+		total_billable_hours: DF.Float
+		total_billed_amount: DF.Currency
+		total_billed_hours: DF.Float
+		total_costing_amount: DF.Currency
+		total_days: DF.Float
+		total_hours: DF.Float
+		user: DF.Link | None
+		work_quantity: DF.ReadOnly | None
+		work_quantity_complete: DF.Float
+	# end: auto-generated types
+
 	def autoname(self):
 		cur_year  = str(today())[0:4]
 		cur_month = str(today())[5:7]

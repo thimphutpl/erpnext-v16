@@ -156,7 +156,7 @@ class Project(Document):
 		# 	self.copy_from_template()
 		# self.send_welcome_email()
 		# self.update_costing()
-		# self.update_percent_complete()
+		self.update_percent_complete()
 		# self.validate_from_to_dates("expected_start_date", "expected_end_date")
 		# self.validate_from_to_dates("actual_start_date", "actual_end_date")
 	def on_update(self):
@@ -511,7 +511,7 @@ class Project(Document):
 		for t in frappe.get_all("Task", ["name"], {"project": self.name, "name": ("not in", task_names), "additional_task": 1}):
 			frappe.delete_doc("Task", t.name)
 
-		# self.update_percent_complete()
+		self.update_percent_complete()
 		self.update_costing()
 
 	def sync_activity_tasks(self):
@@ -565,7 +565,7 @@ class Project(Document):
 		for t in frappe.get_all("Task", ["name"], {"project": self.name, "name": ("not in", task_names), "additional_task": 0}):
 			frappe.delete_doc("Task", t.name)
 
-		# self.update_percent_complete()
+		self.update_percent_complete()
 		self.update_costing()
 
 	def validate_work_quantity(self):
@@ -801,7 +801,7 @@ class Project(Document):
 									
 		# +++++++++++++++++++++ Ver 1.0 ENDS +++++++++++++++++++++
 	def update_project(self):
-		#self.update_percent_complete()
+		self.update_percent_complete()
 		self.update_project_progress()
 		self.update_costing()
 		self.flags.dont_sync_tasks = True
