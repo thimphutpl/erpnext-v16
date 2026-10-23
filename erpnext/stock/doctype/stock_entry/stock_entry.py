@@ -90,12 +90,9 @@ class StockEntry(StockController, SubcontractingInwardController):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.types import DF
-
-		from erpnext.stock.doctype.landed_cost_taxes_and_charges.landed_cost_taxes_and_charges import (
-			LandedCostTaxesandCharges,
-		)
+		from erpnext.stock.doctype.landed_cost_taxes_and_charges.landed_cost_taxes_and_charges import LandedCostTaxesandCharges
 		from erpnext.stock.doctype.stock_entry_detail.stock_entry_detail import StockEntryDetail
+		from frappe.types import DF
 
 		add_to_transit: DF.Check
 		additional_costs: DF.Table[LandedCostTaxesandCharges]
@@ -104,6 +101,7 @@ class StockEntry(StockController, SubcontractingInwardController):
 		apply_putaway_rule: DF.Check
 		asset_repair: DF.Link | None
 		bom_no: DF.Link | None
+		branch: DF.Link
 		company: DF.Link
 		cost_center: DF.Link | None
 		credit_note: DF.Link | None
@@ -122,28 +120,14 @@ class StockEntry(StockController, SubcontractingInwardController):
 		outgoing_stock_entry: DF.Link | None
 		per_transferred: DF.Percent
 		pick_list: DF.Link | None
-		posting_date: DF.Date | None
+		posting_date: DF.Date
 		posting_time: DF.Time | None
 		process_loss_percentage: DF.Percent
 		process_loss_qty: DF.Float
 		project: DF.Link | None
 		purchase_order: DF.Link | None
 		purchase_receipt_no: DF.Link | None
-		purpose: DF.Literal[
-			"Material Issue",
-			"Material Receipt",
-			"Material Transfer",
-			"Material Transfer for Manufacture",
-			"Material Consumption for Manufacture",
-			"Manufacture",
-			"Repack",
-			"Send to Subcontractor",
-			"Disassemble",
-			"Receive from Customer",
-			"Return Raw Material to Customer",
-			"Subcontracting Delivery",
-			"Subcontracting Return",
-		]
+		purpose: DF.Literal["Material Issue", "Material Receipt", "Material Transfer"]
 		remarks: DF.Text | None
 		sales_invoice_no: DF.Link | None
 		scan_barcode: DF.Data | None
