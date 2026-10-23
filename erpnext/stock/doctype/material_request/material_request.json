@@ -143,8 +143,10 @@
   {
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Scan Barcode",
-   "options": "Barcode"
+   "options": "Barcode",
+   "print_hide": 1
   },
   {
    "allow_bulk_edit": 1,
@@ -380,7 +382,7 @@
  "idx": 70,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-23 10:45:39.025659",
+ "modified": "2026-10-23 11:17:49.287731",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Material Request",
